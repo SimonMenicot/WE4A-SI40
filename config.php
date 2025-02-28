@@ -11,7 +11,7 @@
 */
 
 const NOOBLE_CONFIG = [
-    "SERVER" => [
+    "SERVER" => [rfcdosk
         "PATH_NAME" => "/WE40-SI40"
     ]
 ];
