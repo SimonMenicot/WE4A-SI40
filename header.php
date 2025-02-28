@@ -14,7 +14,8 @@ function drawHeader(string $title): void
 </head>
 <body>
 	<header>Nooble</header>
-	<main>
+	<div id="root">
+		<main>
 	<?php
 }
 

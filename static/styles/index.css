@@ -1,29 +1,28 @@
-header, footer{
+header {
 	display: static;
 	top: 0px;
+}
 
+header, footer{
 	/*height: 5%;*/ /* Add a rule for little screens*/
 	background: green;
 	color: white;
 	padding: 5px;
 	flex-grow: 0px;
 }
-
-main {
-	flex-grow: 1;
-	margin-top: 20px;
-	margin-bottom: 20px;
-
-	height: 1000px;
-}
-
 body {
 	position: fixed;
-
+	margin: 0px;
 	left: 0px;
-	top: 0px;
+	right: 0px;
+
+	display: flex;
+	flex-direction: column;
 	height: 100%;
-	width: 100%;
+}
+
+#root {
+	flex-grow: 1;
 
 	margin: 0;
 	display: flex;
@@ -33,12 +32,11 @@ body {
 	justify-content: space-between;
 }
 
-main{
-	text-align: center;
-}
+main {
+	flex-grow: 1;
+	margin-top: 20px;
+	margin-bottom: 20px;
 
-#long_div {
-	background: red;
-	height: 1000px;
+	text-align: center;
 }
 
