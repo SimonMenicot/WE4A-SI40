@@ -1,7 +1,9 @@
 <! WE40-SI40/login >
 
 <?php
-	include("../header.php");
+	set_include_path("../");
+	require "header.php";
+	drawHeader("Please log in");
 ?>
 
 <form>
@@ -12,5 +14,5 @@
 
 
 <?php
-	include("../footer.php");
+	require "footer.php";
 ?>
