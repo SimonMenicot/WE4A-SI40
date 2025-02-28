@@ -6,10 +6,11 @@
 	drawHeader("Please log in");
 ?>
 
+<h1>Login</h1>
 <form>
 	<label for="ident">Nom d'utilisateur</label><input type="text" id="ident"> <br/>
-	<label for="passw">Mot de passe</label><input type="password" id="passw">
-	
+	<label for="passw">Mot de passe</label><input type="password" id="passw"> <br/>
+	<input type="submit" value="Se connecter">
 </form>
 
 

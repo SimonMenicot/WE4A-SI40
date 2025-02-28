@@ -12,7 +12,7 @@
 
 const NOOBLE_CONFIG = [
     "SERVER" => [
-        "PATH_NAME" => "/UTBM/nooble/WE40-SI40"
+        "PATH_NAME" => "/WE40-SI40"
     ]
 ];
 

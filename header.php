@@ -10,10 +10,11 @@ function drawHeader(string $title): void
 <head>
 	<title><?php echo $title ?> - Nooble</title>
 	<link rel="stylesheet" href="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/index.css">
-	<scripts src="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/script.js">
+	<script src="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/script.js"></script>
 </head>
 <body>
 	<header>Nooble</header>
+    <main>
 	<?php
 }
 
