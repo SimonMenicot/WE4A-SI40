@@ -9,12 +9,12 @@ function drawHeader(string $title): void
 <html>
 <head>
 	<title><?php echo $title ?> - Nooble</title>
-	<link rel="stylesheet" href="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/index.css">
-	<script src="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/script.js"></script>
+	<link rel="stylesheet" href="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/index.css"/>
+	<script src="<?php echo NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/index.js"></script>
 </head>
 <body>
 	<header>Nooble</header>
-    <main>
+	<main>
 	<?php
 }
 

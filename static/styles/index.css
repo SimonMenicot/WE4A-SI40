@@ -1,18 +1,44 @@
 header, footer{
-	height: 5%; /* Add a rule for little screens*/
+	display: static;
+	top: 0px;
+
+	/*height: 5%;*/ /* Add a rule for little screens*/
 	background: green;
 	color: white;
 	padding: 5px;
+	flex-grow: 0px;
 }
 
-body{
+main {
+	flex-grow: 1;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	height: 1000px;
+}
+
+body {
+	position: fixed;
+
+	left: 0px;
+	top: 0px;
+	height: 100%;
+	width: 100%;
+
 	margin: 0;
-	height: 100vh;
 	display: flex;
 	flex-direction: column;	
+
+	overflow-y: auto;
 	justify-content: space-between;
 }
 
 main{
 	text-align: center;
 }
+
+#long_div {
+	background: red;
+	height: 1000px;
+}
+

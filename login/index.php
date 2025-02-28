@@ -13,6 +13,9 @@
 	<input type="submit" value="Se connecter">
 </form>
 
+<div id="long_div">
+</div>
+
 
 <?php
 	require "footer.php";
