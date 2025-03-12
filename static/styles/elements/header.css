@@ -1,0 +1,25 @@
+header {
+	position: relative;
+	top: 0px;
+
+	background: green;
+	color: white;
+	padding: var(--header-padding);
+}
+
+#head {
+	display:flex;
+	align-items:center;
+}
+
+#head h1 {
+	margin: 0;
+	padding-left: var(--header-padding);
+}
+
+#head a {
+    text-decoration: none;
+    color: inherit;
+}
+
+

@@ -1,0 +1,7 @@
+main {
+	flex-grow: 1;
+	margin: var(--main-vertical-padding) var(--main-horizontal-padding);
+
+	text-align: center;
+}
+
