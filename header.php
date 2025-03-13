@@ -15,8 +15,8 @@ function drawHeader(string $title): void
 </head>
 <body>
 	<header>
-		<div id="head">
-			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logo.png" width="48" height="48">
+		<div id="header-logo">
+			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logo.png" class="logo-medium">
 			<h1><a href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>">Nooble</a></h1>
 		</div>
 	</header>
