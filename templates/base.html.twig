@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>{% block title %}{% endblock %} - Nooble</title>
+        <link rel="stylesheet" href="/static/styles/index.css"/>
+        <link rel="icon" type="image/png" href="/static/images/logo.png">
+        <script src="/static/scripts/index.js"></script>
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+            <div id="header-logo">
+                <img src="/static/images/logo.png" class="logo-medium">
+                <h1><a href="/">Nooble</a></h1>
+            </div>
+        </header>
+        <div id="root">
+            <main>
+                {% block body %}{% endblock %}
+            </main>
+            <footer>Thanks for using Nooble</footer>
+        </div>
+    </body>
+</html>
+
