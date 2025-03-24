@@ -1,8 +1,18 @@
 :root  {
-    --primary-color: green;
+    --primary-color: rgb(16, 168, 62);
     --surfaces-color: white;
+    --inputs-surfaces-color: rgb(232, 224, 200);
     --secondary-color: rgb(213, 135, 67);
 
     --on-primary-text-color: white;
+    
     --on-surface-text-color: black;
+
+    --login-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
+    --login-form-background: var(--inputs-surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
+    --login-inputs-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
+    --login-div-title-color: var(--on-surfaces-text-color);
+
+    --buttons-background: var(--secondary-color);
+    --buttons-border-color: none;
 }

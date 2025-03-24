@@ -1,0 +1,6 @@
+button, input[type="submit"], input[type="file"] {
+    padding: var(--button-padding);
+    background: var(--buttons-background);
+    border: var(--button-border-weight) solid var(--buttons-border-color);
+    border-radius: var(--button-border-radius);
+}
