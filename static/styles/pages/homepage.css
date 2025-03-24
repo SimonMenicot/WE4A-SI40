@@ -1,0 +1,4 @@
+div#homepage-main-separation {
+    flex-direction: row;
+    width: 100%;
+}

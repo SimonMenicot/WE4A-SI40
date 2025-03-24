@@ -1,0 +1,7 @@
+:root {
+    --classes-list-padding: 20px;
+    --classes-list-class-preview-padding: 20px;
+    --classes-list-margin: 5px;
+    --classes-list-class-preview-border-radius: 7px;
+    --classes-list-class-preview-spacing: 10px;
+}

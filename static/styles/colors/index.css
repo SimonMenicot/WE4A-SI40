@@ -15,4 +15,9 @@
 
     --buttons-background: var(--secondary-color);
     --buttons-border-color: none;
+
+    --activity-thread-activity-border-color: #ccc;
+    --activity-thread-activity-box-shadow-color: var(--activity-thread-activity-border-color);
+    --activity-thread-activity-line-color: #ccc;
+    --activity-thread-activity-time-color: #888;
 }
