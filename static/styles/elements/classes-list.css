@@ -1,0 +1,40 @@
+div.classes-list {
+    position: relative;
+
+    width: 100%;
+    height: min-content;
+    margin: 0px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    padding: var(--classes-list-padding);
+
+}
+
+div.classes-list div.class-preview {
+    margin: 0px;
+    flex-grow: 0;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    box-sizing: border-box;
+    padding: var(--classes-list-class-preview-padding);
+    margin: var(--classes-list-margin);
+
+    background: var(--inputs-surfaces-color);
+    border-radius: var(--classes-list-class-preview-border-radius);
+}
+
+div.classes-list div.class-preview h1 {
+    margin-top: 0px;
+    margin-bottom: var(--classes-list-class-preview-spacing);
+}
+
+div.classes-list div.class-preview p {
+    margin: 0px;
+}

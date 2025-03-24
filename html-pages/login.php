@@ -6,6 +6,7 @@ require "config.php";
     <head>
         <meta charset="utf8"/>
         <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/index.css"/>
+        <link rel="icon" type="image/png" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logo.png">
     </head>
 
     <body>
@@ -26,5 +27,6 @@ require "config.php";
                 <a href=".">I have forgotten my password</a>
             </form>
         </div>
+    	<script src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/index.js"></script>
     </body>
 </html>
