@@ -17,15 +17,14 @@ section#activity-thread div.activity {
 section#activity-thread div.activity h1 {
     font-size: var(--activity-thread-activity-title-size);
     margin: 0px;
-    text-align: center;
 }
 
 section#activity-thread div.activity-content {
     position: relative;
 
-    margin-top: var(--activity-thread-activity-padding);
+    margin-top: var(--activity-thread-activity-line-space);
     border-top: var(--activity-thread-activity-line-width) solid var(--activity-thread-activity-line-color);
-    padding-top: var(--activity-thread-activity-padding);
+    padding-top: var(--activity-thread-activity-line-space);
 
     display: flex;
     flex-direction: column;
@@ -83,5 +82,4 @@ section#activity-thread div.activity-content div.activity-author p {
     font-size: var(--activity-thread-activity-author-size);
     margin-right: var(--activity-thread-activity-author-horizontal-margin);
     margin-left: var(--activity-thread-activity-author-horizontal-margin);
-    vertical-align: baseline;
 }
