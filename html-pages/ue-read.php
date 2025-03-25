@@ -115,6 +115,16 @@ drawHeader("Welcome, Student");
     Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reproduit ci-dessous pour ceux que cela intéresse. Les sections 1.10.32 et 1.10.33 de "De Finibus Bonorum et Malorum" par Cicéron y sont également reproduites dans leur forme originale exacte, accompagnées des versions anglaises traduites en 1914 par H. Rackham.
                 </p>
             </div>
+
+            <div class="section section-container">
+                <p class="section section-raw-text">
+                    J'en profite pour glisse mon album
+                </p>
+                <iframe src="https://open.spotify.com/embed/album/2UjSSrKiHFeFFb2WNMEv7X?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <p class="section section-raw-text">
+                    Écoutez c'est cool
+                </p>
+            </div>
         </div>
 
     </div>
