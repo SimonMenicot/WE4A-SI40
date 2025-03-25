@@ -88,7 +88,7 @@ div.section-file a img {
     margin: calc(var(--section-file-padding) / 2);
 }
 
-div.section-file text.file-extension {
+div.section-file span.file-extension {
     margin: 0px;
     text-align: center;
 }

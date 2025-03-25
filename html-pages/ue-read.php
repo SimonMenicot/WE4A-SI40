@@ -49,7 +49,7 @@ drawHeader("Welcome, Student");
                     <p class="file-description">TD1 : Sûrement pas sur Symfony mdr, débrouillez vous</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
-                        <text class="file-extension">TD1.zip</text>
+                        <span class="file-extension">TD1.zip</text>
                     </a>
                 </div>
 
@@ -57,7 +57,7 @@ drawHeader("Welcome, Student");
                     <p class="file-description">TD2 : Tiens, et si on faisait du PHP?</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD2.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
-                        <text class="file-extension">TD2.zip</text>
+                        <span class="file-extension">TD2.zip</text>
                     </a>
                 </div>
 
@@ -65,7 +65,7 @@ drawHeader("Welcome, Student");
                     <p class="file-description">TD3 : Symfony? Noooon, AJAX bien sûr!</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD3.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
-                        <text class="file-extension">TD3.zip</text>
+                        <span class="file-extension">TD3.zip</text>
                     </a>
                 </div>
 
@@ -73,7 +73,7 @@ drawHeader("Welcome, Student");
                     <p class="file-description">Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. </p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/WE4A - Moodle Simplifié (devoir retiré).pdf" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
-                        <text class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</text>
+                        <span class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</text>
                     </a>
                 </div>
             </div>
