@@ -92,11 +92,11 @@ drawHeader("Welcome, Student");
                 <button id="activity-button">
                     !Cliquez-moi!
                 </button>
-                
+
                 <br>
 
                 <small>
-                The activities will be integrated with Javascript, and may not need to user "document.getElementById
+                The activities will be integrated with Javascript, and may not need to use "document.getElementById"
                 </small>
 
                 <script>

@@ -20,4 +20,7 @@
     --activity-thread-activity-box-shadow-color: var(--activity-thread-activity-border-color);
     --activity-thread-activity-line-color: #ccc;
     --activity-thread-activity-time-color: #888;
+
+    --section-container-border-color: #ccc;
+    --section-file-backgroud: #ddd;
 }
