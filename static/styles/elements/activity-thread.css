@@ -9,7 +9,7 @@ section#activity-thread div.activity {
 
     padding: var(--activity-thread-activity-padding);
     box-sizing: border-box;
-    border: 2px solid var(--activity-thread-activity-border-color);
+    border: var(--activity-thread-activity-border-size) solid var(--activity-thread-activity-border-color);
     border-radius: var(--activity-thread-activity-border-radius);
     box-shadow: var(--activity-thread-activity-box-shadow-dimensions) var(--activity-thread-activity-box-shadow-color) ;
 }
