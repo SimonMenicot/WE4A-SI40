@@ -2,6 +2,11 @@ header {
 	position: relative;
 	top: 0px;
 
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
 	background: var(--primary-color);
 	color: var(--on-primary-text-color);
 	padding: var(--header-padding);
@@ -21,3 +26,16 @@ header {
     text-decoration: none;
     color: inherit;
 }
+
+#header-user-icon {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#header-user-icon img {
+	height: var(--header-user-icon-heigth);
+	padding: var(--header-user-icon-padding);
+	border-radius: var(--header-user-border-radius);
+}
+
