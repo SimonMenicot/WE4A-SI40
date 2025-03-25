@@ -78,7 +78,7 @@ drawHeader("Welcome, Student");
                 </div>
             </div>
 
-            <div class="section section-container horizontal-section-container">
+            <div class="section section-container horizontal-section-container wrapping-section-container">
                 <img class="section section-image" src="https://randomwordgenerator.com/img/picture-generator/55e2dc434c50a814f1dc8460962e33791c3ad6e04e50744074267bd19f4ac2_640.jpg"/>
                 <img class="section section-image" src="https://randomwordgenerator.com/img/picture-generator/5fe4d0474255b10ff3d8992cc12c30771037dbf85254784b772779d69f4e_640.jpg"/>
             </div>
@@ -116,6 +116,32 @@ drawHeader("Welcome, Student");
                 </p>
             </div>
 
+            <div class="section section-container horizontal-section-container">
+                <video controls class="section section-video" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+                    Your browser is not compatible...<br>
+                    Download the video
+                    <a href="http://commondatastorage.googleapi.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+                        here
+                    </a>
+                </video>
+                <div class="section section-container">
+                    <p class="section section-raw-text">
+                    Qu'est-ce que le Lorem Ipsum ?<br>
+                    Le Lorem Ipsum est simplement un faux texte utilisé dans l'industrie de l'impression et du traitement de texte. Depuis les années 1500, il est considéré comme le texte fictif standard, lorsque quelqu'un a pris une galère de caractères pour la mélanger et créer un livre d'exemple typographique. Il est parvenu à survivre non seulement cinq siècles, mais aussi l'entrée dans le traitement électronique du texte, sans être essentiellement modifié. Sa popularité a été renforcée dans les années 1960 avec la sortie des feuilles Letraset contenant des passages de Lorem Ipsum, et plus récemment grâce aux logiciels de publication assistée par ordinateur comme Aldus PageMaker qui incluent des versions de Lorem Ipsum.<br>
+                    Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reproduit ci-dessous pour ceux que cela intéresse. Les sections 1.10.32 et 1.10.33 de "De Finibus Bonorum et Malorum" par Cicéron y sont également reproduites dans leur forme originale exacte, accompagnées des versions anglaises traduites en 1914 par H. Rackham.
+                    </p>
+
+                    <audio controls class="section section-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                        Your browser is not compatible...<br>
+                        Download the audio 
+                        <a href="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+                            here
+                        </a>
+                    </audio>
+                </div>
+            </div>
+
+
             <div class="section section-container">
                 <p class="section section-raw-text">
                     J'en profite pour glisse mon album
@@ -125,8 +151,8 @@ drawHeader("Welcome, Student");
                     Écoutez c'est cool
                 </p>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <section id="activity-thread" class="side-thread">
