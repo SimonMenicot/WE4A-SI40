@@ -1,0 +1,106 @@
+/*
+
+    Class sections defines the sections contained in the class reading pages. 
+    They must not be confused with section elements, neither .class definitions
+
+*/
+
+.section {
+    position: relative;
+    margin: 0px;
+
+    box-sizing: border-box;
+
+    border: 1px dashed red; /* only for preview */
+}
+
+div.section-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    justify-content: space-evenly;
+
+    padding: var(--section-container-padding);
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+div.section-container.horizontal-section-container {
+    flex-direction: row;
+}
+
+div.section-container.wrapping-section-container {
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+div.section-raw-text {
+    flex-shrink: 1;
+}
+
+div.section-rich-text {
+
+}
+
+div.section-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border-radius: 4px;
+    background: #ddd;
+    padding: 20px;
+}
+
+div.section-file p.file-description {
+    flex-grow: 1;
+    padding-right: 20px;
+}
+
+div.section-file a {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    text-decoration: none;
+
+    height: 100%;
+    padding: 0px;
+    padding-left: 20px;
+    align-items: center;
+}
+
+div.section-file a::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #888;
+    height: 100%;
+    width: 3px;
+    border-radius: 3px;
+}
+
+div.section-file a img {
+    width: 20px;
+    margin: 10px;
+}
+
+div.section-file text.file-extension {
+    margin: 0px;
+    text-align: center;
+}
+
+img.section-image {
+    width: auto;
+}
+
+div.section-activity {
+}
+
+iframe.section-integration {
+    flex-shrink: 0;   
+}

@@ -6,11 +6,11 @@ drawHeader("Welcome, Student");
 <div id="homepage-main-separation" class="content-separator">
     <div id="classes" class="classes-list"><?php
 
-    for ($i=0; $i < 23; ++$i)
+    for ($i=0; $i < 16; ++$i)
     {?>
         <div class="class-preview">
             <h1>WE4A</h1>
-            <p>Introduction to web</p>
+            <p>Introduction au design WEB</p>
         </div>
     <?php
     }
@@ -20,11 +20,11 @@ drawHeader("Welcome, Student");
     <section id="activity-thread" class="side-thread">
         <div class="activity">
             <h1>
-                Recent activity
+                Activité recent
             </h1>
             <div class="activity-content">
                 <p>
-                    I have created a Figma
+                    J'ai créé un Figma
                 </p>
 
                 <div class="activity-author">
@@ -33,18 +33,18 @@ drawHeader("Welcome, Student");
                 </div>
 
                 <time>
-                    2025/03/24 10:00
+                    Le 24/03/2025 à 10:00
                 </time>
             </div>
         </div>
 
         <div class="activity">
             <h1>
-                Homework to give back
+                Devoir à rendre
             </h1>
             <div class="activity-content">
                 <p>
-                    I have created a Figma
+                    J'ai créé un Figma
                 </p>
 
                 <div class="activity-author">
@@ -53,27 +53,27 @@ drawHeader("Welcome, Student");
                 </div>
 
                 <time>
-                    2025/03/24 10:00
+                    Le 24/03/2025 à 10:00
                 </time>
             </div>
         </div>
 
         <div class="activity">
             <h1>
-                Hi everybody!
+                Salut tout le monde!
             </h1>
             <div class="activity-content">
                 <p>
-                    I will lunch tomorrow afternoon after having drunk some water. 
+                    J'aime beaucoup les sardines au beurre, soit dit en passant ; pourquoi se borner à manger des haricots?
                 </p>
 
                 <div class="activity-author">
-                    <img style="background:linear-gradient(to bottom right, red, blue)"/>
-                    <p>Nicolas Daval</p>
+                    <img style="background:linear-gradient(to right, red, green)"/>
+                    <p>Eden Morey</p>
                 </div>
 
                 <time>
-                    2025/03/24 19:25
+                    24/03/2025 19:25
                 </time>
             </div>
         </div>

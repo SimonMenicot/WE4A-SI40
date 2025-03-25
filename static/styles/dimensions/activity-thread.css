@@ -2,11 +2,12 @@
     --activity-thread-padding: 20px;
     --activity-thread-width: 18vw;
     --activity-thread-spacing: 30px;
-    --activity-thread-activity-padding: 10px;
-    --activity-thread-activity-border-size: 2px;
+    --activity-thread-activity-padding: 13px;
+    --activity-thread-activity-line-space: 7px;
+    --activity-thread-activity-border-size: 1px;
     --activity-thread-activity-border-radius: 6px;
-    --activity-thread-activity-box-shadow-dimensions: 0px 2px 3px;
-    --activity-thread-activity-line-width: 2px;
+    --activity-thread-activity-box-shadow-dimensions: 0px 2px 2px;
+    --activity-thread-activity-line-width: 1px;
     --activity-thread-activity-title-size: large;
     --activity-thread-activity-description-size: medium;
     --activity-thread-activity-time-size: small;
