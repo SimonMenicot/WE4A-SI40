@@ -1,4 +1,7 @@
 section#activity-thread {
+    position: sticky;
+    top: 0px;
+
     padding: var(--activity-thread-padding);
     box-sizing: border-box;
     width: var(--activity-thread-width);
