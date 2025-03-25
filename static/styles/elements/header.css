@@ -2,8 +2,8 @@ header {
 	position: relative;
 	top: 0px;
 
-	background: green;
-	color: white;
+	background: var(--primary-color);
+	color: var(--on-primary-text-color);
 	padding: var(--header-padding);
 }
 
