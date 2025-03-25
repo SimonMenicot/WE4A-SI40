@@ -17,14 +17,13 @@
 div.section-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
 
     justify-content: space-evenly;
 
     padding: var(--section-container-padding);
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
+    margin: var(--section-container-margin);
+    border: var(--section-container-border-width) solid var(--section-container-border-color);
+    border-radius: var(--section-container-border-radius);
 }
 
 div.section-container.horizontal-section-container {
@@ -33,7 +32,7 @@ div.section-container.horizontal-section-container {
 
 div.section-container.wrapping-section-container {
     flex-wrap: wrap;
-    gap: 20px;
+    gap: var(--section-container-wrapping-gap);
 }
 
 div.section-raw-text {
@@ -49,14 +48,14 @@ div.section-file {
     flex-direction: row;
     align-items: center;
 
-    border-radius: 4px;
-    background: #ddd;
-    padding: 20px;
+    border-radius: var(--section-file-border-radius);
+    background: var(--section-file-backgroud);
+    padding: var(--section-file-padding);
 }
 
 div.section-file p.file-description {
     flex-grow: 1;
-    padding-right: 20px;
+    padding-right: var(--section-file-padding);
 }
 
 div.section-file a {
@@ -69,7 +68,7 @@ div.section-file a {
 
     height: 100%;
     padding: 0px;
-    padding-left: 20px;
+    padding-left: var(--section-file-padding);
     align-items: center;
 }
 
@@ -80,13 +79,13 @@ div.section-file a::before {
     left: 0px;
     background: #888;
     height: 100%;
-    width: 3px;
-    border-radius: 3px;
+    width: var(--section-file-line-width);
+    border-radius: var(--section-file-line-width);
 }
 
 div.section-file a img {
-    width: 20px;
-    margin: 10px;
+    width: var(--section-file-image-size);
+    margin: calc(var(--section-file-padding) / 2);
 }
 
 div.section-file text.file-extension {

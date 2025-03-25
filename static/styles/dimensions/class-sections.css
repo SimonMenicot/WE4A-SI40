@@ -1,3 +1,12 @@
 :root {
-    --section-container-padding: 10px;
+    --section-container-padding: 10px 15px;
+    --section-container-margin: 10px;
+    --section-container-border-width: 1px;
+    --section-container-border-radius: 15px;
+    --section-container-wrapping-gap: 20px;
+
+    --section-file-border-radius: 4px;
+    --section-file-padding: 20px;
+    --section-file-line-width: 3px;
+    --section-file-image-size: 20px;
 }
