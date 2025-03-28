@@ -2,7 +2,7 @@
 
 require "config.php";
 
-function drawHeader(string $title): void
+function drawHeader(string $title, bool $is_admin = false): void
 {
 	?>
 	<!DOCTYPE html>
@@ -21,6 +21,21 @@ function drawHeader(string $title): void
 				<a href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>">Nooble</a>
 			</h1>
 		</div>
+
+		<span class="header-space">
+
+		</span>
+
+	<?php
+	if ($is_admin)
+	{
+		?><div id="header-admin-prof-switch">
+			<span>Administrateur</span>
+			<input type="checkbox">
+			<span class="checkbox-style"></span>
+		</div><?php
+	}
+	?>
 
 		<div id="header-user-icon">
 			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/user.png"/>

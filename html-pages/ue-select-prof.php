@@ -1,7 +1,7 @@
 <?php
 set_include_path("../");
 require "header.php";
-drawHeader("Welcome, Student");
+drawHeader("Welcome, Teacher", true);
 ?>
 <div id="homepage-main-separation" class="content-separator">
 	<div id="homepage-content" class="main-page-content">
