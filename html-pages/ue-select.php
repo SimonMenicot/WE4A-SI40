@@ -4,18 +4,21 @@ require "header.php";
 drawHeader("Welcome, Student");
 ?>
 <div id="homepage-main-separation" class="content-separator">
-    <div id="classes" class="classes-list"><?php
+    <div id="homepage-content" class="main-page-content">
+        <h1>Bonjour, Nimen Laden!</h1>
+        <div id="classes" class="classes-list"><?php
 
-    for ($i=0; $i < 16; ++$i)
-    {?>
-        <div class="class-preview">
-            <h1>WE4A</h1>
-            <p>Introduction au design WEB</p>
+        for ($i=0; $i < 16; ++$i)
+        {?>
+            <div class="class-preview">
+                <h1>WE4A</h1>
+                <p>Introduction au design WEB</p>
+            </div>
+        <?php
+        }
+        ?>
         </div>
-    <?php
-    }
-    ?>
-        </div>
+    </div>
 
     <section id="activity-thread" class="side-thread">
         <div class="activity">
