@@ -14,7 +14,7 @@ drawHeader("ça parle de toi là");
 </head>
 
 <body>
-<div class="row">
+<div id="top-profile" class="h-20 row text-white bg-primary">
     <div id="main-info" class="col-md-4 ps-5">
         <h1>Sicolas Berley</h1>
         <h2>Etudiant</h2>
@@ -29,7 +29,7 @@ drawHeader("ça parle de toi là");
         <h3>UTC+1</h3>
     </div>
     <div id="profile-pic" class="col-md-4">
-        <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.png" alt="Profile Picture" class="img-fluid"/>
+        <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.jpg" alt="Profile Picture" class="img-fluid" style="max-height: 100%;"/>
 </div>
 
 </body>

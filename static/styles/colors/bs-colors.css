@@ -8,3 +8,7 @@
     --bs-light: #F1F3F4;
     --bs-dark: #202124;
 }
+
+.bg-primary{
+    background-color: #10a83e !important;
+}
