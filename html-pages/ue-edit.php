@@ -149,11 +149,11 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         </div>
                         
                         <div class="section section-file section-editable">
-                            <p class="file-description">TD1 : Sûrement pas sur Symfony mdr, débrouillez vous</p>
-                            <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip" target="_blank">
+                            <input type="text" class="file-description" value="TD1 : Sûrement pas sur Symfony mdr, débrouillez vous"/>
+                            <button class="file-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD1.zip</text>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -171,11 +171,11 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         </div>
                         
                         <div class="section section-file section-editable">
-                            <p class="file-description">TD2 : Tiens, et si on faisait du PHP?</p>
-                            <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD2.zip" target="_blank">
+                            <input class="file-description" type="text" value="TD2 : Tiens, et si on faisait du PHP?"/>
+                            <button class="file-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD2.zip</text>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -193,11 +193,11 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         </div>
                         
                         <div class="section section-file section-editable">
-                            <p class="file-description">TD3 : Symfony? Noooon, AJAX bien sûr!</p>
-                            <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD3.zip" target="_blank">
+                            <input type="text" class="file-description" value="TD3 : Symfony? Noooon, AJAX bien sûr!"/>
+                            <button class="file-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD3.zip</text>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -215,11 +215,11 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         </div>
                         
                         <div class="section section-file section-editable">
-                            <p class="file-description">Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. </p>
-                            <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/WE4A - Moodle Simplifié (devoir retiré).pdf" target="_blank">
+                            <input type="text" class="file-description" value="Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. "/>
+                            <button class="file-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</text>
-                            </a>
+                            </button>
                         </div>
                     </div>
                     <button class="edit-section-add-button">
@@ -255,7 +255,12 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                             </button>
                         </div>
                         
-                        <img class="section section-image section-editable" src="https://randomwordgenerator.com/img/picture-generator/55e2dc434c50a814f1dc8460962e33791c3ad6e04e50744074267bd19f4ac2_640.jpg"/>
+                        <div class="section section-image section-editable">
+                            <img src="https://randomwordgenerator.com/img/picture-generator/55e2dc434c50a814f1dc8460962e33791c3ad6e04e50744074267bd19f4ac2_640.jpg"/>
+                            <button>
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/edit.png"/>
+                            </button>
+                        </div>
                     </div>
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
@@ -270,7 +275,12 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                             </button>
                         </div>
                         
-                        <img class="section section-image" src="https://randomwordgenerator.com/img/picture-generator/5fe4d0474255b10ff3d8992cc12c30771037dbf85254784b772779d69f4e_640.jpg"/>
+                        <div class="section section-image section-editable">
+                            <img src="https://randomwordgenerator.com/img/picture-generator/5fe4d0474255b10ff3d8992cc12c30771037dbf85254784b772779d69f4e_640.jpg"/>
+                            <button>
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/edit.png"/>
+                            </button>
+                        </div>
                     </div>
                     <button class="edit-section-add-button">
                         Ajouter une section...
@@ -535,10 +545,10 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         </button>
                     </div>
                 </div>
-                <button class="edit-section-add-button">
-                    Ajouter une section...
-                </button>
             </div>
+            <button class="edit-section-add-button">
+                Ajouter une section...
+            </button>
 
         </div>
     </div>

@@ -1,9 +1,12 @@
+button, input[type="submit"], input[type="file"] {
+    cursor: pointer;
+}
+
 button.main-button, input[type="submit"].main-button, input[type="file"].main-button {
     padding: var(--button-padding);
     background: var(--buttons-background);
     border: var(--button-border-weight) solid var(--buttons-border-color);
     border-radius: var(--button-border-radius);
-    cursor: pointer;
     outline: none;
     font-size: var(--button-font-size);
 }
