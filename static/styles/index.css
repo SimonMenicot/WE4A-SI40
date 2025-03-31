@@ -26,10 +26,10 @@
 }
 
 #profile-pic img {
-	border: 5px solid white; /* Ajustez la couleur et l'épaisseur de la bordure selon vos besoins */
-	border-radius: 50%; /* Rend l'image circulaire */
-	width: 150px; /* Ajustez la taille selon vos besoins */
-	height: 150px; /* Ajustez la taille selon vos besoins */
+	border: 3px solid white; /* Ajustez la couleur et l'épaisseur de la bordure selon vos besoins */
+	border-radius: 30%; /* Rend l'image circulaire */
+	width: 200px; /* Ajustez la taille selon vos besoins */
+	height: 200px; /* Ajustez la taille selon vos besoins */
 	object-fit: cover; /* Assure que l'image s'adapte bien dans le cercle */
 }
 
@@ -38,4 +38,22 @@
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+}
+
+#logos img{
+	height: 50px;
+	padding: 10px;
+	align-items: center;
+}
+
+#rest-info {
+	flex-grow: 1;
+	display: flex;
+}
+
+#right-menu {
+	background: #5c636a;
+	width: 30%;
+	border-radius: 5%;
+	height: 100%
 }

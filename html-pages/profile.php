@@ -28,8 +28,36 @@ drawHeader("ça parle de toi là");
         <h2>Fuseau horaire</h2>
         <h3>UTC+1</h3>
     </div>
-    <div id="profile-pic" class="col-md-4">
+    <div id="profile-pic" class="col-md-3">
         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.jpg" alt="Profile Picture" class="img-fluid" style="max-height: 100%;"/>
+    </div>
+    <div id="logos" class="col-md-1">
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/LinkedIn_icon.svg.png" alt="Logo 1" class="img-fluid"/></a>
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/Microsoft-Teams-Logo.png" alt="Logo 2" class="img-fluid"/></a>
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/e-mail.png" alt="Logo 3" class="img-fluid"/></a>
+    </div>
 </div>
+<div id="rest-info" class="h-40 row">
+    <div id="UE" class="col-md-4">
+        <h2>UE Suivies</h2>
+        <p>WE4A : Introduction to Web Design</p>
+        <p>WE4A : Introduction to Web Design</p>
+        <p>WE4A : Introduction to Web Design</p>
+    </div>
+    <div id="jsp" class="col-md-4">
+        <h2>JSP</h2>
+        <p>info intéressante 1</p>
+        <p>info intéressante 2</p>
+        <p>info intéressante 3</p>
+    </div>
+    <div id="right-menu" class="col-md-4">
+        <h2>Menu</h2>
+        <p>info intéressante 1</p>
+        <p>info intéressante 2</p>
+        <p>info intéressante 3</p>
+        <p>info intéressante 4</p>
+    </div>
+</div>
+
 
 </body>
