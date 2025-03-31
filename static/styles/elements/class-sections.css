@@ -14,6 +14,14 @@
 /*    border: 1px dashed red; /* only for preview */
 }
 
+
+/*
+
+    Class Section Enumerations
+
+*/
+
+/* Section Container */
 div.section-container {
     display: flex;
     flex-direction: column;
@@ -35,14 +43,41 @@ div.section-container.wrapping-section-container {
     gap: var(--section-container-wrapping-gap);
 }
 
-div.section-raw-text {
-    flex-shrink: 1;
+/* Raw Text*/
+p.section-raw-text {
 }
 
+div.section-raw-text.section-editable {
+    outline: none;
+    border: 1px dashed lightgrey;
+}
+
+div.section-raw-text.section-editable:focus {
+    outline: none;
+    border: 1px dashed black;
+}
+
+/* Rich Text */
 div.section-rich-text {
-
 }
 
+div.section-rich-text.section-editable {
+    margin: 2px;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+div.section-rich-text.section-editable div.rich-text-section-edit-line {
+    padding: 12px;
+    border-bottom: 1px solid green;
+}
+
+div.section-rich-text.section-editable div.rich-text-section-content {
+    outline: none;
+    padding: 10px;
+}
+
+/* File */
 div.section-file {
     display: flex;
     flex-direction: row;
@@ -93,6 +128,7 @@ div.section-file span.file-extension {
     text-align: center;
 }
 
+/* Image */
 img.section-image {
     height: auto; 
     width: auto; 
@@ -103,9 +139,11 @@ img.section-image {
     max-height: 100%;
 }
 
+/* Activity */
 div.section-activity {
 }
 
+/* Video */
 video.section-video {
     flex: 1;
 
@@ -118,6 +156,61 @@ video.section-video {
 video.section-audio {
 }
 
+/* Integration */
 iframe.section-integration {
     flex-shrink: 0;   
+}
+
+/*
+
+    Content edition styling
+
+*/
+div.edit-content-section {
+    display: flex;
+    align-items: center;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section {
+    flex-direction: row;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+div.section-container.horizontal-section-container > div.edit-content-section {
+    flex-direction: column;
+}
+
+div.edit-content-section div.edit-content-buttons-actions {
+    display: flex;
+    flex-direction: row;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section div.edit-content-buttons-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+div.section-container.horizontal-section-container > div.edit-content-section div.edit-content-buttons-actions {
+    display: flex;
+    flex-direction: row;
+}
+
+div.edit-content-section button.edit-content-action {
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+div.edit-content-section .section {
+    flex-grow: 1;
+}
+
+div.edit-content-section button.edit-content-action img {
+    height: 12px;
+    width: 12px;
 }

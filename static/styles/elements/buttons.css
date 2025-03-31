@@ -1,4 +1,4 @@
-button, input[type="submit"], input[type="file"] {
+button.main-button, input[type="submit"].main-button, input[type="file"].main-button {
     padding: var(--button-padding);
     background: var(--buttons-background);
     border: var(--button-border-weight) solid var(--buttons-border-color);
@@ -7,3 +7,4 @@ button, input[type="submit"], input[type="file"] {
     outline: none;
     font-size: var(--button-font-size);
 }
+
