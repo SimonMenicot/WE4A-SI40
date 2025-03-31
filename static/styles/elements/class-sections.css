@@ -29,7 +29,6 @@ div.section-container {
     justify-content: space-evenly;
 
     padding: var(--section-container-padding);
-    margin: var(--section-container-margin);
     border: var(--section-container-border-width) solid var(--section-container-border-color);
     border-radius: var(--section-container-border-radius);
 }
@@ -167,25 +166,33 @@ iframe.section-integration {
 
 */
 div.edit-content-section {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
+    padding: 5px;
 }
 
 div.section-container:not(.horizontal-section-container) > div.edit-content-section {
     flex-direction: row;
-    border-top: 1px solid lightgrey;
-    border-bottom: 1px solid lightgrey;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section:not(:first-child) {
+    border-top: 1px dashed lightgrey;
 }
 
 div.section-container.horizontal-section-container > div.edit-content-section {
     flex-direction: column;
 }
 
+div.section-container.horizontal-section-container > div.edit-content-section:not(:first-child) {
+    border-left: 1px dashed lightgrey;
+}
+
 div.edit-content-section div.edit-content-buttons-actions {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    margin-right: 5px;
-    margin-left: 5px;
+    padding: 10px;
 }
 
 div.section-container:not(.horizontal-section-container) > div.edit-content-section div.edit-content-buttons-actions {
@@ -198,19 +205,7 @@ div.section-container.horizontal-section-container > div.edit-content-section di
     flex-direction: row;
 }
 
-div.edit-content-section button.edit-content-action {
-    height: 30px;
-    width: 30px;
-    padding: 7px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 div.edit-content-section .section {
     flex-grow: 1;
 }
 
-div.edit-content-section button.edit-content-action img {
-    height: 12px;
-    width: 12px;
-}

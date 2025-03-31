@@ -16,16 +16,28 @@ drawHeader("Welcome, Litzler");
 
         <div id="main-class-section" class="section section-container">
             <div class="edit-content-section">
+                <div class="edit-content-buttons-actions">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
+                        <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
+                    </button>
+                    <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
+                        <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
+                    </button>
+                    <button class="edit-content-action icon-button edit-content-move-next">
+                        <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
+                    </button>
+                </div>
+                
                 <div class="section section-container">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
@@ -35,13 +47,13 @@ drawHeader("Welcome, Litzler");
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
@@ -53,13 +65,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
@@ -93,13 +105,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -111,13 +123,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -125,13 +137,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                 <div class="section section-container horizontal-section-container wrapping-section-container section-editable">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -139,7 +151,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-file section-editable">
                             <p class="file-description">TD1 : Sûrement pas sur Symfony mdr, débrouillez vous</p>
                             <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip" target="_blank">
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD1.zip</text>
                             </a>
                         </div>
@@ -147,13 +159,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -161,7 +173,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-file section-editable">
                             <p class="file-description">TD2 : Tiens, et si on faisait du PHP?</p>
                             <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD2.zip" target="_blank">
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD2.zip</text>
                             </a>
                         </div>
@@ -169,13 +181,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -183,7 +195,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-file section-editable">
                             <p class="file-description">TD3 : Symfony? Noooon, AJAX bien sûr!</p>
                             <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD3.zip" target="_blank">
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">TD3.zip</text>
                             </a>
                         </div>
@@ -191,13 +203,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -205,7 +217,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-file section-editable">
                             <p class="file-description">Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. </p>
                             <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/WE4A - Moodle Simplifié (devoir retiré).pdf" target="_blank">
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                 <span class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</text>
                             </a>
                         </div>
@@ -218,13 +230,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -232,13 +244,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                 <div class="section section-container horizontal-section-container wrapping-section-container section-editable">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -247,13 +259,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                     </div>
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -268,13 +280,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -306,13 +318,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -320,13 +332,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                 <div class="section section-container horizontal-section-container section-editable">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -336,13 +348,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -360,13 +372,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -374,13 +386,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                 <div class="section section-container horizontal-section-container section-editable">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -396,13 +408,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/left.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/right.png"/>
                             </button>
                         </div>
@@ -410,18 +422,18 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-container section-editable">
                             <div class="edit-content-section">
                                 <div class="edit-content-buttons-actions">
-                                    <button class="edit-content-action edit-content-remove-line">
+                                    <button class="edit-content-action icon-button edit-content-remove-line">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                                     </button>
-                                    <button class="edit-content-action edit-content-move-top disabled-button">
+                                    <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                                     </button>
-                                    <button class="edit-content-action edit-content-move-bottom">
+                                    <button class="edit-content-action icon-button edit-content-move-next">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                                     </button>
                                 </div>
                                 
-                                <div class="section section-raw-text section-editable">
+                                <div class="section section-raw-text section-editable" contenteditable="true">
 Qu'est-ce que le Lorem Ipsum ?<br>
 Le Lorem Ipsum est simplement un faux texte utilisé dans l'industrie de l'impression et du traitement de texte. Depuis les années 1500, il est considéré comme le texte fictif standard, lorsque quelqu'un a pris une galère de caractères pour la mélanger et créer un livre d'exemple typographique. Il est parvenu à survivre non seulement cinq siècles, mais aussi l'entrée dans le traitement électronique du texte, sans être essentiellement modifié. Sa popularité a été renforcée dans les années 1960 avec la sortie des feuilles Letraset contenant des passages de Lorem Ipsum, et plus récemment grâce aux logiciels de publication assistée par ordinateur comme Aldus PageMaker qui incluent des versions de Lorem Ipsum.<br>
 Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reproduit ci-dessous pour ceux que cela intéresse. Les sections 1.10.32 et 1.10.33 de "De Finibus Bonorum et Malorum" par Cicéron y sont également reproduites dans leur forme originale exacte, accompagnées des versions anglaises traduites en 1914 par H. Rackham.</div>
@@ -429,13 +441,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
                             <div class="edit-content-section">
                                 <div class="edit-content-buttons-actions">
-                                    <button class="edit-content-action edit-content-remove-line">
+                                    <button class="edit-content-action icon-button edit-content-remove-line">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                                     </button>
-                                    <button class="edit-content-action edit-content-move-top disabled-button">
+                                    <button class="edit-content-action icon-button edit-content-move-previous">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                                     </button>
-                                    <button class="edit-content-action edit-content-move-bottom">
+                                    <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                                     </button>
                                 </div>
@@ -462,13 +474,13 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
 
             <div class="edit-content-section">
                 <div class="edit-content-buttons-actions">
-                    <button class="edit-content-action edit-content-remove-line">
+                    <button class="edit-content-action icon-button edit-content-remove-line">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-top disabled-button">
+                    <button class="edit-content-action icon-button edit-content-move-previous">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                     </button>
-                    <button class="edit-content-action edit-content-move-bottom">
+                    <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                     </button>
                 </div>
@@ -476,28 +488,28 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                 <div class="section section-container section-editable">
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
                             
-                        <div class="section section-raw-text section-editable">J'en profite pour glisse mon album</div>
+                        <div class="section section-raw-text section-editable" contenteditable="true">J'en profite pour glisse mon album</div>
                     </div>
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
@@ -506,18 +518,18 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                     </div>
                     <div class="edit-content-section">
                         <div class="edit-content-buttons-actions">
-                            <button class="edit-content-action edit-content-remove-line">
+                            <button class="edit-content-action icon-button edit-content-remove-line">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/close.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-top disabled-button">
+                            <button class="edit-content-action icon-button edit-content-move-previous">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/up.png"/>
                             </button>
-                            <button class="edit-content-action edit-content-move-bottom">
+                            <button class="edit-content-action icon-button edit-content-move-next disabled-button">
                                 <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/down.png"/>
                             </button>
                         </div>
                             
-                        <div class="section section-raw-text section-editable">Écoutez c'est cool</div>
+                        <div class="section section-raw-text section-editable" contenteditable="true">Écoutez c'est cool</div>
                         <button class="edit-section-add-button">
                             Ajouter une section...
                         </button>

@@ -8,3 +8,19 @@ button.main-button, input[type="submit"].main-button, input[type="file"].main-bu
     font-size: var(--button-font-size);
 }
 
+button.disabled-button {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+button.icon-button {
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+}
+
+button.icon-button img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
