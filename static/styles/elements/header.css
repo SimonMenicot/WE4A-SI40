@@ -43,7 +43,6 @@ header > div:not(:first-child) {
 
 #header-user-icon img {
 	height: var(--header-user-icon-heigth);
-	padding: var(--header-user-icon-padding);
 	border-radius: var(--header-user-border-radius);
 }
 

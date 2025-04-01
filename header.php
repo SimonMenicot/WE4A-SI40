@@ -36,7 +36,7 @@ function drawHeader(string $title, bool $is_admin = false): void
 	}
 	?>
 		<div id="header-user-icon">
-			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/user.png"/>
+			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.jpg"/>
 			<span>
 				Nuck Chorris
 			</span>
