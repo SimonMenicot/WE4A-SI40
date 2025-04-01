@@ -14,6 +14,14 @@
 /*    border: 1px dashed red; /* only for preview */
 }
 
+
+/*
+
+    Class Section Enumerations
+
+*/
+
+/* Section Container */
 div.section-container {
     display: flex;
     flex-direction: column;
@@ -21,7 +29,6 @@ div.section-container {
     justify-content: space-evenly;
 
     padding: var(--section-container-padding);
-    margin: var(--section-container-margin);
     border: var(--section-container-border-width) solid var(--section-container-border-color);
     border-radius: var(--section-container-border-radius);
 }
@@ -35,14 +42,41 @@ div.section-container.wrapping-section-container {
     gap: var(--section-container-wrapping-gap);
 }
 
-div.section-raw-text {
-    flex-shrink: 1;
+/* Raw Text*/
+p.section-raw-text {
 }
 
+div.section-raw-text.section-editable {
+    outline: none;
+    border: 1px dashed lightgrey;
+}
+
+div.section-raw-text.section-editable:focus {
+    outline: none;
+    border: 1px dashed black;
+}
+
+/* Rich Text */
 div.section-rich-text {
-
 }
 
+div.section-rich-text.section-editable {
+    margin: 2px;
+    border: 1px solid grey;
+    border-radius: 3px;
+}
+
+div.section-rich-text.section-editable div.rich-text-section-edit-line {
+    padding: 12px;
+    border-bottom: 1px solid green;
+}
+
+div.section-rich-text.section-editable div.rich-text-section-content {
+    outline: none;
+    padding: 10px;
+}
+
+/* File */
 div.section-file {
     display: flex;
     flex-direction: row;
@@ -58,13 +92,15 @@ div.section-file p.file-description {
     padding-right: var(--section-file-padding);
 }
 
-div.section-file a {
+div.section-file .file-button {
     position: relative;
 
     display: flex;
     flex-direction: column;
 
     text-decoration: none;
+    background: transparent;
+    border: none;
 
     height: 100%;
     padding: 0px;
@@ -72,7 +108,7 @@ div.section-file a {
     align-items: center;
 }
 
-div.section-file a::before {
+div.section-file .file-button::before {
     content: "";
     position: absolute;
     top: 0px;
@@ -83,7 +119,7 @@ div.section-file a::before {
     border-radius: var(--section-file-line-width);
 }
 
-div.section-file a img {
+div.section-file .file-button img {
     width: var(--section-file-image-size);
     margin: calc(var(--section-file-padding) / 2);
 }
@@ -93,6 +129,7 @@ div.section-file span.file-extension {
     text-align: center;
 }
 
+/* Image */
 img.section-image {
     height: auto; 
     width: auto; 
@@ -103,9 +140,29 @@ img.section-image {
     max-height: 100%;
 }
 
+div.section-image.section-editable {
+    position: relative;
+}
+
+div.section-image.section-editable img {
+    position: relative;
+}
+
+div.section-image.section-editable button {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #FFF8;
+    border: 0px;
+}
+
+/* Activity */
 div.section-activity {
 }
 
+/* Video */
 video.section-video {
     flex: 1;
 
@@ -118,6 +175,57 @@ video.section-video {
 video.section-audio {
 }
 
+/* Integration */
 iframe.section-integration {
     flex-shrink: 0;   
 }
+
+/*
+
+    Content edition styling
+
+*/
+div.edit-content-section {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section {
+    flex-direction: row;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section:not(:first-child) {
+    border-top: 1px dashed lightgrey;
+}
+
+div.section-container.horizontal-section-container > div.edit-content-section {
+    flex-direction: column;
+}
+
+div.section-container.horizontal-section-container > div.edit-content-section:not(:first-child) {
+    border-left: 1px dashed lightgrey;
+}
+
+div.edit-content-section div.edit-content-buttons-actions {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+div.section-container:not(.horizontal-section-container) > div.edit-content-section div.edit-content-buttons-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+div.section-container.horizontal-section-container > div.edit-content-section div.edit-content-buttons-actions {
+    display: flex;
+    flex-direction: row;
+}
+
+div.edit-content-section .section {
+    flex-grow: 1;
+}
+

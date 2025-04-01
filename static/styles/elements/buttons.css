@@ -1,9 +1,29 @@
 button, input[type="submit"], input[type="file"] {
+    cursor: pointer;
+}
+
+button.main-button, input[type="submit"].main-button, input[type="file"].main-button {
     padding: var(--button-padding);
     background: var(--buttons-background);
     border: var(--button-border-weight) solid var(--buttons-border-color);
     border-radius: var(--button-border-radius);
-    cursor: pointer;
     outline: none;
     font-size: var(--button-font-size);
 }
+
+button.disabled-button {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+button.icon-button {
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+}
+
+button.icon-button img {
+    max-width: 100%;
+    max-height: 100%;
+}
+

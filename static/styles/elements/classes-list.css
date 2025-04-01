@@ -9,11 +9,13 @@ div.classes-list {
     flex-direction: row;
     flex-wrap: wrap;
     box-sizing: border-box;
-    padding: var(--classes-list-padding);
+    justify-content: center;
 
 }
 
 div.classes-list div.class-preview {
+    position: relative;
+
     margin: 0px;
     flex-grow: 0;
 
@@ -23,7 +25,7 @@ div.classes-list div.class-preview {
     flex-wrap: nowrap;
 
     box-sizing: border-box;
-    padding: var(--classes-list-class-preview-padding);
+    padding: var(--classes-list-class-preview-padding-vertical) var(--classes-list-class-preview-padding-horizontal);
     margin: var(--classes-list-margin);
 
     background: var(--inputs-surfaces-color);
@@ -41,4 +43,15 @@ div.classes-list div.class-preview h1 {
 
 div.classes-list div.class-preview p {
     margin: 0px;
+}
+
+div.classes-list div.class-preview span.class-edit-icon {
+    position: absolute;
+    top: var(--classes-list-class-preview-padding-horizontal);
+    right: var(--classes-list-class-preview-padding-horizontal);
+}
+
+div.classes-list div.class-preview span.class-edit-icon img{
+    width: var(--classes-list-class-preview-edit-icon-size);
+    opacity: 0.6;
 }

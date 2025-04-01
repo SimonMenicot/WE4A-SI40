@@ -5,6 +5,7 @@ section#activity-thread {
     padding: var(--activity-thread-padding);
     box-sizing: border-box;
     width: var(--activity-thread-width);
+    flex-shrink: 0;
 }
 
 section#activity-thread div.activity {

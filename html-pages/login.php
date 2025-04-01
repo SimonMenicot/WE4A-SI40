@@ -20,9 +20,10 @@ require "config.php";
                 <input type="email" id="login-mail"/>
 
                 <label>Password:</label>
+              
                 <input type="password" id="login-password"/>
 
-                <input type="submit" id="login-password" value="Sign in"/>
+                <input type="submit" class="main-button" id="login-password" value="Sign in"/>
 
                 <a href=".">I have forgotten my password</a>
             </form>
