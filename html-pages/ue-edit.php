@@ -78,10 +78,27 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         
                         <div class="section section-rich-text section-editable">
                             <div class="rich-text-section-edit-line">
-                                <button><b>B</b></button>
-                                <button><i>I</i></button>
-                                <button><u>U</u></button>
-                                <span>...</span>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/bold.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/italic.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/underlined.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/preformat.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/list.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/enumeration.png"/>
+                                </button>
+                                <button class="icon-button">
+                                    <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/link.png"/>
+                                </button>
                             </div>
                             <div class="rich-text-section-content" contenteditable="true">
                                 <h2>
@@ -258,7 +275,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-image section-editable">
                             <img src="https://randomwordgenerator.com/img/picture-generator/55e2dc434c50a814f1dc8460962e33791c3ad6e04e50744074267bd19f4ac2_640.jpg"/>
                             <button>
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/edit.png"/>
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/upload.png"/>
                             </button>
                         </div>
                     </div>
@@ -278,7 +295,7 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                         <div class="section section-image section-editable">
                             <img src="https://randomwordgenerator.com/img/picture-generator/5fe4d0474255b10ff3d8992cc12c30771037dbf85254784b772779d69f4e_640.jpg"/>
                             <button>
-                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/edit.png"/>
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/upload.png"/>
                             </button>
                         </div>
                     </div>
@@ -316,6 +333,15 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                     <small>
                     The activities will be integrated with Javascript, and may not need to use "document.getElementById"
                     </small>
+
+                    <p>
+                        Cette activité est ici en mode édition (indépendant)
+                    </p>
+
+                    <button class="icon-button">
+                        <img src="<?=NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/settings.png"/>
+                        <span>Éditer...</span>
+                    </button>
 
                     <script>
                         let defined_outside_there_div = document.getElementById("an_id_that_will_be_replaced_by_js");
@@ -407,13 +433,18 @@ Le morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reprodui
                             </button>
                         </div>
                         
-                        <video controls class="section section-video section-editable" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
-                            Your browser is not compatible...<br>
-                            Download the video
-                            <a href="http://commondatastorage.googleapi.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
-                                here
-                            </a>
-                        </video>
+                        <div class="section section-video section-editable">
+                            <video controls src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+                                Your browser is not compatible...<br>
+                                Download the video
+                                <a href="http://commondatastorage.googleapi.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+                                    here
+                                </a>
+                            </video>
+                            <button>
+                                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"]?>/static/images/icons/upload.png"/>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="edit-content-section">
