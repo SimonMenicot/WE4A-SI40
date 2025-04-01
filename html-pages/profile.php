@@ -14,11 +14,11 @@ drawHeader("ça parle de toi là");
 </head>
 
 <body>
-<div id="top-profile" class="h-20 row text-white bg-primary">
-    <div id="main-info" class="col-md-4 ps-5">
+<div id="top-profile" class="h-20 row text-white bg-primary justify-content-between px-4">
+    <div id="main-info" class="col-md-4 mx-auto my-4">
         <h1>Sicolas Berley</h1>
         <h2>Etudiant</h2>
-        <p>Description</p>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
     </div>
     <div id="side-info" class="col-md-4">
         <h2>Adresse de courriel</h2>
@@ -37,20 +37,20 @@ drawHeader("ça parle de toi là");
         <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/e-mail.png" alt="Logo 3" class="img-fluid"/></a>
     </div>
 </div>
-<div id="rest-info" class="h-40 row">
-    <div id="UE" class="col-md-4">
+<div id="rest-info" class="h-40 row justify-content-between px-4">
+    <div id="UE" class="col-4 mx-auto my-4">
         <h2>UE Suivies</h2>
         <p>WE4A : Introduction to Web Design</p>
         <p>WE4A : Introduction to Web Design</p>
         <p>WE4A : Introduction to Web Design</p>
     </div>
-    <div id="jsp" class="col-md-4">
+    <div id="jsp" class="col-4 mx-auto my-4">
         <h2>JSP</h2>
         <p>info intéressante 1</p>
         <p>info intéressante 2</p>
         <p>info intéressante 3</p>
     </div>
-    <div id="right-menu" class="col-md-4">
+    <div id="right-menu" class="col-4 mx-auto my-4">
         <h2>Menu</h2>
         <p>info intéressante 1</p>
         <p>info intéressante 2</p>

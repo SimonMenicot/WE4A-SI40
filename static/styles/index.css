@@ -21,7 +21,7 @@
 }
 
 #main-info h2 + p {
-	margin-top: 100px;
+	margin-top: auto;
 
 }
 
@@ -57,3 +57,4 @@
 	border-radius: 5%;
 	height: 100%
 }
+
