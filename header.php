@@ -21,7 +21,6 @@ function drawHeader(string $title, bool $is_admin = false): void
 				<a href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>">Nooble</a>
 			</h1>
 		</div>
-
 		<span class="header-space">
 
 		</span>
@@ -36,7 +35,6 @@ function drawHeader(string $title, bool $is_admin = false): void
 		</div><?php
 	}
 	?>
-
 		<div id="header-user-icon">
 			<img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/user.png"/>
 			<span>
