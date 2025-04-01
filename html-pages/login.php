@@ -20,7 +20,8 @@ require "config.php";
                 <input type="email" id="login-mail"/>
 
                 <label>Password:</label>
-                <input type="password" class="main-button" id="login-password"/>
+              
+                <input type="password" id="login-password"/>
 
                 <input type="submit" class="main-button" id="login-password" value="Sign in"/>
 
