@@ -21,24 +21,40 @@
 */
 
 /* Section Container */
-div.section-container {
-    display: flex;
-    flex-direction: column;
-
-    justify-content: space-evenly;
-
+div.section-container:not(.section-editable) {
     padding: var(--section-container-padding);
+    margin: var(--section-container-margin);
+}
+
+div.section-container {
     border: var(--section-container-border-width) solid var(--section-container-border-color);
     border-radius: var(--section-container-border-radius);
 }
 
-div.section-container.horizontal-section-container {
+div.section-container:not(.section-editable), div.section-container.section-editable > div.container-editable-content {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-evenly;
+}
+
+div.section-container:not(.section-editable).horizontal-section-container, div.section-container.section-editable.horizontal-section-container > div.container-editable-content{
     flex-direction: row;
 }
 
-div.section-container.wrapping-section-container {
+div.section-container:not(.section-editable).wrapping-section-container, div.section-container.section-editable.wrapping-section-container > div.container-editable-content{
     flex-wrap: wrap;
     gap: var(--section-container-wrapping-gap);
+}
+
+div.section-container.section-editable div.edit-container-buttons-actions {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    flex-grow: 0;
+    flex-shrink: 1;
+    align-items: center;
+    flex-direction: row;
 }
 
 /* Raw Text*/
@@ -170,10 +186,15 @@ video.section-video, div.section-video.section-editable video {
     max-height: 50vh;
     height: auto;
     width: auto;
+
+    border-radius: 10px;
 }
 
 div.section-video.section-editable {
     position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 div.section-video.section-editable video {
@@ -192,12 +213,29 @@ div.section-video.section-editable button {
 
 /* Audio */
 
-video.section-audio {
+div.section-audio.section-editable audio {
+    position: relative;
+}
+
+div.section-audio.section-editable audio {
+    position: relative;
+    width: 100%;
+}
+
+div.section-audio.section-editable button {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: #FFF8;
+    border: 0px;
 }
 
 /* Integration */
 iframe.section-integration {
     flex-shrink: 0;   
+    border-radius: 10px;
 }
 
 /*
@@ -217,20 +255,27 @@ div.edit-content-section {
     padding: 5px;
 }
 
-div.section-container:not(.horizontal-section-container) > div.edit-content-section {
+/*
+
+    The use of the direct symbol (">") is justified because one container can contain another one. 
+    The style is here used for direct children. 
+
+*/
+
+div.section-container:not(.horizontal-section-container) > div.container-editable-content > div.edit-content-section {
     flex-direction: row;
 }
 
-div.section-container:not(.horizontal-section-container) > div.edit-content-section:not(:first-child) {
-    border-top: 1px dashed lightgrey;
+div.section-container:not(.horizontal-section-container) > div.container-editable-content > div.edit-content-section:not(:first-child) {
+    border-top: 1px dashed grey;
 }
 
-div.section-container.horizontal-section-container > div.edit-content-section {
+div.section-container.horizontal-section-container > div.container-editable-content > div.edit-content-section {
     flex-direction: column;
 }
 
-div.section-container.horizontal-section-container > div.edit-content-section:not(:first-child) {
-    border-left: 1px dashed lightgrey;
+div.section-container.horizontal-section-container > div.container-editable-content > div.edit-content-section:not(:first-child) {
+    border-left: 1px dashed grey;
 }
 
 div.edit-content-section div.edit-content-buttons-actions {
@@ -240,12 +285,12 @@ div.edit-content-section div.edit-content-buttons-actions {
     padding: 10px;
 }
 
-div.section-container:not(.horizontal-section-container) > div.edit-content-section div.edit-content-buttons-actions {
+div.section-container:not(.horizontal-section-container) > div.container-editable-content > div.edit-content-section > div.edit-content-buttons-actions {
     display: flex;
     flex-direction: column;
 }
 
-div.section-container.horizontal-section-container > div.edit-content-section div.edit-content-buttons-actions {
+div.section-container.horizontal-section-container > div.container-editable-content > div.edit-content-section > div.edit-content-buttons-actions {
     display: flex;
     flex-direction: row;
 }
