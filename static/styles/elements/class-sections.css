@@ -10,8 +10,6 @@
     margin: 0px;
 
     box-sizing: border-box;
-
-/*    border: 1px dashed red; /* only for preview */
 }
 
 /*
@@ -50,7 +48,7 @@ div.section-container:not(.section-editable).wrapping-section-container, div.sec
 div.section-container.section-editable div.edit-container-buttons-actions {
     display: flex;
     justify-content: center;
-    margin: 5px;
+    margin: var(--section-editable-container-buttons-margin);
     flex-grow: 0;
     flex-shrink: 1;
     align-items: center;
@@ -63,12 +61,12 @@ p.section-raw-text {
 
 div.section-raw-text.section-editable {
     outline: none;
-    border: 1px dashed lightgrey;
+    border: var(--section-raw-text-edition-border-size) dashed var(--section-raw-text-edition-border-idle-color);
 }
 
 div.section-raw-text.section-editable:focus {
     outline: none;
-    border: 1px dashed black;
+    border-color: var(--section-raw-text-edition-border-focus-color);
 }
 
 /* Rich Text */
@@ -76,20 +74,21 @@ div.section-rich-text {
 }
 
 div.section-rich-text.section-editable {
-    margin: 2px;
-    border: 1px solid grey;
-    border-radius: 3px;
+    margin: var(--section-rich-text-edition-margin);
+    border: var(--section-rich-text-edition-border-size) solid var(--section-rich-text-edition-border-color);
+    border-radius: var(--section-rich-text-edition-border-radius);
+    overflow: hidden;
 }
 
 div.section-rich-text.section-editable div.rich-text-section-edit-line {
-    padding: 12px;
+    padding: var(--section-rich-text-edition-border-line-padding);
     background: #b6d5b6;
 }
 
 div.section-rich-text.section-editable div.rich-text-section-content {
     outline: none;
-    padding: 5px;
-    border: 5px solid lightgray;
+    padding: var(--section-rich-text-edition-border-inner-padding);
+    border: var(--section-rich-text-edition-border-inner-border) solid var(--section-rich-text-edition-inner-border-color);
 }
 
 /* File */
@@ -99,7 +98,7 @@ div.section-file {
     align-items: center;
 
     border-radius: var(--section-file-border-radius);
-    background: var(--section-file-backgroud);
+    background: var(--section-file-background);
     padding: var(--section-file-padding);
 }
 
@@ -129,7 +128,7 @@ div.section-file .file-button::before {
     position: absolute;
     top: 0px;
     left: 0px;
-    background: #888;
+    background: var(--section-file-background);
     height: 100%;
     width: var(--section-file-line-width);
     border-radius: var(--section-file-line-width);
@@ -170,7 +169,7 @@ div.section-image.section-editable button {
     left: 0px;
     width: 100%;
     height: 100%;
-    background: #FFF8;
+    background: var(--section-image-editable-button-background);
     border: 0px;
 }
 
@@ -187,7 +186,7 @@ video.section-video, div.section-video.section-editable video {
     height: auto;
     width: auto;
 
-    border-radius: 10px;
+    border-radius: var(--section-video-border-radius);
 }
 
 div.section-video.section-editable {
@@ -207,7 +206,7 @@ div.section-video.section-editable button {
     left: 0px;
     width: 100%;
     height: 100%;
-    background: #FFF8;
+    background: var(--section-audio-editable-button-background);
     border: 0px;
 }
 
@@ -228,14 +227,14 @@ div.section-audio.section-editable button {
     left: 0px;
     width: 100%;
     height: 100%;
-    background: #FFF8;
+    background: var(--section-video-editable-button-background);
     border: 0px;
 }
 
 /* Integration */
 iframe.section-integration {
     flex-shrink: 0;   
-    border-radius: 10px;
+    border-radius: var(--section-integration-border-radius);
 }
 
 /*
@@ -244,15 +243,15 @@ iframe.section-integration {
 
 */
 .section.section-editable {
-    min-width: 10px;
-    min-height: 10px;
+    min-width: var(--section-editable-min-size);
+    min-height: var(--section-editable-min-size);
 }
 
 div.edit-content-section {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    padding: 5px;
+    padding: var(--section-edit-padding);
 }
 
 /*
@@ -267,7 +266,7 @@ div.section-container:not(.horizontal-section-container) > div.container-editabl
 }
 
 div.section-container:not(.horizontal-section-container) > div.container-editable-content > div.edit-content-section:not(:first-child) {
-    border-top: 1px dashed grey;
+    border-top: var(--section-editable-separation-width) dashed var(--section-editable-separation-color);
 }
 
 div.section-container.horizontal-section-container > div.container-editable-content > div.edit-content-section {
@@ -275,14 +274,14 @@ div.section-container.horizontal-section-container > div.container-editable-cont
 }
 
 div.section-container.horizontal-section-container > div.container-editable-content > div.edit-content-section:not(:first-child) {
-    border-left: 1px dashed grey;
+    border-left: var(--section-editable-separation-width) dashed var(--section-editable-separation-color);
 }
 
 div.edit-content-section div.edit-content-buttons-actions {
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    padding: 10px;
+    padding: var(--section-editable-buttons-list-padding);
 }
 
 div.section-container:not(.horizontal-section-container) > div.container-editable-content > div.edit-content-section > div.edit-content-buttons-actions {

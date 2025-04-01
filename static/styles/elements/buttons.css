@@ -12,14 +12,14 @@ button.main-button, input[type="submit"].main-button, input[type="file"].main-bu
 }
 
 button.disabled-button {
-    opacity: 0.5;
+    opacity: var(--button-disabled-opacity);
     pointer-events: none;
 }
 
 button.icon-button {
-    height: 30px;
-    min-width: 30px;
-    padding: 7px;
+    height: var(--icon-button-size);
+    min-width: var(--icon-button-size);
+    padding: var(--icon-button-padding);
 }
 
 button.icon-button img {

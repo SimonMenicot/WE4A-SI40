@@ -22,5 +22,16 @@
     --activity-thread-activity-time-color: #888;
 
     --section-container-border-color: #ccc;
-    --section-file-backgroud: #ddd;
+    --section-file-background: #ddd;
+    --section-raw-text-edition-border-idle-color: lightgrey;
+    --section-raw-text-edition-border-focus-color: black;
+    --section-rich-text-edition-border-color: grey;
+    --section-rich-text-edition-inner-border-color: #ececec;
+    --section-editable-separation-color: grey;
+    --section-media-editable-button-background: #fff8;
+    --section-video-editable-button-background: var(--section-media-editable-button-background);
+    --section-image-editable-button-background: var(--section-media-editable-button-background);
+    --section-audio-editable-button-background: var(--section-media-editable-button-background);
+    
+
 }

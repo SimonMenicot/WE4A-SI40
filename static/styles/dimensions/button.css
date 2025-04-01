@@ -3,4 +3,9 @@
     --button-border-weight: 0px;
     --button-border-radius: 5px;
     --button-font-size: medium;
+    --button-disabled-opacity: 0.5;
+
+    --icon-button-size: 40px;
+    --icon-button-padding: 10px;
+
 }

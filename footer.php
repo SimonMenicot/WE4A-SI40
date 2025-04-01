@@ -4,7 +4,6 @@ if (NOOBLE_CONFIG === null) {
 	include "config.php";
 };
 
-//git log --pretty=\"%ci\" -n1 HEAD
 ?>		</main>
 		<footer>
 			Thanks for using Nooble<br>
