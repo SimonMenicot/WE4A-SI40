@@ -2,7 +2,7 @@
 
 require "config.php";
 
-function drawHeader(string $title, bool $is_admin = false): void
+function drawHeader(string $title, bool $is_admin = false, string... $addition_scripts): void
 {
 	?>
 	<!DOCTYPE html>
@@ -12,6 +12,19 @@ function drawHeader(string $title, bool $is_admin = false): void
 	<link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/index.css"/>
 	<link rel="icon" type="image/png" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logo.png">
 	<script src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/index.js"></script>
+	<script>
+const NOOBLE_CONFIG = {
+	"PATH_NAME": <?= json_encode(NOOBLE_CONFIG["SERVER"]["PATH_NAME"], true) ?>
+}
+	</script>
+<?php
+foreach ($addition_scripts as $script)
+{
+?>
+	<script type="module" src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/scripts/<?=$script?>"></script>
+<?php
+}
+?>
 </head>
 <body>
 	<header>
