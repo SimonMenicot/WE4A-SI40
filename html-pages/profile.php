@@ -3,18 +3,7 @@ set_include_path("../");
 require "header.php";
 drawHeader("ça parle de toi là");
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf8"/>
-    <link rel"stylesheet
-    <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/bootstrap.min.css"/>
-    <link rel="icon" type="image/png" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logo.png">
-    <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/colors/bs-colors.css"/>
-    <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/pages/temporary-profile-style.css"/><! -- Temporaire -->
-</head>
-
-<body>
+<link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/bootstrap.min.css"/>
 <div id="top-profile" class="h-20 row text-white bg-primary justify-content-between px-4">
     <div id="main-info" class="col-md-4 mx-auto my-4">
         <h1>Sicolas Berley</h1>
@@ -60,5 +49,6 @@ drawHeader("ça parle de toi là");
     </div>
 </div>
 
-
-</body>
+<?php
+include "footer.php"
+?>

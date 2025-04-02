@@ -5,3 +5,14 @@
 @import url("./colors/index.css");
 @import url("./dimensions/index.css");
 
+#root {
+    flex-grow: 1;
+
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+    justify-content: space-between;
+}
+

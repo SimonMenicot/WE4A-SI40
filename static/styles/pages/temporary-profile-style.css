@@ -1,14 +1,3 @@
-#root {
-    flex-grow: 1;
-
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-
-    overflow-y: auto;
-    justify-content: space-between;
-}
-
 #top-profile {
     height: 40vh;
 }
