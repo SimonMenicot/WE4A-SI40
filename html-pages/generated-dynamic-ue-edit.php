@@ -13,6 +13,9 @@ drawHeader("Welcome, Litzler", false);
                 WE4A - Introduction au design WEB
             </h1>
         </div>
+        <pre id="json-output" style="overflow-x: scroll;">
+
+        </pre>
     </div>
 
     <section id="activity-thread" class="side-thread">
@@ -327,23 +330,28 @@ DIV.querySelector("button").addEventListener("click", () => {
 
 self.mainSection = DEFAULT_SECTION_TYPES_MAP.export(data);
 self.maincontent = document.getElementById("main-class-content");
+let json_output = document.getElementById("json-output");
 
-let html_base = self.maincontent.appendChild(self.mainSection.htmlElement);
-html_base.id="main-class-section"
+let html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json_output);
+html_base.id="main-class-section";
+
+json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 
 self.mainSection.addEventListener("modified", () => {
     let new_html = self.mainSection.htmlElement;
     self.maincontent.replaceChild(new_html, html_base);
     html_base = new_html;
+    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 });
 
-let edit_html_base = self.maincontent.appendChild(self.mainSection.editableHtmlElement);
-edit_html_base.id="main-class-section"
+let edit_html_base = self.maincontent.insertBefore(self.mainSection.editableHtmlElement, json_output);
+edit_html_base.id="main-class-section";
 
 self.mainSection.addEventListener("modified", () => {
     let new_html = self.mainSection.editableHtmlElement;
     self.maincontent.replaceChild(new_html, edit_html_base);
     edit_html_base = new_html;
+    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 });
 
     </script>
