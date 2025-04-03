@@ -94,13 +94,13 @@ let json_output = document.getElementById("json-output");
 
 json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 
-let edit_html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json_output);
-edit_html_base.id="main-class-section";
+let html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json_output);
+html_base.id="main-class-section";
 
 self.mainSection.addEventListener("modified", () => {
     let new_html = self.mainSection.editableHtmlElement;
-    self.maincontent.replaceChild(new_html, edit_html_base);
-    edit_html_base = new_html;
+    self.maincontent.replaceChild(new_html, html_base);
+    html_base = new_html;
     json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 });
     
