@@ -1,18 +1,19 @@
-#top-profile {
-    height: 40vh;
+.container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
-#main-info h2 + p {
-    margin-top: auto;
-
+.custom-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 #profile-pic img {
-    border: 3px solid white; /* Ajustez la couleur et l'épaisseur de la bordure selon vos besoins */
-    border-radius: 30%; /* Rend l'image circulaire */
-    width: 200px; /* Ajustez la taille selon vos besoins */
-    height: 200px; /* Ajustez la taille selon vos besoins */
-    object-fit: cover; /* Assure que l'image s'adapte bien dans le cercle */
+    border: 3px solid white;
+    border-radius: 30%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 }
 
 #profile-pic {
@@ -22,9 +23,10 @@
     height: 100%;
 }
 
-#logos img{
-    height: 50px;
+#logos img {
     padding: 10px;
+    height: 100px;
+    max-width: 100%;
     align-items: center;
 }
 
@@ -37,5 +39,5 @@
     background: #5c636a;
     width: 30%;
     border-radius: 5px;
-    height: 100%
+    height: 100%;
 }
