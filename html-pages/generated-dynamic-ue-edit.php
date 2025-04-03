@@ -227,6 +227,99 @@ DIV.querySelector("button").addEventListener("click", () => {
 })
                     `
                 }
+            },
+            {
+                type: "container",
+                data: {
+                    is_horizontal: true,
+                    is_wrapping: false,
+                    children: [
+                        {
+                            type: "integration",
+                            data: {
+                                width: 560,
+                                height: 315,
+                                src: "https://www.youtube.com/embed/lJIrF4YjHfQ?si=bNKfRgR0zomAqao8",
+                                permissions: [
+                                    'accelerometer',
+                                    'autoplay',
+                                    'clipboard-write',
+                                    'encrypted-media',
+                                    'gyroscope',
+                                    'picture-in-picture',
+                                    'web-share',
+                                    'fullscreen'
+                                ]
+                            }
+                        },
+                        {
+                            type: "raw-text",
+                            data: "Qu'est-ce que le Lorem Ipsum ?\nLe Lorem Ipsum est simplement un faux texte utilisé dans l'industrie de l'impression et du traitement de texte. Depuis les années 1500, il est considéré comme le texte fictif standard, lorsque quelqu'un a pris une galère de caractères pour la mélanger et créer un livre d'exemple typographique. Il est parvenu à survivre non seulement cinq siècles, mais aussi l'entrée dans le traitement électronique du texte, sans être essentiellement modifié. Sa popularité a été renforcée dans les années 1960 avec la sortie des feuilles Letraset contenant des passages de Lorem Ipsum, et plus récemment grâce aux logiciels de publication assistée par ordinateur comme Aldus PageMaker qui incluent des versions de Lorem Ipsum.\nLe morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reproduit ci-dessous pour ceux que cela intéresse. Les sections 1.10.32 et 1.10.33 de \"De Finibus Bonorum et Malorum\" par Cicéron y sont également reproduites dans leur forme originale exacte, accompagnées des versions anglaises traduites en 1914 par H. Rackham."
+                        },
+                    ]
+                }
+            },
+            {
+                type: "container",
+                data: {
+                    is_horizontal: true,
+                    is_wrapping: false,
+                    children: [
+                        {
+                            type: "video",
+                            data: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                        },
+                        {
+                            type: "container",
+                            data: {
+                                is_horizontal:  false,
+                                is_wrapping: false,
+                                children: [
+                                    {
+                                        type: "raw-text",
+                                        data: "Qu'est-ce que le Lorem Ipsum ?\nLe Lorem Ipsum est simplement un faux texte utilisé dans l'industrie de l'impression et du traitement de texte. Depuis les années 1500, il est considéré comme le texte fictif standard, lorsque quelqu'un a pris une galère de caractères pour la mélanger et créer un livre d'exemple typographique. Il est parvenu à survivre non seulement cinq siècles, mais aussi l'entrée dans le traitement électronique du texte, sans être essentiellement modifié. Sa popularité a été renforcée dans les années 1960 avec la sortie des feuilles Letraset contenant des passages de Lorem Ipsum, et plus récemment grâce aux logiciels de publication assistée par ordinateur comme Aldus PageMaker qui incluent des versions de Lorem Ipsum.\nLe morceau standard de Lorem Ipsum utilisé depuis les années 1500 est reproduit ci-dessous pour ceux que cela intéresse. Les sections 1.10.32 et 1.10.33 de \"De Finibus Bonorum et Malorum\" par Cicéron y sont également reproduites dans leur forme originale exacte, accompagnées des versions anglaises traduites en 1914 par H. Rackham."
+                                    },
+                                    {
+                                        type: "audio",
+                                        data: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                                    },
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                type: 'container',
+                data: {
+                    is_horizontal: false,
+                    is_wrapping: false,
+                    children: [
+                        {
+                            type: 'raw-text',
+                            data: "J'en profite pour glisser mon album"
+                        },
+                        {
+                            type: 'integration',
+                            data: {
+                                width: 'auto',
+                                height: 352,
+                                permissions: [
+                                    'autoplay',
+                                    'clipboard-write',
+                                    'encrypted-media',
+                                    'fullscreen',
+                                    'picture-in-picture'
+                                ],
+                                src: "https://open.spotify.com/embed/album/2UjSSrKiHFeFFb2WNMEv7X?utm_source=generator&theme=0"
+                            }
+                        },
+                        {
+                            type: 'raw-text',
+                            data: "Écoutez c'est cool",
+                        },
+                    ]
+                }
             }
         ]
     }
