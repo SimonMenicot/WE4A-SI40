@@ -325,10 +325,26 @@ DIV.querySelector("button").addEventListener("click", () => {
     }
 }
 
-let mainSection = DEFAULT_SECTION_TYPES_MAP.export(data);
-let maincontent = document.getElementById("main-class-content");
-maincontent.appendChild(mainSection.htmlElement).id="main-class-section";
-maincontent.appendChild(mainSection.editableHtmlElement).id="main-class-section";
+self.mainSection = DEFAULT_SECTION_TYPES_MAP.export(data);
+self.maincontent = document.getElementById("main-class-content");
+
+let html_base = self.maincontent.appendChild(self.mainSection.htmlElement);
+html_base.id="main-class-section"
+
+self.mainSection.addEventListener("modified", () => {
+    let new_html = self.mainSection.htmlElement;
+    self.maincontent.replaceChild(new_html, html_base);
+    html_base = new_html;
+});
+
+let edit_html_base = self.maincontent.appendChild(self.mainSection.editableHtmlElement);
+edit_html_base.id="main-class-section"
+
+self.mainSection.addEventListener("modified", () => {
+    let new_html = self.mainSection.editableHtmlElement;
+    self.maincontent.replaceChild(new_html, edit_html_base);
+    edit_html_base = new_html;
+});
 
     </script>
 </div>

@@ -5,6 +5,17 @@ export class ContainerSection extends Section
     constructor(data)
     {
         super("container", data);
+
+        for (let child of this.children)
+        {
+            child.addEventListener("modified", (event) => {
+                this.notifyEvents("modified", {
+                    reason: 'child-modification',
+                    child: child,
+                    event: event
+                })
+            });
+        }
     }
 
     get is_horizontal()
@@ -27,6 +38,12 @@ export class ContainerSection extends Section
         let data = this.data;
         data.is_horizontal = enabled;
         this.data = data;
+
+        this.notifyEvents("modified", {
+            reason: 'inner-modification',
+            modification: 'direction',
+            horizontal: enabled
+        });
     }
 
     set is_wrapping(enabled)
@@ -34,16 +51,61 @@ export class ContainerSection extends Section
         let data = this.data;
         data.is_wrapping = enabled;
         this.data = data;
+
+        this.notifyEvents("modified", {
+            reason: 'inner-modification',
+            modification: 'wrapping',
+            wraps: enabled
+        });
     }
 
     addChild(child)
     {
-        this._children.push(child);
+        this.data.children.push(child);
+
+        this.notifyEvents("modified", {
+            reason: 'children-addition',
+            new_child: child
+        });
     }
 
     removeChild(index)
     {
-        this._children.splice(index, 1);
+        let child = this.data.children.splice(index, 1)[0];
+
+        this.notifyEvents("modified", {
+            reason: 'children-removal',
+            child_index: index,
+            child: child
+        });
+    }
+
+    moveChildToPrevious(index)
+    {
+        let child = this.children[index-1];
+
+        this.children[index - 1] = this.children[index];
+        this.children[index] = child;
+
+        this.notifyEvents("modified", {
+            reason: 'children-move',
+            child_index: index,
+            child: child
+        });
+    }
+
+    moveChildToNext(index)
+    {
+        let child = this.children[index];
+
+        this.children[index] = this.children[index + 1];
+        this.children[index + 1] = child;
+
+        this.notifyEvents("modified", {
+            reason: 'children-move',
+            child_index: index,
+            child: child
+        });
     }
 
     render()
@@ -87,6 +149,9 @@ export class ContainerSection extends Section
 
         let direction_button = start_edit_buttons_actions.appendChild(document.createElement("button"));
         direction_button.classList.add("edit-content-action", "icon-button");
+        direction_button.addEventListener("click", () => {
+            this.is_horizontal = !this.is_horizontal;
+        });
 
         let direction_button_image = direction_button.appendChild(document.createElement("img"));
 
@@ -101,6 +166,9 @@ export class ContainerSection extends Section
 
         let wrap_button = start_edit_buttons_actions.appendChild(document.createElement("button"));
         wrap_button.classList.add("edit-content-action", "icon-button");
+        wrap_button.addEventListener("click", () => {
+            this.is_wrapping = !this.is_wrapping;
+        });
 
         let wrap_button_image = wrap_button.appendChild(document.createElement("img"));
 
@@ -120,6 +188,8 @@ export class ContainerSection extends Section
         
         for (let child of this.children)
         {
+            let local_child_index = child_index; // Remember the child index for further operation
+
             let innerdiv = editable_div.appendChild(document.createElement("div"));
             innerdiv.classList.add("edit-content-section");
 
@@ -128,12 +198,18 @@ export class ContainerSection extends Section
 
             let remove_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             remove_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
+            remove_button.addEventListener("click", () => {
+                this.removeChild(local_child_index);
+            })
     
             let remove_button_image = remove_button.appendChild(document.createElement("img"));
             remove_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/close.png";
         
             let move_previous_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_previous_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
+            move_previous_button.addEventListener("click", () => {
+                this.moveChildToPrevious(local_child_index);
+            })
     
             let move_previous_button_image = move_previous_button.appendChild(document.createElement("img"));
 
@@ -144,6 +220,9 @@ export class ContainerSection extends Section
         
             let move_next_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_next_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
+            move_next_button.addEventListener("click", () => {
+                this.moveChildToNext(local_child_index);
+            })
     
             let move_next_button_image = move_next_button.appendChild(document.createElement("img"));
 
@@ -184,7 +263,7 @@ export class ContainerSection extends Section
         return {
             is_horizontal: this.is_horizontal,
             is_wrapping: this.is_wrapping,
-            children: this.children.map((child) => child.exportToJsonData())
+            children: this.children.map((child) => child.json_data)
         };
     }
 

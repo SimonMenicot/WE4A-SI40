@@ -27,6 +27,7 @@ div.section-container:not(.section-editable) {
 div.section-container {
     border: var(--section-container-border-width) solid var(--section-container-border-color);
     border-radius: var(--section-container-border-radius);
+    gap: var(--section-container-wrapping-gap);
 }
 
 div.section-container:not(.section-editable), div.section-container.section-editable > div.container-editable-content {
@@ -42,7 +43,6 @@ div.section-container:not(.section-editable).horizontal-section-container, div.s
 
 div.section-container:not(.section-editable).wrapping-section-container, div.section-container.section-editable.wrapping-section-container > div.container-editable-content{
     flex-wrap: wrap;
-    gap: var(--section-container-wrapping-gap);
 }
 
 div.section-container.section-editable div.edit-container-buttons-actions {
