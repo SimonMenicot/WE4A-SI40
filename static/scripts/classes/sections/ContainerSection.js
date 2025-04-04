@@ -13,7 +13,7 @@ export class ContainerSection extends Section
                     reason: 'child-modification',
                     child: child,
                     event: event
-                })
+                }, event.requires_reload)
             });
         }
     }
@@ -43,7 +43,7 @@ export class ContainerSection extends Section
             reason: 'inner-modification',
             modification: 'direction',
             horizontal: enabled
-        });
+        }, true);
     }
 
     set is_wrapping(enabled)
@@ -56,7 +56,7 @@ export class ContainerSection extends Section
             reason: 'inner-modification',
             modification: 'wrapping',
             wraps: enabled
-        });
+        }, true);
     }
 
     addChild(child)
@@ -66,7 +66,7 @@ export class ContainerSection extends Section
         this.notifyEvents("modified", {
             reason: 'children-addition',
             new_child: child
-        });
+        }, true);
     }
 
     removeChild(index)
@@ -77,7 +77,7 @@ export class ContainerSection extends Section
             reason: 'children-removal',
             child_index: index,
             child: child
-        });
+        }, true);
     }
 
     moveChildToPrevious(index)
@@ -91,7 +91,7 @@ export class ContainerSection extends Section
             reason: 'children-move',
             child_index: index,
             child: child
-        });
+        }, true);
     }
 
     moveChildToNext(index)
@@ -105,7 +105,7 @@ export class ContainerSection extends Section
             reason: 'children-move',
             child_index: index,
             child: child
-        });
+        }, true);
     }
 
     render()

@@ -30,11 +30,16 @@ export class Section
         this._data = value;
     }
 
-    notifyEvents(name, ...args)
+    notifyEvents(name, args, requires_reload = false)
     {
-        let event = new CustomEvent(name, {
-            ...args
-        });
+        let event = new CustomEvent(name, 
+            {
+                detail : {
+                    data: args,
+                    requires_reload: requires_reload
+                }
+            }
+        );
 
         for (let func of this._events[name])
         {

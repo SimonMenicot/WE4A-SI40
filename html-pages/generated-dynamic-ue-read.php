@@ -38,10 +38,14 @@ let html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json
 html_base.id="main-class-section";
 
 self.mainSection.addEventListener("modified", () => {
-    let new_html = self.mainSection.editableHtmlElement;
-    self.maincontent.replaceChild(new_html, html_base);
-    html_base = new_html;
-    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
+    if (event.detail.requires_reload)
+    {
+        let new_html = self.mainSection.editableHtmlElement;
+        self.maincontent.replaceChild(new_html, html_base);
+        html_base = new_html;
+        json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
+    }
+    console.log(event);
 });
     
 })()
