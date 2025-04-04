@@ -1,11 +1,26 @@
-.container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+#top-profile {
+    display: flex;
+    background-color: #10a83e; /* bg-primary */
 }
 
-.custom-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+.profile-row {
+    display: flex;
+    width: 100%;
+}
+
+.profile-infos {
+    flex: 8;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-coord {
+    display: flex;
+    flex-direction: column;
+}
+
+#description, #coordonnees {
+    flex: 1;
 }
 
 #profile-pic img {
@@ -16,13 +31,6 @@
     object-fit: cover;
 }
 
-#profile-pic {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
 #logos img {
     padding: 10px;
     height: 100px;
@@ -31,13 +39,18 @@
 }
 
 #rest-info {
-    flex-grow: 1;
     display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.profile-col-4 {
+    flex: 1;
+    margin: 1rem auto;
 }
 
 #right-menu {
     background: #5c636a;
-    width: 30%;
     border-radius: 5px;
     height: 100%;
 }
