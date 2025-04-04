@@ -3,60 +3,79 @@ set_include_path("../");
 require "header.php";
 drawHeader("ça parle de toi là");
 ?>
-    <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/bootstrap.min.css"/>
-    <link rel="stylesheet" href="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/styles/pages/temporary-profile-style.css"/>
-
-    <div id="top-profile" class="bg-primary">
-        <div class="row">
-            <div class="col-8">
-                <div class="row">
-                    <div id="description" class="col-6">
-                        <h1>Sicolas Berley</h1>
-                        <h2>Etudiant</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                    </div>
-                    <div id="coordonnees" class="col-6">
-                        <h2>Adresse de courriel</h2>
-                        <h3>jean.paul@gmiel.com</h3>
-                        <h2>Dernière connexion</h2>
-                        <h3>26/03/2025 17h30, Belfort</h3>
-                        <h2>Fuseau horaire</h2>
-                        <h3>UTC+1</h3>
-                    </div>
-                </div>
-                <div id="logos">
-                    <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/LinkedIn_icon.svg.png" alt="Logo 1" /></a>
-                    <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/Microsoft-Teams-Logo.png" alt="Logo 2" /></a>
-                    <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf"><img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/outlook.svg.png" alt="Logo 3" /></a>
-                </div>
+<div id="main-profile-page" class="top-banner">
+    <div class="profile-identity">
+        <div class="profile-infos">
+            <div class="profile-description">
+                <h1>Sicolas Berley</h1>
+                <h2>Etudiant</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
             </div>
-            <div id="profile-pic" class="col-4">
-                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.jpg" alt="Profile Picture" class="img-fluid" style="max-height: 100%;"/>
-            </div>
+            <ul class="profile-coordinates">
+                <li>
+                    <h2>Adresse de courriel</h2>
+                    <p>jean.paul@gmiel.com</p>
+                </li>
+                <li>
+                    <h2>Dernière connexion</h2>
+                    <p>26/03/2025 17h30, Belfort</p>
+                </li>
+                <li>
+                    <h2>Fuseau horaire</h2>
+                    <p>UTC+1</p>
+                </li>
+            </ul>
+        </div>
+        <div class="profile-logos">
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logos/LinkedIn_icon.svg.png" alt="LinkedIn logo"/>
+                <span>Sicolas Berley</span>
+            </a>
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logos/Microsoft-Teams-Logo.png" alt="Microsoft Teams logo"/>
+                <span>Berley Sicolas</span>
+            </a>
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/logos/outlook.svg.png" alt="Outlook logo"/>
+                <span>sicolas.berley@platform.com</span>
+            </a>
         </div>
     </div>
+    <img class="profile-thumbnail" src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/profile-pic.jpg" alt="Profile Picture"/>
+</div>
 
-    <div id="rest-info" class="row justify-content-between px-4">
-        <div id="UE" class="col-4 mx-auto my-4">
+<div id="profilepage-main-separation" class="content-separator">
+    <div id="profile-listing">
+        <div class="profile-list">
             <h2>UE Suivies</h2>
-            <p>WE4A : Introduction to Web Design</p>
-            <p>WE4A : Introduction to Web Design</p>
-            <p>WE4A : Introduction to Web Design</p>
+            <ul>
+                <li>WE4A : Introduction to Web Design</li>
+                <li>WE4A : Introduction to Web Design</li>
+                <li>WE4A : Introduction to Web Design</li>
+            </ul>
         </div>
-        <div id="jsp" class="col-4 mx-auto my-4">
+        <div class="profile-list">
             <h2>JSP</h2>
-            <p>info intéressante 1</p>
-            <p>info intéressante 2</p>
-            <p>info intéressante 3</p>
+            <ul>
+                <li>info intéressante 1</li>
+                <li>info intéressante 2</li>
+                <li>info intéressante 3</li>
+            </ul>
         </div>
-        <div id="right-menu" class="col-4 mx-auto my-4">
+        <div class="profile-options">
             <h2>Menu</h2>
-            <p>info intéressante 1</p>
-            <p>info intéressante 2</p>
-            <p>info intéressante 3</p>
-            <p>info intéressante 4</p>
+            <ul>
+                <li>Paramètres du profile...</li>
+                <li>Accessibilité...</li>
+                <li>Modifier le profile...</li>
+                <li>J'aime le riz. Et vous?</li>
+            </ul>
         </div>
     </div>
+
+    <?php include "activity-thread.php" ?>
+
+</div>
 
 <?php
 include "footer.php"
