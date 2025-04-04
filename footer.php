@@ -7,15 +7,15 @@ if (NOOBLE_CONFIG === null) {
 ?>		</main>
 		<footer>
 			Thanks for using Nooble<br>
-			<?php 
-$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].NOOBLE_CONFIG["SERVER"]["PATH_NAME"]."/.git/FETCH_HEAD");
+            <?php
+            //$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].NOOBLE_CONFIG["SERVER"]["PATH_NAME"]."/.git/FETCH_HEAD");
 
-if ($content === false) return;
+            //if ($content === false) return;
 
-$lines = preg_split("/\n/", $content);
+            //$lines = preg_split("/\n/", $content);
 
-echo $lines[0];
-?>
+            //echo $lines[0];
+            ?>
 		</footer>
 	</div>
 </body>
