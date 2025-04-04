@@ -1,9 +1,12 @@
 import { ActivitySectionExporter } from "./section_exporters.js/ActivitySectionExporter.js";
+import { AudioSectionExporter } from "./section_exporters.js/AudioSectionExporter.js";
 import { ContainerSectionExporter } from "./section_exporters.js/ContainerSectionExporter.js";
 import { FileSectionExporter } from "./section_exporters.js/FileSectionExporter.js";
 import { ImageSectionExporter } from "./section_exporters.js/ImageSectionExporter.js";
+import { IntegrationSectionExporter } from "./section_exporters.js/IntegrationSectionExporter.js";
 import { RawTextSectionExporter } from "./section_exporters.js/RawTextSectionExporter.js";
 import { RichTextSectionExporter } from "./section_exporters.js/RichTextSectionExporter.js";
+import { VideoSectionExporter } from "./section_exporters.js/VideoSectionExporter.js";
 
 class SectionTypesMap
 {
@@ -41,4 +44,6 @@ DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new RichTextSectionExporter());
 DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new FileSectionExporter());
 DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ImageSectionExporter());
 DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ActivitySectionExporter());
-
+DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new IntegrationSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new VideoSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new AudioSectionExporter());

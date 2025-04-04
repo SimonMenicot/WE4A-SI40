@@ -94,7 +94,7 @@ let json_output = document.getElementById("json-output");
 
 json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 
-let html_base = self.maincontent.insertBefore(self.mainSection.editableHtmlElement, json_output);
+let html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json_output);
 html_base.id="main-class-section";
 
 self.mainSection.addEventListener("modified", () => {
@@ -103,7 +103,7 @@ self.mainSection.addEventListener("modified", () => {
     html_base = new_html;
     json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
 });
-
+    
 })()
 
     </script>

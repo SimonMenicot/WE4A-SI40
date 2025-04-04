@@ -146,7 +146,7 @@ drawHeader("Welcome, Student");
                 <p class="section section-raw-text">
                     J'en profite pour glisse mon album
                 </p>
-                <iframe src="https://open.spotify.com/embed/album/2UjSSrKiHFeFFb2WNMEv7X?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe class="section section-editable section-integration" src="https://open.spotify.com/embed/album/2UjSSrKiHFeFFb2WNMEv7X?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p class="section section-raw-text">
                     Écoutez c'est cool
                 </p>

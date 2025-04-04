@@ -4,6 +4,15 @@ export class Section
     {
         this._type = type;
         this._data = data;
+
+        this._events = {
+            modified: []
+        }
+    }
+
+    addEventListener(name, func)
+    {
+        this._events[name].push(func);
     }
 
     get type()
@@ -19,6 +28,18 @@ export class Section
     set data(value)
     {
         this._data = value;
+    }
+
+    notifyEvents(name, ...args)
+    {
+        let event = new CustomEvent(name, {
+            ...args
+        });
+
+        for (let func of this._events[name])
+        {
+            (async () => func(event))();
+        }
     }
 
     render() // this function must return the raw generated element
