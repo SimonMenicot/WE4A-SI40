@@ -43,8 +43,8 @@ self.mainSection.addEventListener("modified", () => {
         let new_html = self.mainSection.editableHtmlElement;
         self.maincontent.replaceChild(new_html, html_base);
         html_base = new_html;
-        json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
     }
+    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
     console.log(event);
 });
     

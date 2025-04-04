@@ -13,7 +13,7 @@ export class ContainerSection extends Section
                     reason: 'child-modification',
                     child: child,
                     event: event
-                }, event.requires_reload)
+                }, event.detail.requires_reload)
             });
         }
     }
