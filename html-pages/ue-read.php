@@ -46,7 +46,7 @@ drawHeader("Welcome, Student");
 
             <div class="section section-container horizontal-section-container wrapping-section-container">
                 <div class="section section-file">
-                    <p class="file-description">TD1 : Sûrement pas sur Symfony mdr, débrouillez vous</p>
+                    <p class="file-description">TD1 : Validation/Remise à Niveau PHP/HTML/CSS Fichier</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
                         <span class="file-extension">TD1.zip</span>
@@ -54,7 +54,7 @@ drawHeader("Welcome, Student");
                 </div>
 
                 <div class="section section-file">
-                    <p class="file-description">TD2 : Tiens, et si on faisait du PHP?</p>
+                    <p class="file-description">TD2 : PHP objet, Javascript</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD2.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
                         <span class="file-extension">TD2.zip</span>
@@ -62,7 +62,7 @@ drawHeader("Welcome, Student");
                 </div>
 
                 <div class="section section-file">
-                    <p class="file-description">TD3 : Symfony? Noooon, AJAX bien sûr!</p>
+                    <p class="file-description">TD3 : Version finale du site "sans javascript"</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD3.zip" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
                         <span class="file-extension">TD3.zip</span>
@@ -70,7 +70,7 @@ drawHeader("Welcome, Student");
                 </div>
 
                 <div class="section section-file">
-                    <p class="file-description">Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. </p>
+                    <p class="file-description">Le cahier des charges : Le but du projet est de créer une version simplifiée de Moodle, et le cahier des charges vous aidera à mieux situer ce que nous voulons dire par là. Vous devez utiliser Symfony pour pouvoir avoir une note supérieure à 15/20.</p>
                     <a class="file-button" href="https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/WE4A - Moodle Simplifié (devoir retiré).pdf" target="_blank">
                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/download.png">
                         <span class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</span>

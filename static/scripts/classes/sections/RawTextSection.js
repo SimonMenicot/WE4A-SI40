@@ -15,6 +15,10 @@ export class RawTextSection extends Section
     set text(value)
     {
         this.data = value;
+
+        this.notifyEvents("modified", {
+            new_text: value
+        }, false);
     }
 
     render()
@@ -30,6 +34,14 @@ export class RawTextSection extends Section
 
         div.contentEditable = true;
         div.innerText = this.text;
+
+        div.addEventListener("input", () => {
+            let text = div.innerText;
+
+            if (text.endsWith("\n")) text = text.substring(0, text.length - 1)
+            
+            this.text = text;
+        });
 
         return div;
     }
