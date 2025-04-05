@@ -30,3 +30,8 @@ div#classpage-main-separation div#main-class-content div.class-title-content a.c
     box-sizing: border-box;
     padding: var(--classpage-backlink-padding);
 }
+
+.class-preview-link {
+    text-decoration: none; /* Enlever le soulignement */
+    color: inherit; /* Garder la couleur du texte */
+}
