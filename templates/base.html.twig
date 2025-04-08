@@ -16,7 +16,29 @@
         <header>
             <div id="header-logo">
                 <img src="{{ asset("images/logo.png") }}" class="logo-medium">
-                <h1><a href="/">Nooble</a></h1>
+                <h1>
+                    <a href="/">Nooble</a>
+                </h1>
+            </div>
+            <span class="header-space">
+
+            </span>
+
+            {% if base_config.displayAdminCheckboxInHeader %}
+
+            <div id="header-admin-prof-switch">
+                <span>Administrateur</span>
+                <input type="checkbox">
+                <span class="checkbox-style"></span>
+            </div>
+
+            {% endif %}
+
+            <div id="header-user-icon">
+                <img src="{{ asset("images/profile-pic.jpg") }}"/>
+                <span>
+                    Nuck Chorris
+                </span>
             </div>
         </header>
         <div id="root">

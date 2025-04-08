@@ -7,6 +7,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DefaultPageController extends AbstractController
 {
+    #[Route('/', 'home')]
+    public function render_home_base(): Response
+    {
+        return $this->redirectToRoute("login-page");
+    }
+    
+    #[Route('/ue-select', 'select ue')]
+    public function render_ue_select(): Response
+    {
+        $base_class1 = [
+            "title" => "WE4A",
+            "description" => "Introduction au design Web"
+        ];
+
+        $base_class2 = [
+            "title" => "WE4B",
+            "description" => "Angular Tah les fous"
+        ];
+
+        $classes = [];
+
+        for ($i=0; $i < 8; ++$i)
+        {
+            $classes[] = $base_class1;
+            $classes[] = $base_class2;
+        }
+
+        return $this->render('pages/ue-select.html.twig', [
+            "base_config" => [
+                "displayAdminCheckboxInHeader" => false
+            ],
+            "classes" => $classes
+        ]);
+    }
+    
     #[Route('/login', "login-page")]
     public function render_login(): Response
     {
@@ -14,10 +49,5 @@ class DefaultPageController extends AbstractController
         ]);
     }
 
-    #[Route('/')]
-    public function render_home_base(): Response
-    {
-        return $this->redirectToRoute("login-page");
-    }
 }
 
