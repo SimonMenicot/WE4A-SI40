@@ -1,0 +1,31 @@
+<?php
+set_include_path("../");
+require "header.php";
+drawHeader("Welcome, Student");
+?>
+<div id="homepage-main-separation" class="content-separator">
+    <div id="homepage-content" class="main-page-content">
+        <h1>Bonjour, Nimen Laden!</h1>
+        <div id="classes" class="classes-list"><?php
+
+        for ($i=0; $i < 16; ++$i)
+        {?>
+            <a href="ue-read.php" class="class-preview-link">
+                <div class="class-preview">
+                    <h1>WE4A</h1>
+                    <p>Introduction au design WEB</p>
+                </div>
+            </a>
+        <?php
+        }
+        ?>
+        </div>
+    </div>
+
+    <?php include "activity-thread.php" ?>
+
+</div>
+
+<?php
+	require "footer.php";
+?>
