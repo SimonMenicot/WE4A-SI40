@@ -10,10 +10,12 @@ drawHeader("Welcome, Student");
 
         for ($i=0; $i < 16; ++$i)
         {?>
-            <div class="class-preview">
-                <h1>WE4A</h1>
-                <p>Introduction au design WEB</p>
-            </div>
+            <a href="ue-read.php" class="class-preview-link">
+                <div class="class-preview">
+                    <h1>WE4A</h1>
+                    <p>Introduction au design WEB</p>
+                </div>
+            </a>
         <?php
         }
         ?>

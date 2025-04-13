@@ -54,7 +54,7 @@ $data = [
                         [
                             'type' => "file",
                             'data' => [
-                                'description' => "TD1 : Sûrement pas sur Symfony mdr, débrouillez vous",
+                                'description' => "TD1 : Validation/Remise à Niveau PHP/HTML/CSS Fichier",
                                 'filename' => "TD1.zip",
                                 'src' => "https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip"
                             ]
@@ -62,7 +62,7 @@ $data = [
                         [
                             'type' => "file",
                             'data' => [
-                                'description' => "TD2 : Tiens, et si on faisait du PHP?",
+                                'description' => "TD2 : PHP objet, Javascript",
                                 'filename' => "TD2.zip",
                                 'src' => "https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip"
                             ]
@@ -70,7 +70,7 @@ $data = [
                         [
                             'type' => "file",
                             'data' => [
-                                'description' => "TD3 : Symfony? Noooon, AJAX bien sûr!",
+                                'description' => "TD3 : Version finale du site \"sans javascript\"",
                                 'filename' => "TD3.zip",
                                 'src' => "https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/TD1.zip"
                             ]
@@ -78,7 +78,7 @@ $data = [
                         [
                             'type' => "file",
                             'data' => [
-                                'description' => "Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. ",
+                                'description' => "Le cahier des charges : Le but du projet est de créer une version simplifiée de Moodle, et le cahier des charges vous aidera à mieux situer ce que nous voulons dire par là. Vous devez utiliser Symfony pour pouvoir avoir une note supérieure à 15/20.",
                                 'filename' => "WE4A - Moodle Simplifié (devoir retiré).pdf",
                                 'src' => "https://tests-and-previews.flopcreation.fr/downloads/UTBM - Nooble/WE4A - Moodle Simplifié (devoir retiré).pdf"
                             ]

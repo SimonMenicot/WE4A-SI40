@@ -196,7 +196,7 @@ drawHeader("Welcome, Litzler");
                                 </div>
                                 
                                 <div class="section section-file section-editable">
-                                    <input type="text" class="file-description" value="TD1 : Sûrement pas sur Symfony mdr, débrouillez vous"/>
+                                    <input type="text" class="file-description" value="TD1 : Validation/Remise à Niveau PHP/HTML/CSS"/>
                                     <button class="file-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                         <span class="file-extension">TD1.zip</text>
@@ -218,7 +218,7 @@ drawHeader("Welcome, Litzler");
                                 </div>
                                 
                                 <div class="section section-file section-editable">
-                                    <input class="file-description" type="text" value="TD2 : Tiens, et si on faisait du PHP?"/>
+                                    <input class="file-description" type="text" value="TD2 : PHP objet, Javascript"/>
                                     <button class="file-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                         <span class="file-extension">TD2.zip</text>
@@ -240,7 +240,7 @@ drawHeader("Welcome, Litzler");
                                 </div>
                                 
                                 <div class="section section-file section-editable">
-                                    <input type="text" class="file-description" value="TD3 : Symfony? Noooon, AJAX bien sûr!"/>
+                                    <input type="text" class="file-description" value="TD3 : version finale du site sans Symfony"/>
                                     <button class="file-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                         <span class="file-extension">TD3.zip</text>
@@ -262,7 +262,7 @@ drawHeader("Welcome, Litzler");
                                 </div>
                                 
                                 <div class="section section-file section-editable">
-                                    <input type="text" class="file-description" value="Le cahier des charges : ce que vous allez devoir faire en 2 semaines, en même temps que les autres projets, que vos clubs, que votre vie en général en fait. Ou pas. "/>
+                                    <input type="text" class="file-description" value="Le cahier des charges : Le but du projet est de créer une version simplifiée de Moodle, et le cahier des charges vous aidera à mieux situer ce que nous voulons dire par là. Vous devez utiliser Symfony pour pouvoir avoir une note supérieure à 15/20."/>
                                     <button class="file-button">
                                         <img src="<?= NOOBLE_CONFIG["SERVER"]["PATH_NAME"] ?>/static/images/icons/upload.png">
                                         <span class="file-extension">WE4A - Moodle Simplifié (devoir retiré).pdf</text>
