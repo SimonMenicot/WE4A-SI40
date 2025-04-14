@@ -49,5 +49,12 @@ class DefaultPageController extends AbstractController
         ]);
     }
 
+    #[Route('/profile', "profile-page")]
+    public function render_profile(): Response
+    {
+        return $this->render('pages/profile.html.twig', [
+        ]);
+    }
+
 }
 
