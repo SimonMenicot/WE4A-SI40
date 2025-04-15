@@ -53,6 +53,9 @@ class DefaultPageController extends AbstractController
     public function render_profile(): Response
     {
         return $this->render('pages/profile.html.twig', [
+            "base_config" => [
+                "displayAdminCheckboxInHeader" => false
+            ]
         ]);
     }
 
