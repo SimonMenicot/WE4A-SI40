@@ -59,5 +59,15 @@ class DefaultPageController extends AbstractController
         ]);
     }
 
+    #[Route('/ue-edit', "ue-edit")]
+    public function render_ue_edit(): Response
+    {
+        return $this->render('pages/ue-edit.html.twig', [
+            "base_config" => [
+                "displayAdminCheckboxInHeader" => false
+            ]
+        ]);
+    }
+
 }
 
