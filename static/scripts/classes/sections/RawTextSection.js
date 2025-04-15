@@ -16,9 +16,7 @@ export class RawTextSection extends Section
     {
         this.data = value;
 
-        this.notifyEvents("modified", {
-            new_text: value
-        }, false);
+        this.notifyEvents("modified", {newText : value})
     }
 
     render()
@@ -39,7 +37,7 @@ export class RawTextSection extends Section
             let text = div.innerText;
 
             if (text.endsWith("\n")) text = text.substring(0, text.length - 1)
-            
+
             this.text = text;
         });
 

@@ -15,12 +15,12 @@ class SectionTypesMap
         this._defined_types = {}
     }
 
-    addTypeExporter(type_exporter)
+    addSectionExporter(type_exporter)
     {
         this._defined_types[type_exporter.type] = type_exporter;
     }
 
-    getTypeExporterByType(typename)
+    getSectionExporterByType(typename)
     {
         return this._defined_types[typename];
     }
@@ -32,18 +32,18 @@ class SectionTypesMap
 
     export(data)
     {
-        return this.getTypeExporterByType(data.type).exportDataToSection(data.data, this)
+        return this.getSectionExporterByType(data.type).exportDataToSection(data.data, this)
     }
 }
 
 export const DEFAULT_SECTION_TYPES_MAP = new SectionTypesMap();
 
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ContainerSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new RawTextSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new RichTextSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new FileSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ImageSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ActivitySectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new IntegrationSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new VideoSectionExporter());
-DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new AudioSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new ContainerSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new RawTextSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new RichTextSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new FileSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new ImageSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new ActivitySectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new IntegrationSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new VideoSectionExporter());
+DEFAULT_SECTION_TYPES_MAP.addSectionExporter(new AudioSectionExporter());

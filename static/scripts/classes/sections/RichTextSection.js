@@ -29,15 +29,37 @@ export class RichTextSection extends Section
         let div = document.createElement("div");
 
         let edit_line_div = div.appendChild(document.createElement("div"));
+        let edit_div = div.appendChild(document.createElement("div"));
+
         edit_line_div.classList.add("rich-text-section-edit-line")
-        for (let icon_name of ["bold", "italic", "underlined", "preformat", "list", "enumeration", "link"])
-        {
+
+        let add_button = (name, func) => {
             let action_button = edit_line_div.appendChild(document.createElement("button"));
             action_button.classList.add("icon-button");
-            action_button.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/" + icon_name + ".png";
+            action_button.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/" + name + ".png";
+
+            action_button.addEventListener("click", func);
         }
 
-        let edit_div = div.appendChild(document.createElement("div"));
+        add_button("bold", () => {
+            const selection = window.getSelection();
+            if(edit_div.contains(selection.anchorNode)){
+                for (let  i = 0; i < selection.rangeCount; i++){
+                    let selected = selection.getRangeAt(i).extractContents();
+                    console.log(selected)
+                    let bold = document.createElement("strong");
+                    bold.innerText = selected.textContent;
+                    selection.getRangeAt(i).insertNode(bold);
+                }
+            }
+        })
+
+
+//        for (let icon_name of ["bold", "italic", "underlined", "preformat", "list", "enumeration", "link"])
+//        {
+//        }
+
+        //let edit_div = div.appendChild(document.createElement("div"));
         edit_div.classList.add("rich-text-section-content");
         edit_div.contentEditable = true;
 
