@@ -37,7 +37,7 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, classe>
      */
-    #[ORM\ManyToMany(targetEntity: classe::class, inversedBy: 'accounts')]
+    #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'accounts')]
     private Collection $classes;
 
     #[ORM\Column(length: 255)]
