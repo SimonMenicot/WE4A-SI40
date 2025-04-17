@@ -158,10 +158,10 @@ export class ContainerSection extends Section
         if (this.is_horizontal)
         {
             direction_button.classList.add("edit-content-vertical");
-            direction_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/vertical.png";
+            direction_button_image.src = "/images/icons/vertical.png";
         } else {
             direction_button.classList.add("edit-content-horizontal");
-            direction_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/horizontal.png";
+            direction_button_image.src = "/images/icons/horizontal.png";
         }
 
         let wrap_button = start_edit_buttons_actions.appendChild(document.createElement("button"));
@@ -175,10 +175,10 @@ export class ContainerSection extends Section
         if (this.is_wrapping)
         {
             wrap_button.classList.add("edit-content-nowrap");
-            wrap_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/nowrap.png";
+            wrap_button_image.src = "/images/icons/nowrap.png";
         } else {
             wrap_button.classList.add("edit-content-wrap");
-            wrap_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/wrap.png";
+            wrap_button_image.src = "/images/icons/wrap.png";
         }
 
         let editable_div = div.appendChild(document.createElement("div"));
@@ -203,7 +203,7 @@ export class ContainerSection extends Section
             })
     
             let remove_button_image = remove_button.appendChild(document.createElement("img"));
-            remove_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/close.png";
+            remove_button_image.src = "/images/icons/close.png";
         
             let move_previous_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_previous_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
@@ -214,9 +214,9 @@ export class ContainerSection extends Section
             let move_previous_button_image = move_previous_button.appendChild(document.createElement("img"));
 
             if (this.is_horizontal)
-                move_previous_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/left.png";
+                move_previous_button_image.src = "/images/icons/left.png";
             else
-                move_previous_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/up.png";
+                move_previous_button_image.src = "/images/icons/up.png";
         
             let move_next_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_next_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
@@ -227,9 +227,9 @@ export class ContainerSection extends Section
             let move_next_button_image = move_next_button.appendChild(document.createElement("img"));
 
             if (this.is_horizontal)
-                move_next_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/right.png";
+                move_next_button_image.src = "/images/icons/right.png";
             else
-                move_next_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/down.png";
+                move_next_button_image.src = "/images/icons/down.png";
 
             if (child_index === 0)
             {
@@ -253,7 +253,7 @@ export class ContainerSection extends Section
         add_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
 
         let add_button_image = add_button.appendChild(document.createElement("img"));
-        add_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/add.png";
+        add_button_image.src = "/images/icons/add.png";
     
         return div;
     }

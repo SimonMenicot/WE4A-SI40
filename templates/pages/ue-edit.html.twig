@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="classpage-main-separation" class="content-separator">
+    <div id="main-class-content" class="class-content">
+        <div class="class-title-content">
+            <a class="class-back-link" href=".">
+                <img src="{{ asset("/images/icons/back.png") }}">
+            </a>
+            <h1 id="class-title">
+                WE4A - Introduction au design WEB
+            </h1>
+        </div>
+        <pre id="json-output" style="overflow-x: scroll; border: 1px solid grey; background: #eee">
+
+        </pre>
+    </div>
+
+    <?php include "activity-thread.php" ?>
+
+    <script type="module">
+
+import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
+
+(async () => {
+let fetch_data = await fetch("./classes/{{ ue_id }}/get-content");
+let data = await fetch_data.json();
+
+document.getElementById("class-title").textContent = data.name;
+
+self.mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
+self.maincontent = document.getElementById("main-class-content");
+let json_output = document.getElementById("json-output");
+
+json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
+
+let html_base = self.maincontent.insertBefore(self.mainSection.editableHtmlElement, json_output);
+html_base.id="main-class-section";
+
+self.mainSection.addEventListener("modified", (event) => {
+    if (event.detail.requires_reload)
+    {
+        let new_html = self.mainSection.editableHtmlElement;
+        self.maincontent.replaceChild(new_html, html_base);
+        html_base = new_html;
+    }
+    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
+    console.log(event);
+});
+
+})()
+
+    </script>
+</div>
+
+{% endblock %}
