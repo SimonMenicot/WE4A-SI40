@@ -23,7 +23,7 @@ export class ActivitySection extends Section
         return this.data.id;
     }
 
-    get type()
+    get activity_type()
     {
         return this.data.type;
     }
@@ -72,6 +72,7 @@ export class ActivitySection extends Section
     renderEditable()
     {
         let div = document.createElement("div");
+        div.id = "activity-integration-" + this.id;
         div.innerHTML = this.edit_html;
 
         let parser = new CssParser();
@@ -88,7 +89,7 @@ export class ActivitySection extends Section
     {
         return {
             id: this.id,
-            type: this.type
+            type: this.activity_type
         };
     }
 }
