@@ -12,6 +12,8 @@
     --login-form-background: var(--inputs-surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-inputs-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-div-title-color: var(--on-surfaces-text-color);
+    --login-error-text-background: rgb(178, 36, 36);
+    --login-error-text-color: white;
 
     --buttons-background: var(--secondary-color);
     --buttons-border-color: none;
@@ -33,5 +35,4 @@
     --section-image-editable-button-background: var(--section-media-editable-button-background);
     --section-audio-editable-button-background: var(--section-media-editable-button-background);
     
-
 }
