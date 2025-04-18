@@ -1,0 +1,54 @@
+div#settings-main-separation {
+    justify-content: center;
+}
+
+ul#settings-menu-section {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+}
+
+ul#settings-menu-section li.settings-menu-category:not(.first-child) {
+    margin-top: var(--settings-menu-categories-spacing);
+}
+
+ul#settings-menu-section li.settings-menu-category {
+    list-style-type: none;
+    border: var(--settings-menu-border-size) solid var(--settings-menu-border-color);
+    background: var(--settings-menu-background);
+}
+
+ul#settings-menu-section li.settings-menu-category h3 {
+    margin: 0px;
+    padding: var(--settings-menu-category-padding);
+}
+
+ul#settings-menu-section li.settings-menu-category ul.settings-menu-category-list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+}
+
+ul#settings-menu-section li.settings-menu-category ul.settings-menu-category-list li.settings-menu-item {
+    list-style-type: none;
+    position: relative;
+    border-top: var(--settings-menu-border-size) solid var(--settings-menu-border-color);
+}
+
+ul#settings-menu-section li.settings-menu-category ul.settings-menu-category-list li.settings-menu-item:last-child {
+    border-bottom: var(--settings-menu-border-size) solid var(--settings-menu-border-color);
+}
+
+ul#settings-menu-section li.settings-menu-category ul.settings-menu-category-list li.settings-menu-item a {
+    display: inline-block;
+    padding: var(--settings-menu-item-padding);
+    margin: 0px;
+    width: 100%;
+    height: 1em;
+    text-decoration: none;
+}
+
+ul#settings-menu-section li.settings-menu-category ul.settings-menu-category-list li.settings-menu-item img {
+    height: 100%;
+}
+

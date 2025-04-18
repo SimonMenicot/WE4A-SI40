@@ -36,5 +36,8 @@
     --section-audio-editable-button-background: var(--section-media-editable-button-background);
 
     --profile-options-background: var(--secondary-color);
+
+    --settings-menu-background: rgb(186, 205, 168);
+    --settings-menu-border-color: black;
     
 }
