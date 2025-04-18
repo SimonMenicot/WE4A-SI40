@@ -35,9 +35,9 @@
             {% endif %}
 
             <div id="header-user-icon">
-                <img src="{{ asset("images/profile-pic.jpg") }}"/>
+                <img src="data:img/png;base64,{{ base_config.current_user_image }}"/>
                 <span>
-                    Nuck Chorris
+                    {{ base_config.current_user.surname }} {{ base_config.current_user.name }}
                 </span>
             </div>
         </header>

@@ -9,14 +9,14 @@ Welcome, student
 {% block body %}
 <div id="homepage-main-separation" class="content-separator">
     <div id="homepage-content" class="main-page-content">
-        <h1>Bonjour, Nimen Laden!</h1>
+        <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
         <div id="classes" class="classes-list">
-            {% for class in classes %}
+            {% for class in base_config.current_user.classes %}
 
-            <a href="ue-read.php" class="class-preview-link">
+            <a href="class/{{ class.id }}/read" class="class-preview-link">
                 <div class="class-preview">
-                    <h1>{{ class.title }}</h1>
+                    <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>
                 </div>
             </a>

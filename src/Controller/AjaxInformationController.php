@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\CustomFeatures\ActivitiesManager;
+use App\Entity\Account;
 use App\Entity\Classe;
 use App\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Twig\Environment;
 
 class AjaxInformationController extends AbstractController
@@ -21,7 +23,7 @@ class AjaxInformationController extends AbstractController
     }
 
    #[Route('/classes/{id}/get-content', "get class content")]
-    public function render_login(Classe $class, EntityManagerInterface $entityManager): Response
+    public function render_class_content(Classe $class, EntityManagerInterface $entityManager): Response
     {
         $content = $class->getContent();
 
@@ -38,6 +40,21 @@ class AjaxInformationController extends AbstractController
                 "Content-Type" => "text/json"
             ]
         );
+    }
+
+    #[Route('/authenticate', name: "authentication-page", methods: ["POST"])]
+    public function authenticate(#[CurrentUser] ?Account $user): Response
+    {
+        if ($user === null) 
+        {
+            return new Response(json_encode([
+                "error" => 'bad user or password'
+            ]), Response::HTTP_UNAUTHORIZED);
+        } else {
+            return new Response(json_encode([
+                "status" => 'success'
+            ]));
+        }
     }
 
     public function cleanContentData(array $class_content, EntityManagerInterface $entityManager)

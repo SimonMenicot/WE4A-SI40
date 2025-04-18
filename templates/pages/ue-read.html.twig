@@ -4,7 +4,7 @@
 <div id="classpage-main-separation" class="content-separator">
     <div id="main-class-content" class="class-content">
         <div class="class-title-content">
-            <a class="class-back-link" href=".">
+            <a class="class-back-link" href="/">
                 <img src="{{ asset("/images/icons/back.png") }}">
             </a>
             <h1 id="class-title">
@@ -23,7 +23,7 @@
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 
 (async () => {
-let fetch_data = await fetch("./classes/{{ ue_id }}/get-content");
+let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
 let data = await fetch_data.json();
 
 document.getElementById("class-title").textContent = data.name;

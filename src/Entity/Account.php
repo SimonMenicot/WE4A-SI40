@@ -35,7 +35,7 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, classe>
+     * @var Collection<int, Classe>
      */
     #[ORM\ManyToMany(targetEntity: Classe::class, inversedBy: 'accounts')]
     private Collection $classes;
@@ -133,14 +133,14 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, classe>
+     * @return Collection<int, Classe>
      */
     public function getClasses(): Collection
     {
         return $this->classes;
     }
 
-    public function addClass(classe $class): static
+    public function addClass(Classe $class): static
     {
         if (!$this->classes->contains($class)) {
             $this->classes->add($class);
@@ -149,7 +149,7 @@ class Account implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeClass(classe $class): static
+    public function removeClass(Classe $class): static
     {
         $this->classes->removeElement($class);
 
