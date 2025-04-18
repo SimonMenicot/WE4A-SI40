@@ -1,0 +1,93 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Ça parle de toi là
+{% endblock %}
+
+{% block body %}
+<div id="main-profile-page" class="top-banner">
+    <div class="profile-identity">
+        <div class="profile-infos">
+            <div class="profile-description">
+                <h1>{{ account.surname }} {{ account.name }}</h1>
+                <h2>{% for role in account.roles %} 
+                {% if role == "ROLE_STUDENT" %}
+                Étudiant
+                {% elseif role == "ROLE_ADMIN" %}
+                Administrateur
+                {% elseif role == "ROLE_TEACHER" %}
+                Enseignant
+                {% endif %}
+                {% endfor %}</h2>
+                <p>{{ account.description }}</p>
+            </div>
+            <ul class="profile-coordinates">
+                <li>
+                    <h2>Adresse courriel</h2>
+                    <p>{{ account.email }}</p>
+                </li>
+                <li>
+                    <h2>Dernière connexion</h2>
+                    <p>&lt; LAST CONNECTION &gt;</p>
+                </li>
+                <li>
+                    <h2>Fuseau horaire</h2>
+                    <p>&lt; FUSEAU HORAIRE &gt;</p>
+                </li>
+            </ul>
+        </div>
+        <div class="profile-logos">
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="{{ asset("/images/logos/LinkedIn_icon.svg.png") }}" alt="LinkedIn logo"/>
+                <span>{{ account.surname }} {{ account.name }}</span>
+            </a>
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="{{ asset("/images/logos/Microsoft-Teams-Logo.png") }}" alt="Microsoft Teams logo"/>
+                <span>{{ account.surname }} {{ account.name }}</span>
+            </a>
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
+                <img src="{{ asset("/images/logos/outlook.svg.png") }}" alt="Outlook logo"/>
+                <span>{{ account.email }}</span>
+            </a>
+        </div>
+    </div>
+    <img class="profile-thumbnail" src="data:image/png;base64,{{ user_image }}" alt="Profile Picture"/>
+</div>
+
+<div id="profilepage-main-separation" class="content-separator">
+    <div id="profile-listing">
+        <div class="profile-list">
+            <h2>Cours suivis</h2>
+            {% if account.classes|length %}
+            <ul>
+                {% for class in account.classes %}
+                <li>WE4A : Introduction to Web Design</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Cet utilisateur n'est inscrit à aucun cours</p>
+            {% endif %}
+        </div>
+        <div class="profile-list">
+            <h2>JSP</h2>
+            <ul>
+                <li>info intéressante 1</li>
+                <li>info intéressante 2</li>
+                <li>info intéressante 3</li>
+            </ul>
+        </div>
+        <div class="profile-options">
+            <h2>Menu</h2>
+            <ul>
+                <li>Paramètres du profile...</li>
+                <li>Accessibilité...</li>
+                <li>Modifier le profile...</li>
+                <li>J'aime le riz. Et vous?</li>
+            </ul>
+        </div>
+    </div>
+
+    {% include "sections/activity-thread.html.twig" %}
+
+</div>
+{% endblock %}

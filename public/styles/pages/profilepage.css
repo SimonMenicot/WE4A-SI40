@@ -82,6 +82,7 @@ div#main-profile-page div.profile-logos img {
 div#main-profile-page img.profile-thumbnail {
     box-sizing: border-box;
     height: 100%;
+    aspect-ratio: 1;
     border-radius: 100vh;
     margin-left: 100px;
 }
