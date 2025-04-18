@@ -1,12 +1,4 @@
-<<<<<<< HEAD:static/styles/cross-elements/logo-medium.css
 .logo-medium{
 	width: var(--medium-logo-size);
 	height: var(--medium-logo-size);
 }
-=======
-@import url("./logo-medium.css");
-@import url("./side-thread.css");
-@import url("./content-separator.css");
-@import url("./main-page-content.css");
-@import url("./top-banner.css");
->>>>>>> kaki-in/dev-implement-symfony:public/styles/cross-elements/logo-medium.css
