@@ -37,6 +37,11 @@ class DefaultPageController extends AbstractController
     #[Route('/profile', 'self-profile')]
     public function render_self_profile(#[CurrentUser] ?Account $user): Response
     {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
         return $this->render_user_profile($user, $user);
     }
 

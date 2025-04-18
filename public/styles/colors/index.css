@@ -34,5 +34,7 @@
     --section-video-editable-button-background: var(--section-media-editable-button-background);
     --section-image-editable-button-background: var(--section-media-editable-button-background);
     --section-audio-editable-button-background: var(--section-media-editable-button-background);
+
+    --profile-options-background: var(--secondary-color);
     
 }

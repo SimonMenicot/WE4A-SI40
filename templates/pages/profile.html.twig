@@ -13,10 +13,10 @@
                 <h2>{% for role in account.roles %} 
                 {% if role == "ROLE_STUDENT" %}
                 Étudiant
-                {% elseif role == "ROLE_ADMIN" %}
-                Administrateur
                 {% elseif role == "ROLE_TEACHER" %}
                 Enseignant
+                {% elseif role == "ROLE_ADMIN" %}
+                Administrateur
                 {% endif %}
                 {% endfor %}</h2>
                 <p>{{ account.description }}</p>
@@ -76,15 +76,15 @@
                 <li>info intéressante 3</li>
             </ul>
         </div>
+        {% if base_config.current_user == account %}
         <div class="profile-options">
-            <h2>Menu</h2>
+            <h2>Accès rapides</h2>
             <ul>
-                <li>Paramètres du profile...</li>
-                <li>Accessibilité...</li>
-                <li>Modifier le profile...</li>
-                <li>J'aime le riz. Et vous?</li>
+                <li><a href="/settings/profile">Paramètres du profile...</a></li>
+                <li><a href="/settings/accessibility">Accessibilité...</a></li>
             </ul>
         </div>
+        {% endif %}
     </div>
 
     {% include "sections/activity-thread.html.twig" %}
