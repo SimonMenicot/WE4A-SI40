@@ -53,6 +53,8 @@ export default class LoginDiv
         let mail = this._mail_input.value;
         let password = this._password_input.value;
 
+        this._submit_button.setAttribute("disabled", "");
+
         let data = await fetch(
             "/authenticate",
             {
@@ -70,12 +72,19 @@ export default class LoginDiv
 
         let result = await data.json();
 
-        if (result.status_code == 200) 
+        switch (data.status )
         {
+            case 200:
             location.href = "/";
-        } else {
-            this._error_text.innerText = "Erreur lors de la connexion (" + result.error + ")";
-            this._submit_button.setAttribute("disabled", "");
+            break;
+        
+            case 401:
+            this._error_text.innerText = "Nom d'utilisateur ou mot de passe incorrect";
+            break;
+        
+            default:
+            this._error_text.innerText = "An unkown error occured. Please contact your administrator";
+            break;
         }
     }
 }

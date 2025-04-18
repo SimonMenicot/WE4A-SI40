@@ -23,7 +23,7 @@
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 
 (async () => {
-let fetch_data = await fetch("./classes/{{ ue_id }}/get-content");
+let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
 let data = await fetch_data.json();
 
 document.getElementById("class-title").textContent = data.name;

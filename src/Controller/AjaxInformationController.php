@@ -9,16 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\MakerBundle\Security\Model\Authenticator;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Twig\Environment;
 
 class AjaxInformationController extends AbstractController
@@ -56,12 +48,12 @@ class AjaxInformationController extends AbstractController
         if ($user === null) 
         {
             return new Response(json_encode([
-                "status" => 'success'
-            ]));
+                "error" => 'bad user or password'
+            ]), Response::HTTP_UNAUTHORIZED);
         } else {
             return new Response(json_encode([
-                "error" => 'bad user or password'
-            ]), REsponse::HTTP_UNAUTHORIZED);
+                "status" => 'success'
+            ]));
         }
     }
 
