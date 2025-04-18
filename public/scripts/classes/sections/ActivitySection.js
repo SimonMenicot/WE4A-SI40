@@ -23,11 +23,6 @@ export class ActivitySection extends Section
         return this.data.id;
     }
 
-    get activity_type()
-    {
-        return this.data.type;
-    }
-
     get html()
     {
         return this.data.html;
@@ -88,8 +83,7 @@ export class ActivitySection extends Section
     exportToJsonData()
     {
         return {
-            id: this.id,
-            type: this.activity_type
+            id: this.id
         };
     }
 }
