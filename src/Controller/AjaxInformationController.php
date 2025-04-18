@@ -56,11 +56,12 @@ class AjaxInformationController extends AbstractController
 
             return $class_content["data"];
         } else if ($class_content["type"] == "activity") {
-            $activity = $this->activities_manager->getActivity($class_content["data"]["type"]);
             $id = $class_content["data"]["id"];
 
             $file = $entityManager->getRepository(File::class)->find($id);
             $file_content = stream_get_contents($file->getContent());
+
+            $activity = $this->activities_manager->getActivity($file->getType());
 
             return [
                 "id" => $class_content["data"]["id"],

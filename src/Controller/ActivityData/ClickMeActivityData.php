@@ -4,7 +4,6 @@ namespace App\Controller\ActivityData;
 
 use App\Annotation\ActivityContentController;
 use App\CustomFeatures\ActivityData;
-use Doctrine\DBAL\Types\BlobType;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
