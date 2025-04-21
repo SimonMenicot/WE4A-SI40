@@ -34,12 +34,12 @@
 
             {% endif %}
 
-            <div id="header-user-icon">
+            <a id="header-user-icon" href="/profile">
                 <img src="data:img/png;base64,{{ base_config.current_user_image }}"/>
                 <span>
                     {{ base_config.current_user.surname }} {{ base_config.current_user.name }}
                 </span>
-            </div>
+            </a>
         </header>
         <div id="root">
             <main>

@@ -33,6 +33,39 @@ class DefaultPageController extends AbstractController
 
         return $this->redirectToRoute("select ue");
     }
+
+    #[Route('/profile', 'self-profile')]
+    public function render_self_profile(#[CurrentUser] ?Account $user): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        return $this->render_user_profile($user, $user);
+    }
+
+    #[Route('/profile/{id}', 'profile')]
+    public function render_user_profile(#[CurrentUser] ?Account $user, Account $displayed_user): Response
+    {
+        $user_image = $user->getImage();
+        fseek($user_image, 0);
+        $user_image_base64 = base64_encode(stream_get_contents($user_image));
+
+        $displayed_user_image = $displayed_user->getImage();
+        fseek($displayed_user_image, 0);
+        $displayed_user_image_base64 = base64_encode(stream_get_contents($displayed_user_image));
+
+        return $this->render('pages/profile.html.twig', [
+            "base_config" => [
+                "displayAdminCheckboxInHeader" => false,
+                "current_user" => $user,
+                "current_user_image" => $user_image_base64
+            ],
+            "account" => $displayed_user,
+            "user_image" => $displayed_user_image_base64
+        ]);
+    }
     
     #[Route('/class/{id}/read', 'ue-read')]
     public function render_ue_read(#[CurrentUser] ?Account $user, int $id): Response
