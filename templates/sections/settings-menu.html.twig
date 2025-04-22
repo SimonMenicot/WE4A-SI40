@@ -1,0 +1,86 @@
+<ul id="settings-menu-section">
+    <li class="settings-menu-category">
+        <h3 class="settings-title">Profil</h3>
+
+        <ul class="settings-menu-category-list">
+
+            {% if app.request.pathinfo == "/settings/account/profile" %}
+            <li class="settings-menu-item settings-menu-selected-item">
+                <img src={{ asset("/images/icons/customize.png") }}/>
+                <span>Personnaliser le profil</span>
+            </li>
+            {% else %}
+            <li class="settings-menu-item">
+                <a href="/settings/account/profile">
+                    <img src={{ asset("/images/icons/customize.png") }}/>
+                    <span>Personnaliser le profil</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if app.request.pathinfo == "/settings/account/infos" %}
+            <li class="settings-menu-item settings-menu-selected-item">
+                <img src={{ asset("/images/icons/info.png") }}/>
+                <span>Informations</span>
+            </li>
+            {% else %}
+            <li class="settings-menu-item">
+                <a href="/settings/account/infos">
+                    <img src={{ asset("/images/icons/info.png") }}/>
+                    <span>Informations</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if app.request.pathinfo == "/settings/account/password" %}
+            <li class="settings-menu-item settings-menu-selected-item">
+                <img src={{ asset("/images/icons/password.png") }}/>
+                <span>Mot de passe</span>
+            </li>
+            {% else %}
+            <li class="settings-menu-item">
+                <a href="/settings/account/password">
+                    <img src={{ asset("/images/icons/password.png") }}/>
+                    <span>Mot de passe</span>
+                </a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </li>
+
+    <li class="settings-menu-category">
+        <h3 class="settings-title">Accessibilité</h3>
+
+        <ul class="settings-menu-category-list">
+
+            {% if app.request.pathinfo == "/settings/accessibility/themes" %}
+            <li class="settings-menu-item settings-menu-selected-item">
+                <img src={{ asset("/images/icons/settings.png") }}/>
+                <span>Thèmes</span>
+            </li>
+            {% else %}
+            <li class="settings-menu-item">
+                <a href="/settings/accessibility/themes">
+                    <img src={{ asset("/images/icons/settings.png") }}/>
+                    <span>Thèmes</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if app.request.pathinfo == "/settings/accessibility" %}
+            <li class="settings-menu-item">
+                <img src={{ asset("/images/icons/user.png") }}/>
+                <span>Paramètres d'accessibilité</span>
+            </li>
+            {% else %}
+            <li class="settings-menu-item">
+                <a href="/settings/accessibility">
+                    <img src={{ asset("/images/icons/user.png") }}/>
+                    <span>Paramètres d'accessibilité</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </li>
+</ul>

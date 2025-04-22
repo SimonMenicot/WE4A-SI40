@@ -80,22 +80,3 @@
     text-decoration: underline;
 }
 
-#login-div span.error-text:empty {
-    display: none;
-}
-
-#login-div span.error-text {
-    width: 100%;
-    text-align: center;
-
-    padding: var(--login-error-text-padding);
-    margin-top: var(--login-error-text-margin);
-    margin-bottom: var(--login-error-text-margin);
-    border-radius: var(--login-error-text-border-radius);
-
-    background: var(--login-error-text-background);
-    color: var(--login-error-text-color);
-
-    box-sizing: border-box;
-}
-

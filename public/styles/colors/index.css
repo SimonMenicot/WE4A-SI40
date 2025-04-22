@@ -3,6 +3,14 @@
     --surfaces-color: white;
     --inputs-surfaces-color: rgb(232, 224, 200);
     --secondary-color: rgb(213, 135, 67);
+    --secondary-color-dark: rgb(122, 71, 26);
+    --secondary-color-light: rgb(249, 195, 147);
+
+    --color-error: rgb(178, 36, 36);
+    --on-error-text-color: white;
+
+    --color-success: rgb(35, 132, 28);
+    --on-success-text-color: white;
 
     --on-primary-text-color: white;
     
@@ -11,11 +19,10 @@
     --login-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-form-background: var(--inputs-surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-inputs-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
-    --login-div-title-color: var(--on-surfaces-text-color);
-    --login-error-text-background: rgb(178, 36, 36);
-    --login-error-text-color: white;
+    --login-div-title-color: var(--on-surface-text-color);
 
     --buttons-background: var(--secondary-color);
+    --buttons-hover-background: var(--secondary-color-light);
     --buttons-border-color: none;
 
     --activity-thread-activity-border-color: #ccc;
@@ -36,5 +43,15 @@
     --section-audio-editable-button-background: var(--section-media-editable-button-background);
 
     --profile-options-background: var(--secondary-color);
+
+    --settings-menu-background: var(--secondary-color);
+    --settings-menu-color: var(--on-primary-text-color);
+    --settings-menu-selected-color: var(--on-surface-text-color);
+    --settings-menu-item-hover-background: #fff4;
+    --settings-menu-item-selected-background: var(--surfaces-color);
+    --settings-menu-border-color: black;
+    --settings-edit-media-button-background: #fff8;
     
+    --fields-border-color: var(--secondary-color);
+    --fields-background: var(--surfaces-color);
 }
