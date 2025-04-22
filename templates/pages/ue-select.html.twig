@@ -14,7 +14,11 @@ Welcome, student
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
+            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+            {% else %}
             <a href="class/{{ class.id }}/read" class="class-preview-link">
+            {% endif %}
                 <div class="class-preview">
                     <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>

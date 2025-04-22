@@ -31,7 +31,8 @@ div#classpage-main-separation div#main-class-content div.class-title-content a.c
     padding: var(--classpage-backlink-padding);
 }
 
-.class-preview-link {
-    text-decoration: none; /* Enlever le soulignement */
-    color: inherit; /* Garder la couleur du texte */
+div#main-class-content > button {
+    margin: auto;
+    margin-top: var(--classpage-save-buttons-margin);
+    margin-bottom: var(--classpage-save-buttons-margin);
 }
