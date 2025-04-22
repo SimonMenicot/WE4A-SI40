@@ -37,6 +37,8 @@ class UeEditScript
 {
     constructor(class_title, main_content, save_buttons)
     {
+        console.log(main_content);
+
         this._class_title = class_title;
         this._main_content = main_content;
 
@@ -48,12 +50,10 @@ class UeEditScript
         let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
         let data = await fetch_data.json();
 
-        let maincontent = document.getElementById("main-class-content");
-
         if (data.error) 
         {
             this._class_title.textContent = "Impossible d'accéder à ce cours";
-            let error_span = maincontent.appendChild(document.createElement("span"));
+            let error_span = this._main_content.insertBefore(document.createElement("span"), document.getElementById("save-button-bottom"));
             error_span.classList.add("error");
             error_span.classList.add("result-text");
 
@@ -84,7 +84,7 @@ class UeEditScript
 
         this._last_json = JSON.stringify(this._main_section.json_data);
 
-        this._html_base = maincontent.insertBefore(this._main_section.editableHtmlElement, document.getElementById("save-button-bottom"));
+        this._html_base = this._main_content.insertBefore(this._main_section.editableHtmlElement, document.getElementById("save-button-bottom"));
 
         for (let button of this._save_buttons)
         {
@@ -163,7 +163,7 @@ class UeEditScript
 window.addEventListener("load", () => {
     new UeEditScript(
         document.getElementById("class-title"),
-        document.getElementById("main-content"),
+        document.getElementById("main-class-content"),
         [
             document.getElementById("save-button-top"),
             document.getElementById("save-button-bottom")
