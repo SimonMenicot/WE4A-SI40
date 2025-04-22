@@ -5,7 +5,7 @@ export class VideoSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("video");
+        super("video", "Vidéo");
     }
 
     exportDataToSection(data, section_types_map)

@@ -5,12 +5,17 @@ export class RawTextSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("raw-text");
+        super("raw-text", "Texte brute");
     }
 
     exportDataToSection(data, section_types_map)
     {
         return new RawTextSection(data);
+    }
+
+    async createNew()
+    {
+        return new RawTextSection("");
     }
 }
 

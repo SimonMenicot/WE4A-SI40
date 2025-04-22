@@ -1,12 +1,12 @@
-import { ActivitySectionExporter } from "./section_exporters.js/ActivitySectionExporter.js";
-import { AudioSectionExporter } from "./section_exporters.js/AudioSectionExporter.js";
-import { ContainerSectionExporter } from "./section_exporters.js/ContainerSectionExporter.js";
-import { FileSectionExporter } from "./section_exporters.js/FileSectionExporter.js";
-import { ImageSectionExporter } from "./section_exporters.js/ImageSectionExporter.js";
-import { IntegrationSectionExporter } from "./section_exporters.js/IntegrationSectionExporter.js";
-import { RawTextSectionExporter } from "./section_exporters.js/RawTextSectionExporter.js";
-import { RichTextSectionExporter } from "./section_exporters.js/RichTextSectionExporter.js";
-import { VideoSectionExporter } from "./section_exporters.js/VideoSectionExporter.js";
+import { ActivitySectionExporter } from "./section_exporters/ActivitySectionExporter.js";
+import { AudioSectionExporter } from "./section_exporters/AudioSectionExporter.js";
+import { ContainerSectionExporter } from "./section_exporters/ContainerSectionExporter.js";
+import { FileSectionExporter } from "./section_exporters/FileSectionExporter.js";
+import { ImageSectionExporter } from "./section_exporters/ImageSectionExporter.js";
+import { IntegrationSectionExporter } from "./section_exporters/IntegrationSectionExporter.js";
+import { RawTextSectionExporter } from "./section_exporters/RawTextSectionExporter.js";
+import { RichTextSectionExporter } from "./section_exporters/RichTextSectionExporter.js";
+import { VideoSectionExporter } from "./section_exporters/VideoSectionExporter.js";
 
 class SectionTypesMap
 {

@@ -5,7 +5,7 @@ export class FileSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("file");
+        super("file", "Fichier");
     }
 
     exportDataToSection(data, section_types_map)

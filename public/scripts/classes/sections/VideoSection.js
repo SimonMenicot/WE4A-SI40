@@ -51,7 +51,6 @@ export class VideoSection extends Section
         video_link.href = this.src;
 
         let change_button = div.appendChild(document.createElement("button"));
-        change_button.classList.add("icon-button");
         change_button.appendChild(document.createElement("img")).src = "/images/icons/upload.png";
 
         return div;

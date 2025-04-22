@@ -2,7 +2,7 @@ import { Section } from "./Section.js";
 
 export class ContainerSection extends Section
 {
-    constructor(data)
+    constructor(data, section_adder)
     {
         super("container", data);
 
@@ -16,6 +16,8 @@ export class ContainerSection extends Section
                 }, event.detail.requires_reload)
             });
         }
+
+        this._section_adder = section_adder;
     }
 
     get is_horizontal()
@@ -62,6 +64,14 @@ export class ContainerSection extends Section
     addChild(child)
     {
         this.data.children.push(child);
+
+        child.addEventListener("modified", (event) => {
+            this.notifyEvents("modified", {
+                reason: 'child-modification',
+                child: child,
+                event: event
+            }, event.detail.requires_reload)
+        });
 
         this.notifyEvents("modified", {
             reason: 'children-addition',
@@ -251,6 +261,9 @@ export class ContainerSection extends Section
 
         let add_button = end_edit_buttons_actions.appendChild(document.createElement("button"));
         add_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
+        add_button.addEventListener("click", () => {
+            this.addElement();
+        });
 
         let add_button_image = add_button.appendChild(document.createElement("img"));
         add_button_image.src = "/images/icons/add.png";
@@ -265,6 +278,23 @@ export class ContainerSection extends Section
             is_wrapping: this.is_wrapping,
             children: this.children.map((child) => child.json_data)
         };
+    }
+
+    async addElement()
+    {
+        let exporter = await this._section_adder.promptNewSection()
+
+        if (exporter !== null)
+        {
+            let element;
+            try {
+                element = await exporter.createNew(this._section_adder.types_map);
+            } catch (exc) {
+                throw exc;
+            }
+
+            this.addChild(element);
+        }
     }
 
 

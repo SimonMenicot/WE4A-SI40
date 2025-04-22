@@ -5,7 +5,7 @@ export class ImageSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("image");
+        super("image", "Image");
     }
 
     exportDataToSection(data, section_types_map)

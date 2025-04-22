@@ -85,8 +85,8 @@ class DefaultPageController extends AbstractController
         ]);
     }
     
-    #[Route('/ue-edit', 'ue-edit')]
-    public function render_ue_edit(#[CurrentUser] ?Account $user): Response
+    #[Route('/class/{id}/edit', 'ue-edit')]
+    public function render_ue_edit(#[CurrentUser] ?Account $user, int $id): Response
     {
         if ($user === null)
         {
@@ -94,12 +94,12 @@ class DefaultPageController extends AbstractController
         }
 
         return $this->render('pages/ue-edit.html.twig', [
-            "displayAdminCheckboxInHeader" => false,
             "base_config" => [
+                "displayAdminCheckboxInHeader" => false,
                 "current_user" => $user,
                 "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
             ],
-            "ue_id" => 1
+            "ue_id" => $id
         ]);
     }
     

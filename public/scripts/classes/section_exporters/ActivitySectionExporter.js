@@ -5,7 +5,7 @@ export class ActivitySectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("activity");
+        super("activity", "Activité interactive");
     }
 
     exportDataToSection(data, section_types_map)

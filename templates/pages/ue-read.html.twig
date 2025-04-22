@@ -8,43 +8,62 @@
                 <img src="{{ asset("/images/icons/back.png") }}">
             </a>
             <h1 id="class-title">
-                WE4A - Introduction au design WEB
+                Chargement...
             </h1>
         </div>
-        <pre id="json-output" style="overflow-x: scroll; border: 1px solid grey; background: #eee">
-
-        </pre>
     </div>
 
-    <?php include "activity-thread.php" ?>
+    {% include 'sections/activity-thread.html.twig' %}
 
     <script type="module">
 
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 
 (async () => {
+
 let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
+
+let maincontent = document.getElementById("main-class-content");
+
+if (fetch_data.status != 202) 
+{
+    document.getElementById("class-title").textContent = "Impossible d'accéder à ce cours";
+    let error_span = maincontent.appendChild(document.createElement("span"));
+    error_span.classList.add("error");
+    error_span.classList.add("result-text");
+
+    switch (fetch_data.status)
+    {
+        case 401:
+        error_span.innerText = "Vous devez d'abord vous connecter";
+        break;
+
+        case 403:
+        error_span.innerText = "Vous n'avez pas la permission d'accéder à ce cours";
+        break;
+
+        default:
+        error_span.innerText = "Une erreur s'est produite (" + data.error + ")";
+        break;
+    }
+    return;
+}
+
 let data = await fetch_data.json();
 
-document.getElementById("class-title").textContent = data.name;
+let mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
+document.getElementById("class-title").textContent = data.name + " - " + data.description;
 
-self.mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
-self.maincontent = document.getElementById("main-class-content");
-let json_output = document.getElementById("json-output");
-
-json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
-
-let html_base = self.maincontent.insertBefore(self.mainSection.htmlElement, json_output);
+let html_base = maincontent.appendChild(mainSection.htmlElement);
 html_base.id="main-class-section";
 
-self.mainSection.addEventListener("modified", () => {
+mainSection.addEventListener("modified", (event) => {
     if (event.detail.requires_reload)
     {
-        let new_html = self.mainSection.editableHtmlElement;
-        self.maincontent.replaceChild(new_html, html_base);
+        let new_html = mainSection.htmlElement;
+        maincontent.replaceChild(new_html, html_base);
         html_base = new_html;
     }
-    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
     console.log(event);
 });
     

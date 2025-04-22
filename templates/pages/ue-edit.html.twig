@@ -4,53 +4,174 @@
 <div id="classpage-main-separation" class="content-separator">
     <div id="main-class-content" class="class-content">
         <div class="class-title-content">
-            <a class="class-back-link" href=".">
+            <a class="class-back-link" href="/">
                 <img src="{{ asset("/images/icons/back.png") }}">
             </a>
             <h1 id="class-title">
-                WE4A - Introduction au design WEB
+                Chargement...
             </h1>
         </div>
-        <pre id="json-output" style="overflow-x: scroll; border: 1px solid grey; background: #eee">
-
-        </pre>
+        <button class="main-button icon-button" id="save-button-top">
+            <img src="{{ asset("/images/icons/save.png") }}"/>
+            <span>Sauvegarder</span>
+        </button>
+        <button class="main-button icon-button" id="save-button-bottom">
+            <img src="{{ asset("/images/icons/save.png") }}"/>
+            <span>Sauvegarder</span>
+        </button>
     </div>
 
-    <?php include "activity-thread.php" ?>
+    {% include 'sections/activity-thread.html.twig' %}
 
-    <script type="module">
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="module">
 
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 
-(async () => {
-let fetch_data = await fetch("./classes/{{ ue_id }}/get-content");
-let data = await fetch_data.json();
-
-document.getElementById("class-title").textContent = data.name;
-
-self.mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
-self.maincontent = document.getElementById("main-class-content");
-let json_output = document.getElementById("json-output");
-
-json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
-
-let html_base = self.maincontent.insertBefore(self.mainSection.editableHtmlElement, json_output);
-html_base.id="main-class-section";
-
-self.mainSection.addEventListener("modified", (event) => {
-    if (event.detail.requires_reload)
+class UeEditScript
+{
+    constructor(class_title, main_content, save_buttons)
     {
-        let new_html = self.mainSection.editableHtmlElement;
-        self.maincontent.replaceChild(new_html, html_base);
-        html_base = new_html;
+        console.log(main_content);
+
+        this._class_title = class_title;
+        this._main_content = main_content;
+
+        this._save_buttons = save_buttons;
     }
-    json_output.innerText = JSON.stringify(self.mainSection.json_data, null, 2);
-    console.log(event);
+
+    async start()
+    {
+        let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
+
+        if (fetch_data.status != 202) 
+        {
+            this._class_title.textContent = "Impossible d'accéder à ce cours";
+            let error_span = this._main_content.insertBefore(document.createElement("span"), document.getElementById("save-button-bottom"));
+            error_span.classList.add("error");
+            error_span.classList.add("result-text");
+
+            for (let button of this._save_buttons)
+            {
+                this._main_content.removeChild(button);
+            }
+
+            switch (fetch_data.status)
+            {
+                case 401:
+                error_span.innerText = "Vous devez d'abord vous connecter";
+                break;
+
+                case 403:
+                error_span.innerText = "Vous n'avez pas la permission d'accéder à ce cours";
+                break;
+
+                default:
+                error_span.innerText = "Une erreur s'est produite (" + fetch_data.status + ")";
+                break;
+            }
+            return;
+        }
+
+        let data = await fetch_data.json();
+
+        this._main_section = DEFAULT_SECTION_TYPES_MAP.export(data.content);
+        this._class_title.textContent = data.name + " - " + data.description;
+
+        this._last_json = JSON.stringify(this._main_section.json_data);
+
+        this._html_base = this._main_content.insertBefore(this._main_section.editableHtmlElement, document.getElementById("save-button-bottom"));
+
+        for (let button of this._save_buttons)
+        {
+            button.setAttribute("disabled", "");
+            
+            button.addEventListener("click", async () => {
+                for (let button of this._save_buttons)
+                {
+                    button.setAttribute("disabled", '');
+                }
+
+                if (await this.save())
+                {
+                    this._last_json = JSON.stringify(this._main_section.json_data);
+                } else {
+                    alert("an error occured while saving");
+
+                    for (let button of this._save_buttons)
+                    {
+                        button.removeAttribute();
+                    }
+                }
+
+            });
+
+        }
+
+        this._main_section.addEventListener("modified", (event) => {
+            this.update(event);
+        });
+            
+    }
+
+    async update(event)
+    {
+        if (event.detail.requires_reload)
+        {
+            let new_html = this._main_section.editableHtmlElement;
+            this._main_content.replaceChild(new_html, this._html_base);
+            this._html_base = new_html;
+        }
+
+        if (this._last_json == JSON.stringify(this._main_section.json_data))
+        {
+            for (let button of this._save_buttons)
+            {
+                button.setAttribute("disabled", '');
+            }
+        } else {
+            for (let button of this._save_buttons)
+            {
+                button.removeAttribute("disabled");
+            }
+        }
+    }
+
+    async save()
+    {
+        let fetch_data = await fetch(
+            "/classes/{{ ue_id }}/set-content",
+            {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        "content": JSON.stringify(this._main_section.json_data)
+                    }
+                )
+            }
+        );
+
+        return fetch_data.status === 202;
+    }
+
+}
+
+window.addEventListener("load", () => {
+    new UeEditScript(
+        document.getElementById("class-title"),
+        document.getElementById("main-class-content"),
+        [
+            document.getElementById("save-button-top"),
+            document.getElementById("save-button-bottom")
+        ]
+    ).start();
 });
 
-})()
-
-    </script>
-</div>
+</script>
 
 {% endblock %}
