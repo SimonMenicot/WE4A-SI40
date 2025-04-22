@@ -54,4 +54,11 @@
     
     --fields-border-color: var(--secondary-color);
     --fields-background: var(--surfaces-color);
+
+    --fullscreen-widget-background: #0008;
+
+    --thumbnails-button-background: var(--surfaces-color);
+    --thumbnails-button-hover-background: var(--secondary-color-light);
+    --thumbnails-button-border-color: var(--secondary-color-light);
+    
 }

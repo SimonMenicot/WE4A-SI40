@@ -5,12 +5,17 @@ export class RichTextSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("rich-text");
+        super("rich-text", "Texte riche");
     }
 
     exportDataToSection(data, section_types_map)
     {
         return new RichTextSection(data);
+    }
+
+    async createNew()
+    {
+        return new RichTextSection("");
     }
 }
 

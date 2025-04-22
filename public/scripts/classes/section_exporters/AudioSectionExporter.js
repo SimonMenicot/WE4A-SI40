@@ -5,7 +5,7 @@ export class AudioSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("audio");
+        super("audio", "Audio");
     }
 
     exportDataToSection(data, section_types_map)

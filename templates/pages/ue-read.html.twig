@@ -8,7 +8,7 @@
                 <img src="{{ asset("/images/icons/back.png") }}">
             </a>
             <h1 id="class-title">
-                WE4A - Introduction au design WEB
+                Chargement...
             </h1>
         </div>
     </div>
@@ -22,11 +22,10 @@ import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTyp
 (async () => {
 
 let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
-let data = await fetch_data.json();
 
 let maincontent = document.getElementById("main-class-content");
 
-if (data.error) 
+if (fetch_data.status != 202) 
 {
     document.getElementById("class-title").textContent = "Impossible d'accéder à ce cours";
     let error_span = maincontent.appendChild(document.createElement("span"));
@@ -49,6 +48,8 @@ if (data.error)
     }
     return;
 }
+
+let data = await fetch_data.json();
 
 let mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
 document.getElementById("class-title").textContent = data.name + " - " + data.description;

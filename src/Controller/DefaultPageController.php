@@ -99,7 +99,7 @@ class DefaultPageController extends AbstractController
                 "current_user" => $user,
                 "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
             ],
-            "ue_id" => 1
+            "ue_id" => $id
         ]);
     }
     

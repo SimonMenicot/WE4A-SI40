@@ -5,7 +5,7 @@ export class IntegrationSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("integration");
+        super("integration", "Intégration");
     }
 
     exportDataToSection(data, section_types_map)
