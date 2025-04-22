@@ -9,9 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Controller\SecurityTokenValueResolver;
 use Twig\Environment;
+use Twig\Sandbox\SecurityPolicyInterface;
 
 class AjaxInformationController extends AbstractController
 {
@@ -52,8 +57,28 @@ class AjaxInformationController extends AbstractController
             ]), Response::HTTP_UNAUTHORIZED);
         } else {
             return new Response(json_encode([
-                "status" => 'success'
+                "status" => 'success',
+                "name" => $user->getName(),
+                'surname' => $user->getSurname()
             ]));
+        }
+    }
+
+    #[Route('/logout', name: "logout")]
+    public function logout(#[CurrentUser] ?Account $user, TokenStorageInterface $tokenStorage): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'cannot logout disconnected client'
+            ]), Response::HTTP_FORBIDDEN);
+        } else {
+            $tokenStorage->setToken(null);
+            
+            return new Response(json_encode([
+                "status" => 'success'
+            ]), Response::HTTP_ACCEPTED);
         }
     }
 

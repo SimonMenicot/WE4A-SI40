@@ -1,0 +1,58 @@
+{% extends "base-settings.html.twig" %}
+
+{% block settings_body %}
+
+<h1> Informations sur le compte </h1>
+<div class="info-content">
+    <div class="info-section">
+        <h2> Adresse mail associée </h2>
+        <p>{{ base_config.current_user.email }}</p>
+    </div>
+    <div class="info-section">
+        <h2> Dernière connexion </h2>
+        <p> &lt; LAST CONNECTION &gt; </p>
+    </div>
+    <div class="info-section">
+        <h2> Fuseau horaire </h2>
+        <p> &lt; FUSEAU HORAIRE &gt; </p>
+    </div>
+</div>
+<div class="related-section">
+    <a href="./profile">Éditer le profile</a>
+</div>
+<div class="actions-section">
+    <button class="main-button icon-button" id="button-disconnect">
+        <img src="{{ asset("images/icons/disconnect.png") }}"/>
+        <span> Se déconnecter
+    </button>
+</div>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset("styles/pages/settings/account-info.css") }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+window.addEventListener("load", () => {
+    let button = document.getElementById("button-disconnect");
+
+    button.addEventListener("click", async () => {
+        let logout = await fetch("/logout");
+
+        if (logout.status === 202)
+        {
+            location.href = "/login";
+        } 
+    });
+});
+
+</script>
+
+{% endblock %}
+

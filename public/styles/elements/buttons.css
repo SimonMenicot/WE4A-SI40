@@ -9,14 +9,24 @@ button.main-button, input[type="submit"].main-button, input[type="file"].main-bu
     border-radius: var(--button-border-radius);
     outline: none;
     font-size: var(--button-font-size);
+    transition: 0.2s background ease-out;
 }
 
-button.disabled-button {
+button.main-button:hover {
+    background: var(--buttons-hover-background);
+    transition: 0.2s background ease-out;
+}
+
+button[disabled] {
     opacity: var(--button-disabled-opacity);
     pointer-events: none;
 }
 
 button.icon-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
     height: var(--icon-button-size);
     min-width: var(--icon-button-size);
     padding: var(--icon-button-padding);
@@ -25,5 +35,9 @@ button.icon-button {
 button.icon-button img {
     max-width: 100%;
     max-height: 100%;
+}
+
+button.icon-button:has(span) img {
+    padding-right: var(--icon-button-padding);
 }
 
