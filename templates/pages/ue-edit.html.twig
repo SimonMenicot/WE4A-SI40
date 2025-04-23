@@ -11,6 +11,11 @@
                 Chargement...
             </h1>
         </div>
+        {% if base_config.user_role == "ROLE_ADMIN" %}
+        <div class="users-list">
+            <h2>Comptes associés</h2>
+        </div>
+        {% endif %}
         <button class="main-button icon-button" id="save-button-top">
             <img src="{{ asset("/images/icons/save.png") }}"/>
             <span>Sauvegarder</span>

@@ -12,16 +12,23 @@ Welcome, student
         <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
         {% if base_config.current_user.classes|length %}
+        <div class="search-bar" id="classes-search-bar">
+            <input type="text"/>
+            <button class="icon-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
-            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+            {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
             <a href="class/{{ class.id }}/edit" class="class-preview-link">
             {% else %}
             <a href="class/{{ class.id }}/read" class="class-preview-link">
             {% endif %}
                 <div class="class-preview">
-                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                    {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
                     </span>

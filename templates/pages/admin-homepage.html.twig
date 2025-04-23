@@ -15,6 +15,13 @@ Welcome, student
         <h2>Vos cours</h2>
 
         {% if base_config.current_user.classes|length %}
+        <div class="search-bar" id="classes-search-bar">
+            <input type="text"/>
+            <button class="icon-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
@@ -41,20 +48,21 @@ Welcome, student
         <h2>Tous les cours</h2>
 
         {% if classes|length %}
-        <div id="classes" class="classes-list">
+        <div class="search-bar" id="global-classes-search-bar">
+            <input type="text"/>
+            <button class="icon-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="global-classes" class="classes-list">
             {% for class in classes %}
 
-            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
             <a href="class/{{ class.id }}/edit" class="class-preview-link">
-            {% else %}
-            <a href="class/{{ class.id }}/read" class="class-preview-link">
-            {% endif %}
                 <div class="class-preview">
-                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
                     </span>
-                    {% endif %}
                     <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>
                 </div>
@@ -62,12 +70,58 @@ Welcome, student
             
             {% endfor %}
 
+            <button id="add-class-button">
+                <img src="{{ asset("images/icons/add.png") }}" />
+                <span class="class-edit-icon">
+                    Nouvelle classe...
+                </span>
+            </button>
         </div>
         {% else %}
         <span>Aucun cours trouvé dans la base de données</span>
         {% endif %}
 
         <h2>Tous les utilisateurs</h2>
+
+        <div class="search-bar" id="users-search-bar">
+            <input type="text"/>
+            <button class="icon-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="users" class="users-list">
+            {% for user in accounts %}
+
+            <a href="profile/{{ user.id }}" class="user-preview-link">
+                <div class="user-preview">
+                    <img src="data:image/png;base64,{{ user.image }}" />
+
+                    <div class="user-description">
+                        <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} 
+                {% if role == "ROLE_STUDENT" %}
+                Étudiant
+                {% elseif role == "ROLE_TEACHER" %}
+                Enseignant
+                {% elseif role == "ROLE_ADMIN" %}
+                Administrateur
+                {% endif %}
+                {% endfor %}</span></h1>
+                        <p>{{ user.description }}</p>
+                    </div>
+                </div>
+
+            </a>
+            
+            {% endfor %}
+            <button id="add-user-button">
+                <img src="{{ asset("images/icons/add.png") }}" />
+                <span class="user-edit-icon">
+                    Nouvel utilisateur...
+                </span>
+            </button>
+
+        </div>
 
     </div>
 

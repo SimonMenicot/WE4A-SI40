@@ -16,9 +16,9 @@ class AdminCheckbox
     {
         if (this._checkbox.checked)
         {
-            document.cookie = "admin_enabled=true";
+            document.cookie = "admin_enabled=true;path=/;";
         } else {
-            document.cookie = "admin_enabled=false";
+            document.cookie = "admin_enabled=false;path=/;";
         }
 
         setTimeout(() => {
@@ -29,6 +29,11 @@ class AdminCheckbox
 }
 
 window.addEventListener("load", () => {
-    let admin_checkbox = new AdminCheckbox(document.getElementById("admin-checkbox"));
+    let admin_checkbox_element = document.getElementById("admin-checkbox");
+
+    if (admin_checkbox_element != null) {
+        let admin_checkbox = new AdminCheckbox(admin_checkbox_element);
+    }
+
 });
 

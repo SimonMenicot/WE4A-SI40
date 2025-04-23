@@ -1,0 +1,22 @@
+:root {
+    --users-list-padding: 10px;
+    --users-list-margin: 10px;
+
+    --users-list-user-preview-border-radius: 7px;
+    --users-list-user-preview-spacing: 15px;
+    --users-list-user-preview-border-radius: 7px;
+    --users-list-user-preview-spacing: 5px;
+    --users-list-user-preview-edit-icon-size: 20px;
+    --users-list-user-preview-title-size: larger;
+
+    --users-list-user-preview-description-padding-horizontal: 30px;
+    --users-list-user-preview-description-padding-vertical: 30px;
+
+    --users-list-user-preview-height: 150px;
+
+    --users-list-user-preview-img-border-radius: 20px;
+    --users-list-user-preview-img-padding: 10px;
+
+    --users-list-add-user-button-border-width: 2px;
+    --users-list-add-user-button-image-padding: 20px;
+}

@@ -13,7 +13,7 @@ div.classes-list {
 
 }
 
-div.classes-list div.class-preview {
+div.classes-list div.class-preview, button#add-class-button {
     position: relative;
 
     margin: 0px;
@@ -26,7 +26,6 @@ div.classes-list div.class-preview {
 
     box-sizing: border-box;
     padding: var(--classes-list-class-preview-padding-vertical) var(--classes-list-class-preview-padding-horizontal);
-    margin: var(--classes-list-margin);
 
     background: var(--inputs-surfaces-color);
     border-radius: var(--classes-list-class-preview-border-radius);
@@ -36,6 +35,11 @@ div.classes-list div.class-preview {
 
 div.classes-list a.class-preview-link {
     text-decoration: none;
+    margin: var(--classes-list-margin);
+}
+
+div.classes-list a.class-preview-link.hidden {
+    display: none;
 }
 
 div.classes-list div.class-preview h1 {
@@ -55,7 +59,25 @@ div.classes-list div.class-preview span.class-edit-icon {
     right: var(--classes-list-class-preview-padding-horizontal);
 }
 
-div.classes-list div.class-preview span.class-edit-icon img{
+div.classes-list div.class-preview span.class-edit-icon img {
     width: var(--classes-list-class-preview-edit-icon-size);
     opacity: 0.6;
 }
+
+div.classes-list button#add-class-button {
+    margin: var(--classes-list-margin);
+    background: none;
+    border: var(--classes-list-add-class-button-border-width) dashed var(--inputs-surfaces-color);
+    height: 100%;
+    outline: none;
+}
+
+div.classes-list button#add-class-button img {
+    height: 2.8em;
+    box-sizing: border-box;
+}
+
+div.classes-list button#add-class-button span {
+    font-size: var(--classes-list-class-preview-title-size);
+}
+
