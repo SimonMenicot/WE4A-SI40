@@ -11,6 +11,11 @@ Welcome, student
     <div id="homepage-content" class="main-page-content">
         <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
+        {% if "ROLE_ADMIN" in base_config.current_user.roles %}
+        <h2>Vos cours</h2>
+        {% endif %}
+
+        {% if base_config.current_user.classes|length %}
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
@@ -31,7 +36,43 @@ Welcome, student
             </a>
             
             {% endfor %}
+
         </div>
+        {% else %}
+        <span>Vous n'avez actuellement aucun cours</span>
+        {% endif %}
+
+        {% if "ROLE_ADMIN" in base_config.current_user.roles %}
+        <h2>Tous les cours</h2>
+
+        {% if classes|length %}
+        <div id="classes" class="classes-list">
+            {% for class in classes %}
+
+            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+            {% else %}
+            <a href="class/{{ class.id }}/read" class="class-preview-link">
+            {% endif %}
+                <div class="class-preview">
+                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                    <span class="class-edit-icon">
+                        <img src="{{ asset("images/icons/edit.png") }}" />
+                    </span>
+                    {% endif %}
+                    <h1>{{ class.name }}</h1>
+                    <p>{{ class.description }}</p>
+                </div>
+            </a>
+            
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <span>Aucun cours trouvé dans la base de données</span>
+        {% endif %}
+        {% endif %}
+
     </div>
 
     {{ include('sections/activity-thread.html.twig') }}
