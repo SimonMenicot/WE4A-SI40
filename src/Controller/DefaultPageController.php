@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\CustomFeatures\ActivitiesManager;
 use App\Entity\Account;
 use App\Entity\Classe;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -104,7 +106,7 @@ class DefaultPageController extends AbstractController
     }
     
     #[Route('/ue-select', 'select ue')]
-    public function render_ue_select(#[CurrentUser] ?Account $user): Response
+    public function render_ue_select(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager): Response
     {
         if ($user === null)
         {
@@ -116,7 +118,8 @@ class DefaultPageController extends AbstractController
                 "displayAdminCheckboxInHeader" => false,
                 "current_user" => $user,
                 "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
-            ]
+            ],
+            "classes" => $entityManager->getRepository(Classe::class)->findAll()
         ]);
     }
     
