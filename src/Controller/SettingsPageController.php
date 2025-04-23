@@ -31,7 +31,7 @@ class SettingsPageController extends AbstractController
 
         return $this->render("settings/home.html.twig", [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
+                "admin_enabled" => false,
                 "current_user" => $user,
                 "current_user_image" => $user_image_base64
             ]
@@ -53,7 +53,7 @@ class SettingsPageController extends AbstractController
 
         return $this->render("settings/account/profile.html.twig", [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
+                "admin_enabled" => false,
                 "current_user" => $user,
                 "current_user_image" => $user_image_base64
             ],
@@ -180,7 +180,7 @@ class SettingsPageController extends AbstractController
 
         return $this->render("settings/account/profile-info.html.twig", [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
+                "admin_enabled" => false,
                 "current_user" => $user,
                 "current_user_image" => $user_image_base64
             ],
@@ -202,7 +202,7 @@ class SettingsPageController extends AbstractController
 
         return $this->render("settings/account/password.html.twig", [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
+                "admin_enabled" => false,
                 "current_user" => $user,
                 "current_user_image" => $user_image_base64
             ],

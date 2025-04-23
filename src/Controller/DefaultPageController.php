@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\Packages;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Twig\Environment;
 
@@ -26,16 +27,92 @@ class DefaultPageController extends AbstractController
     }
 
     #[Route('/', 'home')]
-    public function render_home_base(#[CurrentUser] ?Account $user): Response
+    public function render_home_base(#[CurrentUser] ?Account $user, Request $request, EntityManagerInterface $entityManager): Response
     {
         if ($user === null)
         {
             return $this->redirectToRoute("login-page");
         }
 
-        return $this->redirectToRoute("select ue");
+        $ROLES = [
+            "ROLE_ADMIN" => in_array("ROLE_ADMIN", $user->getRoles()),
+            "ROLE_STUDENT" => in_array("ROLE_STUDENT", $user->getRoles()),
+            "ROLE_TEACHER" => in_array("ROLE_TEACHER", $user->getRoles())
+        ];
+
+        if ($ROLES["ROLE_ADMIN"] && $ROLES["ROLE_TEACHER"])
+        {
+            $admin_mode_enabled = $request->cookies->get("admin_enabled", "false") === "true";
+        } else {
+            $admin_mode_enabled = false;
+        }
+
+        if ($ROLES["ROLE_STUDENT"])
+        {
+            return $this->render_student_home($user, $entityManager);
+        }
+
+        if (($ROLES["ROLE_ADMIN"] && $ROLES["ROLE_TEACHER"] && !$admin_mode_enabled) || (!$ROLES["ROLE_ADMIN"] && $ROLES["ROLE_TEACHER"]))
+        {
+            return $this->render_teacher_home($user, $entityManager);
+        }
+
+        if (($ROLES["ROLE_ADMIN"] && $ROLES["ROLE_TEACHER"] && $admin_mode_enabled) || ($ROLES["ROLE_ADMIN"] && !$ROLES["ROLE_TEACHER"]))
+        {
+            return $this->render_admin_home($user, $entityManager);
+        }
+
+        return new Response(status:Response::HTTP_NOT_IMPLEMENTED);
     }
 
+    public function render_student_home(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        return $this->render('pages/ue-select.html.twig', [
+            "base_config" => [
+                "current_user" => $user,
+                "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
+            ],
+            "classes" => $entityManager->getRepository(Classe::class)->findAll()
+        ]);
+    }
+    
+    public function render_teacher_home(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        return $this->render('pages/ue-select.html.twig', [
+            "base_config" => [
+                "current_user" => $user,
+                "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
+            ],
+            "classes" => $entityManager->getRepository(Classe::class)->findAll()
+        ]);
+    }
+    
+    public function render_admin_home(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        return $this->render('pages/admin-homepage.html.twig', [
+            "base_config" => [
+                "current_user" => $user,
+                "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
+            ],
+            "classes" => $entityManager->getRepository(Classe::class)->findAll()
+        ]);
+    }
+    
     #[Route('/profile', 'self-profile')]
     public function render_self_profile(#[CurrentUser] ?Account $user): Response
     {
@@ -60,7 +137,6 @@ class DefaultPageController extends AbstractController
 
         return $this->render('pages/profile.html.twig', [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
                 "current_user" => $user,
                 "current_user_image" => $user_image_base64
             ],
@@ -79,7 +155,6 @@ class DefaultPageController extends AbstractController
 
         return $this->render('pages/ue-read.html.twig', [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
                 "current_user" => $user,
                 "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
             ],
@@ -97,29 +172,10 @@ class DefaultPageController extends AbstractController
 
         return $this->render('pages/ue-edit.html.twig', [
             "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
                 "current_user" => $user,
                 "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
             ],
             "ue_id" => $id
-        ]);
-    }
-    
-    #[Route('/ue-select', 'select ue')]
-    public function render_ue_select(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager): Response
-    {
-        if ($user === null)
-        {
-            return $this->redirectToRoute("login-page");
-        }
-
-        return $this->render('pages/ue-select.html.twig', [
-            "base_config" => [
-                "displayAdminCheckboxInHeader" => false,
-                "current_user" => $user,
-                "current_user_image" => base64_encode(stream_get_contents($user->getImage()))
-            ],
-            "classes" => $entityManager->getRepository(Classe::class)->findAll()
         ]);
     }
     
