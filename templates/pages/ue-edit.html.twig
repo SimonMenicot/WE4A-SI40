@@ -15,6 +15,14 @@
             <img src="{{ asset("/images/icons/save.png") }}"/>
             <span>Sauvegarder</span>
         </button>
+        <div class="tabs-container" id="class-tabs">
+            <div class="tabs-buttons">
+                <button id="view-tab-button">Aperçu</button>
+                <button id="edit-tab-button">Édition</button>
+            </div>
+            <div class="tabs-content" id="content-display">
+            </div>
+        </div>
         <button class="main-button icon-button" id="save-button-bottom">
             <img src="{{ asset("/images/icons/save.png") }}"/>
             <span>Sauvegarder</span>
@@ -32,17 +40,18 @@
 <script type="module">
 
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
+import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}"
 
 class UeEditScript
 {
-    constructor(class_title, main_content, save_buttons)
+    constructor(class_title, main_content, save_buttons, tabs_selector)
     {
-        console.log(main_content);
-
         this._class_title = class_title;
         this._main_content = main_content;
 
         this._save_buttons = save_buttons;
+
+        this._tabs_selector = tabs_selector;
     }
 
     async start()
@@ -52,7 +61,7 @@ class UeEditScript
         if (fetch_data.status != 202) 
         {
             this._class_title.textContent = "Impossible d'accéder à ce cours";
-            let error_span = this._main_content.insertBefore(document.createElement("span"), document.getElementById("save-button-bottom"));
+            let error_span = this._main_content.appendChild(document.createElement("span"));
             error_span.classList.add("error");
             error_span.classList.add("result-text");
 
@@ -85,7 +94,8 @@ class UeEditScript
 
         this._last_json = JSON.stringify(this._main_section.json_data);
 
-        this._html_base = this._main_content.insertBefore(this._main_section.editableHtmlElement, document.getElementById("save-button-bottom"));
+        this._html_base = this._main_content.appendChild(this._main_section.htmlElement);
+        this._edit_html_base = this._main_content.appendChild(this._main_section.editableHtmlElement);
 
         for (let button of this._save_buttons)
         {
@@ -117,16 +127,23 @@ class UeEditScript
             this.update(event);
         });
             
+        this._tabs_selector.update();
     }
 
     async update(event)
     {
         if (event.detail.requires_reload)
         {
-            let new_html = this._main_section.editableHtmlElement;
-            this._main_content.replaceChild(new_html, this._html_base);
-            this._html_base = new_html;
+            let edit_new_html = this._main_section.editableHtmlElement;
+            this._main_content.replaceChild(edit_new_html, this._edit_html_base);
+            this._edit_html_base = edit_new_html;
         }
+
+        let new_html = this._main_section.htmlElement;
+        this._main_content.replaceChild(new_html, this._html_base);
+        this._html_base = new_html;
+
+        this._tabs_selector.update();
 
         if (this._last_json == JSON.stringify(this._main_section.json_data))
         {
@@ -161,14 +178,15 @@ class UeEditScript
 
 }
 
-window.addEventListener("load", () => {
-    new UeEditScript(
+window.addEventListener("load", async () => {
+    await new UeEditScript(
         document.getElementById("class-title"),
-        document.getElementById("main-class-content"),
+        document.getElementById("content-display"),
         [
             document.getElementById("save-button-top"),
             document.getElementById("save-button-bottom")
-        ]
+        ],
+        new TabsSelector(document.getElementById("class-tabs"))
     ).start();
 });
 

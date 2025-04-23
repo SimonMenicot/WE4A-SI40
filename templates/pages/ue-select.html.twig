@@ -20,6 +20,11 @@ Welcome, student
             <a href="class/{{ class.id }}/read" class="class-preview-link">
             {% endif %}
                 <div class="class-preview">
+                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                    <span class="class-edit-icon">
+                        <img src="{{ asset("images/icons/edit.png") }}" />
+                    </span>
+                    {% endif %}
                     <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>
                 </div>

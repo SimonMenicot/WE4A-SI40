@@ -60,5 +60,11 @@
     --thumbnails-button-background: var(--surfaces-color);
     --thumbnails-button-hover-background: var(--secondary-color-light);
     --thumbnails-button-border-color: var(--secondary-color-light);
+
+    --tabs-buttons-border-color: grey;
+    --tabs-buttons-background: var(--surfaces-color);
+    --tabs-buttons-hover-background: var(--secondary-color-light);
+    --tabs-buttons-selected-background: var(--secondary-color);
+    --tabs-content-border-color: grey;
     
 }
