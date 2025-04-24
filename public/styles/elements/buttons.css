@@ -5,6 +5,7 @@ button, input[type="submit"], input[type="file"] {
 button.main-button, input[type="submit"].main-button, input[type="file"].main-button {
     padding: var(--button-padding);
     background: var(--buttons-background);
+    height: calc(1em + 2 * var(--button-padding));
     border: var(--button-border-weight) solid var(--buttons-border-color);
     border-radius: var(--button-border-radius);
     outline: none;
@@ -27,6 +28,9 @@ button.icon-button {
     flex-direction: row;
     align-items: center;
     
+}
+
+button.icon-button:not(.main-button) {
     height: var(--icon-button-size);
     min-width: var(--icon-button-size);
     padding: var(--icon-button-padding);
@@ -37,7 +41,7 @@ button.icon-button img {
     max-height: 100%;
 }
 
-button.icon-button:has(span) img {
-    padding-right: var(--icon-button-padding);
+button.icon-button.main-button:has(span) img, button.icon-button.main-button:has(p) img {
+    padding-right: var(--button-padding);
 }
 

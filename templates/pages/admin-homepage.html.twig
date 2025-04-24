@@ -17,7 +17,7 @@ Welcome, student
         {% if base_config.current_user.classes|length %}
         <div class="search-bar" id="classes-search-bar">
             <input type="text"/>
-            <button class="icon-button">
+            <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
         </div>
@@ -47,10 +47,9 @@ Welcome, student
 
         <h2>Tous les cours</h2>
 
-        {% if classes|length %}
         <div class="search-bar" id="global-classes-search-bar">
             <input type="text"/>
-            <button class="icon-button">
+            <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
         </div>
@@ -73,19 +72,16 @@ Welcome, student
             <button id="add-class-button">
                 <img src="{{ asset("images/icons/add.png") }}" />
                 <span class="class-edit-icon">
-                    Nouvelle classe...
+                    Nouveau cours...
                 </span>
             </button>
         </div>
-        {% else %}
-        <span>Aucun cours trouvé dans la base de données</span>
-        {% endif %}
 
         <h2>Tous les utilisateurs</h2>
 
         <div class="search-bar" id="users-search-bar">
             <input type="text"/>
-            <button class="icon-button">
+            <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
         </div>
@@ -93,7 +89,7 @@ Welcome, student
         <div id="users" class="users-list">
             {% for user in accounts %}
 
-            <a href="profile/{{ user.id }}" class="user-preview-link">
+            <a href="/profile/{{ user.id }}" class="user-preview-link">
                 <div class="user-preview">
                     <img src="data:image/png;base64,{{ user.image }}" />
 
@@ -128,5 +124,41 @@ Welcome, student
     {{ include('sections/activity-thread.html.twig') }}
 
 </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+import { CreateClassWidget } from "{{ asset("scripts/widgets/CreateClassWidget.js") }}";
+
+window.addEventListener("load", () => {
+{% if base_config.current_user.classes|length %}
+    let classes_search_bar = new SearchBar(document.getElementById("classes-search-bar"));
+    new SearchList(classes_search_bar, document.getElementById("classes"));
+
+{% endif %}
+    let global_classes_search_bar = new SearchBar(document.getElementById("global-classes-search-bar"));
+    new SearchList(global_classes_search_bar, document.getElementById("global-classes"));
+
+    let users_search_bar = new SearchBar(document.getElementById("users-search-bar"));
+    new SearchList(users_search_bar, document.getElementById("users"));
+
+    let add_class_button = document.getElementById('add-class-button');
+    add_class_button.addEventListener("click", async () => {
+        let widget = new CreateClassWidget();
+        let new_class_id = await widget.main();
+
+        if (new_class_id !== null)
+        {
+            document.location.href = "/class/" + new_class_id + "/edit";
+        }
+    });
+});
+
+</script>
 
 {% endblock %}

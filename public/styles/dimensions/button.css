@@ -1,11 +1,11 @@
 :root {
-    --button-padding: 20px;
+    --button-padding: 10px;
     --button-border-weight: 0px;
     --button-border-radius: 5px;
     --button-font-size: medium;
     --button-disabled-opacity: 0.5;
 
-    --icon-button-size: 40px;
-    --icon-button-padding: 10px;
+    --icon-button-size: 20px;
+    --icon-button-padding: 4px;
 
 }

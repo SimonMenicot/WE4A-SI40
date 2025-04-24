@@ -1,16 +1,29 @@
 div.users-list {
     position: relative;
 
-    width: 100%;
+    max-width: 100%;
     height: min-content;
     margin: 0px;
 
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     box-sizing: border-box;
-    justify-content: center;
 
+    gap: var(--users-list-margin);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+div.users-list a.user-preview-link {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+div.users-list a.user-preview-link.hidden, div.users-list div.user-preview.hidden {
+    display: none;
 }
 
 div.users-list div.user-preview, div.users-list button#add-user-button {
@@ -36,9 +49,13 @@ div.users-list div.user-preview, div.users-list button#add-user-button {
     cursor: pointer;
 }
 
-div.users-list a.user-preview-link {
-    text-decoration: none;
-    margin: var(--users-list-margin);
+div.users-list div.user-preview.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+div.users-list div.user-preview.selected {
+    background: var(--users-list-user-preview-selected-background);
 }
 
 div.users-list div.user-preview img, div.users-list button#add-user-button img {
@@ -81,6 +98,7 @@ div.users-list button#add-user-button {
     margin: var(--users-list-margin);
     background: none;
     border: var(--users-list-add-user-button-border-width) dashed var(--inputs-surfaces-color);
+    box-sizing: border-box;
 }
 
 div.users-list button#add-user-button span {
@@ -93,5 +111,6 @@ div.users-list button#add-user-button span {
 
 div.users-list button#add-user-button img {
     padding: var(--users-list-add-user-button-image-padding);
+    box-sizing: border-box;
 }
 

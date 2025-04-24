@@ -50,7 +50,8 @@
     --settings-menu-item-hover-background: #fff4;
     --settings-menu-item-selected-background: var(--surfaces-color);
     --settings-menu-border-color: black;
-    --settings-edit-media-button-background: #fff8;
+    --image-edit-button-background: #fff8;
+    --image-edit-border-color: grey;
     
     --fields-border-color: var(--secondary-color);
     --fields-background: var(--surfaces-color);
@@ -72,4 +73,6 @@
     --checkbox-border-color: white;
     --checkbox-background: var(--surfaces-color);
     --checkbox-color: var(--secondary-color);
+
+    --users-list-user-preview-selected-background: var(--secondary-color);
 }

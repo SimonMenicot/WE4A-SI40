@@ -6,6 +6,7 @@ use App\Entity\Account;
 use App\Entity\Classe;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -188,12 +189,34 @@ class DefaultPageController extends AbstractController
     }
     
     #[Route('/class/{id}/edit', 'ue-edit')]
-    public function render_ue_edit(#[CurrentUser] ?Account $user, int $id, Request $request): Response
+    public function render_ue_edit(#[CurrentUser] ?Account $user, int $id, ?Classe $class, Request $request): Response
     {
         if ($user === null)
         {
             return $this->redirectToRoute("login-page");
         }
+
+        if ($class === null)
+        {
+            $accounts = [];
+        } else {
+            $accounts = $class->getAccounts();
+        }
+
+        $users = [];
+
+        foreach ($accounts as $account)
+        {
+            $users[] = [
+                "name" => $account->getName(),
+                "surname" => $account->getSurname(),
+                "image" => $this->readImage($account->getImage()),
+                "description" => $account->getDescription(),
+                "roles" => $account->getRoles(),
+                "id" => $account->getId()
+            ];
+        }
+
 
         return $this->render('pages/ue-edit.html.twig', [
             "base_config" => [
@@ -201,7 +224,8 @@ class DefaultPageController extends AbstractController
                 "current_user_image" => $this->readImage($user->getImage()),
                 "user_role" => $this->get_current_user_role($user, $request)
             ],
-            "ue_id" => $id
+            "ue_id" => $id,
+            "users" => $users
         ]);
     }
     

@@ -3,5 +3,8 @@
     --fullscreen-widget-height: 450px;
     --fullscreen-widget-padding: 30px;
     --fullscreen-widget-border-radius: 10px;
+    --fullscreen-widget-gap: 20px;
+    --fullscreen-widget-form-margin-bottom: 8px;
+    --fullscreen-widget-buttons-margin: 10px;
 
 }

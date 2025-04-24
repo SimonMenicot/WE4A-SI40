@@ -14,7 +14,7 @@ Welcome, student
         {% if base_config.current_user.classes|length %}
         <div class="search-bar" id="classes-search-bar">
             <input type="text"/>
-            <button class="icon-button">
+            <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
         </div>
@@ -51,4 +51,22 @@ Welcome, student
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+{% if base_config.current_user.classes|length %}
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+window.addEventListener("load", () => {
+    let search_bar = new SearchBar(document.getElementById("classes-search-bar"));
+
+    new SearchList(search_bar, document.getElementById("classes"));
+});
+
+</script>
+
+{% endif %}
 {% endblock %}
