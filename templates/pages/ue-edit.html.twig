@@ -34,9 +34,9 @@
                         <input id="description-input"/>
                         <label> Image de fond </label>
                         <div class="image-edit">
-                            <img class="edit-image" id="class-thumbnail">
+                            <img class="edit-image" id="thumbnail-display">
                             </img>
-                            <button id="class-button">
+                            <button id="thumbnail-button">
                                 <img src="{{ asset("images/icons/upload.png") }}"/>
                             </button>
                         </div>
@@ -45,7 +45,7 @@
                         </button>
                     <hr></hr>
                     <h2> Gestion </h2>
-                    <button id="delete" class="main-button icon-button">
+                    <button id="delete-class-button" class="main-button icon-button">
                         <img src="{{ asset("images/icons/delete.png") }}"/>
                         <span> Supprimer le cours </span>
                     </button> 
@@ -85,7 +85,7 @@
                         <button id="add-user-button">
                             <img src="{{ asset("images/icons/add.png") }}" />
                             <span class="user-edit-icon">
-                                Ajouter un élève...
+                                Ajouter un élève / enseignant...
                             </span>
                         </button>
 
@@ -118,11 +118,15 @@ import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
 import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
 
 import { SelectUserWidget } from "{{ asset("scripts/widgets/SelectUserWidget.js") }}";
+import { ConfirmWidget } from "{{ asset("scripts/widgets/ConfirmWidget.js") }}";
+import { AlertWidget } from "{{ asset("scripts/widgets/AlertWidget.js") }}";
+
+import { ImageSelector } from "/scripts/elements/ImageSelector.js";
 {% endif %}
 
 class UeEditScript
 {
-    constructor(class_title, main_content, save_buttons, tabs_selector{% if base_config.user_role == "ROLE_ADMIN" %}, title_input, description_input, thumbnail_input{% endif %})
+    constructor(class_title, main_content, save_buttons, tabs_selector{% if base_config.user_role == "ROLE_ADMIN" %}, title_input, description_input, thumbnail_image, thumbnail_button{% endif %})
     {
         this._class_title = class_title;
         this._main_content = main_content;
@@ -133,10 +137,16 @@ class UeEditScript
 
         {% if base_config.user_role == "ROLE_ADMIN" %}
         this._title_input = title_input;
+        this._thumbnail_button = thumbnail_button;
         this._description_input = description_input;
-        this._thumbnail_input = thumbnail_input;
+        this._thumbnail_image = thumbnail_image;
         {% endif %}
 
+    }
+
+    async onImageSelected(base64_content)
+    {
+        this._thumbnail_image.src = "data:image/png;base64," + base64_content;
     }
 
     async start()
@@ -180,6 +190,14 @@ class UeEditScript
 
         this._title_input.value = data.name;
         this._description_input.value = data.description;
+
+        this._thumbnail_selector = new ImageSelector(this._thumbnail_button, "data:img/png;base64," + data.thumbnail,
+            (base64_content) => {
+                this.onImageSelected(base64_content);
+            },
+            3000,
+            1000
+        );
         {% endif %}
 
         this._last_json = JSON.stringify(this._main_section.json_data);
@@ -380,6 +398,47 @@ class UeUsersScript
         }
     }
 }
+
+class UeMainHandlePanelScript
+{
+    constructor(delete_button)
+    {
+        this._delete_button = delete_button;
+
+        delete_button.addEventListener("click", () => {
+            this.onDeleteClicked();
+        });
+    }
+
+    async onDeleteClicked() {
+        let confirm = new ConfirmWidget("Êtes-vous sûr de vouloir supprimer ce cours?", "Cette opération est irréversible!")
+
+        if (await confirm.main())
+        {
+            let request = await fetch("/classes/{{ ue_id }}/delete", { method: "POST"});
+            
+            switch (request.status) {
+                case 202:
+                location.href = "/";
+                break;
+            
+                case 401:
+                await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter");
+                break;
+
+                case 403:
+                await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ");
+                break;
+
+                default:
+                await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")");
+                break;
+            }
+        } else {
+            console.log("operation canceled");
+        }
+    }
+}
 {% endif %}
 
 window.addEventListener("load", async () => {
@@ -393,6 +452,8 @@ window.addEventListener("load", async () => {
         new TabsSelector(document.getElementById("class-tabs")){% if base_config.user_role == "ROLE_ADMIN" %},
         document.getElementById("title-input"),
         document.getElementById("description-input"),
+        document.getElementById("thumbnail-display"),
+        document.getElementById("thumbnail-button")
         {% endif %}
     ).start();
     {% if base_config.user_role == "ROLE_ADMIN" %}
@@ -402,6 +463,8 @@ window.addEventListener("load", async () => {
         document.getElementById("users-search-bar"),
         document.getElementById('add-user-button')
     );
+
+    new UeMainHandlePanelScript(document.getElementById("delete-class-button"));
     {% endif %}
 });
 

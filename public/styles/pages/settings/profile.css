@@ -28,3 +28,7 @@ div#settings-content div#profile-settings-description textarea {
 div#settings-content button#profile-settings-save-button {
     align-self: center;
 }
+
+div#settings-content div.image-edit {
+    aspect-ratio: 1;
+}

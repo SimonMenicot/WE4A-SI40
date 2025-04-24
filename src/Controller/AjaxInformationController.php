@@ -5,6 +5,7 @@ use App\CustomFeatures\ActivitiesManager;
 use App\Entity\Account;
 use App\Entity\Classe;
 use App\Entity\File;
+use App\Repository\ClasseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,6 +59,7 @@ class AjaxInformationController extends AbstractController
                     "type" => $content["type"],
                     "data" => $this->cleanContentData($content, $entityManager)
                 ],
+                "image" => $this->readImage($class->getThumbnail())
             ], true),
             Response::HTTP_ACCEPTED,
             [
@@ -377,6 +379,32 @@ class AjaxInformationController extends AbstractController
         ]), Response::HTTP_ACCEPTED);
     }
 
+    #[Route('/classes/{id}/delete', name: "delete-class", methods: ["POST"])]
+    public function delete_class(#[CurrentUser] ?Account $user, Classe $class, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null) 
+        {
+            return new Response(json_encode([
+                "error" => 'bad user or password'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $entityManager->remove($class);
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+        ]), Response::HTTP_ACCEPTED);
+    }
+
     #[Route('/classes/new', name: "create class", methods:["POST"])]
     public function create_new_class(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -463,5 +491,13 @@ class AjaxInformationController extends AbstractController
             return $class_content["data"];
         }
     }
+
+    public function readImage($image)
+    {
+        if (is_null($image)) return "";
+        fseek($image, 0);
+        return base64_encode(stream_get_contents($image));
+    }
+
 }
 

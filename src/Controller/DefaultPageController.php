@@ -86,13 +86,25 @@ class DefaultPageController extends AbstractController
             return $this->redirectToRoute("login-page");
         }
 
+        $classes = [];
+
+        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        {
+            $classes[] = [
+                "id" => $class->getId(),
+                "name" => $class->getName(),
+                "description" => $class->getDescription(),
+                "thumbnail" => $this->readImage($class->getThumbnail()),
+            ];
+        }
+
         return $this->render('pages/ue-select.html.twig', [
             "base_config" => [
                 "current_user" => $user,
                 "current_user_image" => $this->readImage($user->getImage()),
                 "user_role" => "ROLE_STUDENT"
             ],
-            "classes" => $entityManager->getRepository(Classe::class)->findAll()
+            "classes" => $classes
         ]);
     }
     
@@ -103,13 +115,25 @@ class DefaultPageController extends AbstractController
             return $this->redirectToRoute("login-page");
         }
 
+        $classes = [];
+
+        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        {
+            $classes[] = [
+                "id" => $class->getId(),
+                "name" => $class->getName(),
+                "description" => $class->getDescription(),
+                "thumbnail" => $this->readImage($class->getThumbnail()),
+            ];
+        }
+
         return $this->render('pages/ue-select.html.twig', [
             "base_config" => [
                 "current_user" => $user,
                 "current_user_image" => $this->readImage($user->getImage()),
                 "user_role" => "ROLE_TEACHER"
             ],
-            "classes" => $entityManager->getRepository(Classe::class)->findAll()
+            "classes" => $classes
         ]);
     }
     
@@ -134,13 +158,25 @@ class DefaultPageController extends AbstractController
             ];
         }
 
+        $classes = [];
+
+        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        {
+            $classes[] = [
+                "id" => $class->getId(),
+                "name" => $class->getName(),
+                "description" => $class->getDescription(),
+                "thumbnail" => $this->readImage($class->getThumbnail()),
+            ];
+        }
+
         return $this->render('pages/admin-homepage.html.twig', [
             "base_config" => [
                 "current_user" => $user,
                 "current_user_image" => $this->readImage($user->getImage()),
                 "user_role" => "ROLE_ADMIN"
             ],
-            "classes" => $entityManager->getRepository(Classe::class)->findAll(),
+            "classes" => $classes,
             "accounts" => $accounts,
         ]);
     }
@@ -243,6 +279,7 @@ class DefaultPageController extends AbstractController
 
     public function readImage($image)
     {
+        if (is_null($image)) return "";
         fseek($image, 0);
         return base64_encode(stream_get_contents($image));
     }

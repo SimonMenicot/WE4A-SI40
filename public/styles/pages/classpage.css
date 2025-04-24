@@ -49,3 +49,6 @@ div#admin-class-handler input
     width: 100%;
 }
 
+div#admin-class-handler div.image-edit {
+    aspect-ratio: 3;
+}
