@@ -1,0 +1,164 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+Welcome, student
+
+{% endblock %}
+
+{% block body %}
+<div id="homepage-main-separation" class="content-separator">
+    <div id="homepage-content" class="main-page-content">
+        <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
+
+        {% if "ROLE_TEACHER" in base_config.current_user.roles %}
+        <h2>Vos cours</h2>
+
+        {% if base_config.current_user.classes|length %}
+        <div class="search-bar" id="classes-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="classes" class="classes-list">
+            {% for class in base_config.current_user.classes %}
+
+            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+                <div class="class-preview">
+                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                    <span class="class-edit-icon">
+                        <img src="{{ asset("images/icons/edit.png") }}" />
+                    </span>
+                    {% endif %}
+                    <h1>{{ class.name }}</h1>
+                    <p>{{ class.description }}</p>
+                </div>
+            </a>
+            
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <span>Vous n'avez actuellement aucun cours</span>
+        {% endif %}
+        {% endif %}
+
+        <h2>Tous les cours</h2>
+
+        <div class="search-bar" id="global-classes-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="global-classes" class="classes-list">
+            {% for class in classes %}
+
+            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+                <div class="class-preview">
+                    <span class="class-edit-icon">
+                        <img src="{{ asset("images/icons/edit.png") }}" />
+                    </span>
+                    <h1>{{ class.name }}</h1>
+                    <p>{{ class.description }}</p>
+                </div>
+            </a>
+            
+            {% endfor %}
+
+            <button id="add-class-button">
+                <img src="{{ asset("images/icons/add.png") }}" />
+                <span class="class-edit-icon">
+                    Nouveau cours...
+                </span>
+            </button>
+        </div>
+
+        <h2>Tous les utilisateurs</h2>
+
+        <div class="search-bar" id="users-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="users" class="users-list">
+            {% for user in accounts %}
+
+            <a href="/profile/{{ user.id }}" class="user-preview-link">
+                <div class="user-preview">
+                    <img src="data:image/png;base64,{{ user.image }}" />
+
+                    <div class="user-description">
+                        <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} 
+                {% if role == "ROLE_STUDENT" %}
+                Étudiant
+                {% elseif role == "ROLE_TEACHER" %}
+                Enseignant
+                {% elseif role == "ROLE_ADMIN" %}
+                Administrateur
+                {% endif %}
+                {% endfor %}</span></h1>
+                        <p>{{ user.description }}</p>
+                    </div>
+                </div>
+
+            </a>
+            
+            {% endfor %}
+            <button id="add-user-button">
+                <img src="{{ asset("images/icons/add.png") }}" />
+                <span class="user-edit-icon">
+                    Nouvel utilisateur...
+                </span>
+            </button>
+
+        </div>
+
+    </div>
+
+    {{ include('sections/activity-thread.html.twig') }}
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+import { CreateClassWidget } from "{{ asset("scripts/widgets/CreateClassWidget.js") }}";
+
+window.addEventListener("load", () => {
+{% if base_config.current_user.classes|length %}
+    let classes_search_bar = new SearchBar(document.getElementById("classes-search-bar"));
+    new SearchList(classes_search_bar, document.getElementById("classes"));
+
+{% endif %}
+    let global_classes_search_bar = new SearchBar(document.getElementById("global-classes-search-bar"));
+    new SearchList(global_classes_search_bar, document.getElementById("global-classes"));
+
+    let users_search_bar = new SearchBar(document.getElementById("users-search-bar"));
+    new SearchList(users_search_bar, document.getElementById("users"));
+
+    let add_class_button = document.getElementById('add-class-button');
+    add_class_button.addEventListener("click", async () => {
+        let widget = new CreateClassWidget();
+        let new_class_id = await widget.main();
+
+        if (new_class_id !== null)
+        {
+            document.location.href = "/class/" + new_class_id + "/edit";
+        }
+    });
+});
+
+</script>
+
+{% endblock %}

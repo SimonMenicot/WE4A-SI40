@@ -11,21 +11,24 @@ Welcome, student
     <div id="homepage-content" class="main-page-content">
         <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
-        {% if "ROLE_ADMIN" in base_config.current_user.roles %}
-        <h2>Vos cours</h2>
-        {% endif %}
-
         {% if base_config.current_user.classes|length %}
+        <div class="search-bar" id="classes-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
-            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+            {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
             <a href="class/{{ class.id }}/edit" class="class-preview-link">
             {% else %}
             <a href="class/{{ class.id }}/read" class="class-preview-link">
             {% endif %}
                 <div class="class-preview">
-                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                    {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
                     </span>
@@ -42,41 +45,28 @@ Welcome, student
         <span>Vous n'avez actuellement aucun cours</span>
         {% endif %}
 
-        {% if "ROLE_ADMIN" in base_config.current_user.roles %}
-        <h2>Tous les cours</h2>
-
-        {% if classes|length %}
-        <div id="classes" class="classes-list">
-            {% for class in classes %}
-
-            {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
-            <a href="class/{{ class.id }}/edit" class="class-preview-link">
-            {% else %}
-            <a href="class/{{ class.id }}/read" class="class-preview-link">
-            {% endif %}
-                <div class="class-preview">
-                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
-                    <span class="class-edit-icon">
-                        <img src="{{ asset("images/icons/edit.png") }}" />
-                    </span>
-                    {% endif %}
-                    <h1>{{ class.name }}</h1>
-                    <p>{{ class.description }}</p>
-                </div>
-            </a>
-            
-            {% endfor %}
-
-        </div>
-        {% else %}
-        <span>Aucun cours trouvé dans la base de données</span>
-        {% endif %}
-        {% endif %}
-
     </div>
 
     {{ include('sections/activity-thread.html.twig') }}
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+{% if base_config.current_user.classes|length %}
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+window.addEventListener("load", () => {
+    let search_bar = new SearchBar(document.getElementById("classes-search-bar"));
+
+    new SearchList(search_bar, document.getElementById("classes"));
+});
+
+</script>
+
+{% endif %}
 {% endblock %}

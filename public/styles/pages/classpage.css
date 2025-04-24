@@ -36,3 +36,19 @@ div#main-class-content > button {
     margin-top: var(--classpage-save-buttons-margin);
     margin-bottom: var(--classpage-save-buttons-margin);
 }
+
+div#admin-class-handler
+{
+    padding: var(--classpage-admin-class-handler-margin);
+}
+
+div#admin-class-handler input
+{
+    display: block;
+    margin: var(--classpage-admin-class-handler-spacing) 0px;
+    width: 100%;
+}
+
+div#admin-class-handler div.image-edit {
+    aspect-ratio: 3;
+}

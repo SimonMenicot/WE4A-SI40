@@ -1,7 +1,7 @@
 div.thumbnails-list
 {
     display: flex;
-    flex-direction: row;
+    flex-direction: row!important;
     flex-wrap: wrap;
     overflow-y: auto;
     gap: var(--thumbnails-list-spacing);

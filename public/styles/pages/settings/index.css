@@ -13,47 +13,6 @@ div#settings-content {
     flex-direction: column;
 }
 
-div#settings-content div.user-image-edit {
-    position: relative;
-    width: var(--settings-user-image-edit-size);
-    height: var(--settings-user-image-edit-size);
-    margin: 0px;
-    padding: 0px;
-}
-
-div#settings-content div.user-image-edit .user-profile-image {
-    width: var(--settings-user-image-edit-size);
-    height: var(--settings-user-image-edit-size);
-    border-radius: var(--settings-user-image-edit-size);
-}
-
-div#settings-content div.user-image-edit button {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background: var(--settings-edit-media-button-background);
-    border: 0px;
-    border-radius: var(--settings-user-image-edit-size);
-    padding: var(--settings-edit-media-button-padding);
-}
-
-div#settings-content div.user-image-edit button img {
-    width: 100%;
-    height: 100%;
-}
-
-div#settings-content div.user-image-edit button {
-    opacity: 0;
-    transition: 0.2s all ease-out;
-}
-
-div#settings-content div.user-image-edit button:hover {
-    opacity: 1;
-    transition: 0.2s all ease-out;
-}
-
 div#settings-content div.settings-row {
     display: flex;
     flex-direction: row;
