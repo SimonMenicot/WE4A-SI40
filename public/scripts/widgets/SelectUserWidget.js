@@ -33,7 +33,7 @@ export class SelectUserWidget extends Widget
 
         this.content_element.innerHTML = `
 <div class="search-bar" id="users-search-bar">
-    <input type="text"/>
+    <input type="text" placeholder="Rechercher..."/>
     <button class="icon-button main-button">
         <img src="/images/icons/search.png"/>
     </button>

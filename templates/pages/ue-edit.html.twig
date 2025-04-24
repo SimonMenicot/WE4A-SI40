@@ -40,7 +40,7 @@
                                 <img src="{{ asset("images/icons/upload.png") }}"/>
                             </button>
                         </div>
-                        <button class="main-button">
+                        <button class="main-button" id="save-class-info-button">
                             <span> Enregistrer </span>
                         </button>
                     <hr></hr>
@@ -52,7 +52,7 @@
                 </div>
                 <div>
                     <div class="search-bar" id="users-search-bar">
-                        <input type="text"/>
+                        <input type="text" placeholder="Rechercher..."/>
                         <button class="icon-button main-button">
                             <img src="{{ asset("images/icons/search.png") }}"/>
                         </button>
@@ -238,6 +238,11 @@ class UeEditScript
         this._tabs_selector.update();
     }
 
+    get thumbnail_selector()
+    {
+        return this._thumbnail_selector;
+    }
+
     async update(event)
     {
         if (event.detail.requires_reload)
@@ -401,13 +406,51 @@ class UeUsersScript
 
 class UeMainHandlePanelScript
 {
-    constructor(delete_button)
+    constructor(name_input, description_input, image_selector, save_button, delete_button)
     {
+        this._name_input = name_input;
+        this._description_input = description_input;
+        this._image_selector = image_selector;
+        this._save_button = save_button;
         this._delete_button = delete_button;
+
+        save_button.addEventListener("click", () => {
+            this.onSaveClicked();
+        })
 
         delete_button.addEventListener("click", () => {
             this.onDeleteClicked();
         });
+    }
+
+    async onSaveClicked() {
+        let request = await fetch("/classes/{{ ue_id }}/set-info", {
+            method: "POST",
+            body: JSON.stringify({
+                name: this._name_input.value,
+                description: this._description_input.value,
+                thumbnail: this._image_selector.base64_png_data,
+            })
+        });
+        
+        switch (request.status) {
+            case 202:
+            await new AlertWidget("Cours enregistré", "Le cours a été enregistré avec succès").main();
+            location.reload();
+            break;
+        
+            case 401:
+            await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+            break;
+
+            default:
+            await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+            break;
+        }
     }
 
     async onDeleteClicked() {
@@ -423,15 +466,15 @@ class UeMainHandlePanelScript
                 break;
             
                 case 401:
-                await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter");
+                await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter").main();
                 break;
 
                 case 403:
-                await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ");
+                await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
                 break;
 
                 default:
-                await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")");
+                await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
                 break;
             }
         } else {
@@ -442,7 +485,7 @@ class UeMainHandlePanelScript
 {% endif %}
 
 window.addEventListener("load", async () => {
-    await new UeEditScript(
+    let ue_edit_script = new UeEditScript(
         document.getElementById("class-title"),
         document.getElementById("content-display"),
         [
@@ -455,7 +498,9 @@ window.addEventListener("load", async () => {
         document.getElementById("thumbnail-display"),
         document.getElementById("thumbnail-button")
         {% endif %}
-    ).start();
+    );
+    await ue_edit_script.start();
+
     {% if base_config.user_role == "ROLE_ADMIN" %}
     
     new UeUsersScript([{% for user in users %} {{ user.id}}, {% endfor %}],
@@ -464,7 +509,13 @@ window.addEventListener("load", async () => {
         document.getElementById('add-user-button')
     );
 
-    new UeMainHandlePanelScript(document.getElementById("delete-class-button"));
+    new UeMainHandlePanelScript(
+        document.getElementById("title-input"),
+        document.getElementById("description-input"),
+        ue_edit_script.thumbnail_selector,
+        document.getElementById("save-class-info-button"),
+        document.getElementById("delete-class-button")
+    );
     {% endif %}
 });
 

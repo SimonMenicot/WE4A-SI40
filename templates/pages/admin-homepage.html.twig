@@ -16,7 +16,7 @@ Welcome, student
 
         {% if base_config.current_user.classes|length %}
         <div class="search-bar" id="classes-search-bar">
-            <input type="text"/>
+            <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
@@ -48,7 +48,7 @@ Welcome, student
         <h2>Tous les cours</h2>
 
         <div class="search-bar" id="global-classes-search-bar">
-            <input type="text"/>
+            <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>
@@ -80,7 +80,7 @@ Welcome, student
         <h2>Tous les utilisateurs</h2>
 
         <div class="search-bar" id="users-search-bar">
-            <input type="text"/>
+            <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
                 <img src="{{ asset("images/icons/search.png") }}"/>
             </button>

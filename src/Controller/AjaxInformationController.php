@@ -59,7 +59,7 @@ class AjaxInformationController extends AbstractController
                     "type" => $content["type"],
                     "data" => $this->cleanContentData($content, $entityManager)
                 ],
-                "image" => $this->readImage($class->getThumbnail())
+                "thumbnail" => $this->readImage($class->getThumbnail())
             ], true),
             Response::HTTP_ACCEPTED,
             [
@@ -371,6 +371,39 @@ class AjaxInformationController extends AbstractController
                 ]));
             }
         }
+
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+        ]), Response::HTTP_ACCEPTED);
+    }
+
+    #[Route('/classes/{id}/set-info', name: "classes-set-info", methods: ["POST"])]
+    public function set_class_info(#[CurrentUser] ?Account $user, Classe $class, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null) 
+        {
+            return new Response(json_encode([
+                "error" => 'bad user or password'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $name = $request->getPayload()->get("name");
+        $description = $request->getPayload()->get("description");
+        $thumbnail = $request->getPayload()->get("thumbnail");
+
+        if (!is_null($name)) $class->setName($name);
+        if (!is_null($description)) $class->setDescription($description);
+        if (!is_null($thumbnail)) $class->setThumbnail(base64_decode($thumbnail));
 
         $entityManager->flush();
 
