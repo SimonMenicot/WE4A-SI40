@@ -9,24 +9,60 @@ Welcome, student
 {% block body %}
 <div id="homepage-main-separation" class="content-separator">
     <div id="homepage-content" class="main-page-content">
-        <h1>Bonjour, Nimen Laden!</h1>
+        <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
+
+        {% if base_config.current_user.classes|length %}
+        <div class="search-bar" id="classes-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
 
         <div id="classes" class="classes-list">
             {% for class in classes %}
 
-            <a href="ue-read.php" class="class-preview-link">
-                <div class="class-preview">
-                    <h1>{{ class.title }}</h1>
+            <a href="class/{{ class.id }}" class="class-preview-link">
+                <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
+                    {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
+                    <span class="class-edit-icon">
+                        <img src="{{ asset("images/icons/edit.png") }}" />
+                    </span>
+                    {% endif %}
+                    <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>
                 </div>
             </a>
             
             {% endfor %}
+
         </div>
+        {% else %}
+        <span>Vous n'avez actuellement aucun cours</span>
+        {% endif %}
+
     </div>
 
     {{ include('sections/activity-thread.html.twig') }}
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+{% if base_config.current_user.classes|length %}
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+window.addEventListener("load", () => {
+    let search_bar = new SearchBar(document.getElementById("classes-search-bar"));
+
+    new SearchList(search_bar, document.getElementById("classes"));
+});
+
+</script>
+
+{% endif %}
 {% endblock %}

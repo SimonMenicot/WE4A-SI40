@@ -1,0 +1,524 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="classpage-main-separation" class="content-separator">
+    <div id="main-class-content" class="class-content">
+        <div class="class-title-content">
+            <a class="class-back-link" href="/">
+                <img src="{{ asset("/images/icons/back.png") }}">
+            </a>
+            <h1 id="class-title">
+                Chargement...
+            </h1>
+        </div>
+        <button class="main-button icon-button" id="save-button-top">
+            <img src="{{ asset("/images/icons/save.png") }}"/>
+            <span>Sauvegarder</span>
+        </button>
+        <div class="tabs-container" id="class-tabs">
+            <div class="tabs-buttons">
+                {% if base_config.user_role == "ROLE_ADMIN" %}
+                <button id="view-tab-button">Paramètres généraux</button>
+                <button id="view-tab-button">Comptes liés</button>
+                {% endif %}
+                <button id="view-tab-button">Aperçu</button>
+                <button id="edit-tab-button">Édition</button>
+            </div>
+            <div class="tabs-content" id="content-display">
+                {% if base_config.user_role == "ROLE_ADMIN" %}
+                <div id="admin-class-handler">
+                    <h2> Affiche </h2>
+                        <label> Nom </label>
+                        <input id="title-input"/>
+                        <label> Description brève </label>
+                        <input id="description-input"/>
+                        <label> Image de fond </label>
+                        <div class="image-edit">
+                            <img class="edit-image" id="thumbnail-display">
+                            </img>
+                            <button id="thumbnail-button">
+                                <img src="{{ asset("images/icons/upload.png") }}"/>
+                            </button>
+                        </div>
+                        <button class="main-button" id="save-class-info-button">
+                            <span> Enregistrer </span>
+                        </button>
+                    <hr></hr>
+                    <h2> Gestion </h2>
+                    <button id="delete-class-button" class="main-button icon-button">
+                        <img src="{{ asset("images/icons/delete.png") }}"/>
+                        <span> Supprimer le cours </span>
+                    </button> 
+                </div>
+                <div>
+                    <div class="search-bar" id="users-search-bar">
+                        <input type="text" placeholder="Rechercher..."/>
+                        <button class="icon-button main-button">
+                            <img src="{{ asset("images/icons/search.png") }}"/>
+                        </button>
+                    </div>
+
+                    <div id="users" class="users-list">
+                        {% for user in users %}
+
+                        <a href="/profile/{{ user.id }}" class="user-preview-link" target="_blank">
+                            <div class="user-preview">
+                                <img src="data:image/png;base64,{{ user.image }}" />
+
+                                <div class="user-description">
+                                    <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} 
+                                        {% if role == "ROLE_STUDENT" %}
+                                        Étudiant
+                                        {% elseif role == "ROLE_TEACHER" %}
+                                        Enseignant
+                                        {% elseif role == "ROLE_ADMIN" %}
+                                        Administrateur
+                                        {% endif %}
+                                        {% endfor %}</span></h1>
+                                    <p>{{ user.description }}</p>
+                                </div>
+                            </div>
+
+                        </a>
+                        
+                        {% endfor %}
+                        <button id="add-user-button">
+                            <img src="{{ asset("images/icons/add.png") }}" />
+                            <span class="user-edit-icon">
+                                Ajouter un élève / enseignant...
+                            </span>
+                        </button>
+
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <button class="main-button icon-button" id="save-button-bottom">
+            <img src="{{ asset("/images/icons/save.png") }}"/>
+            <span>Sauvegarder</span>
+        </button>
+    </div>
+
+    {% include 'sections/activity-thread.html.twig' %}
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="module">
+
+import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
+import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}"
+{% if base_config.user_role == "ROLE_ADMIN" %}
+
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+import { SelectUserWidget } from "{{ asset("scripts/widgets/SelectUserWidget.js") }}";
+import { ConfirmWidget } from "{{ asset("scripts/widgets/ConfirmWidget.js") }}";
+import { AlertWidget } from "{{ asset("scripts/widgets/AlertWidget.js") }}";
+
+import { ImageSelector } from "/scripts/elements/ImageSelector.js";
+{% endif %}
+
+class UeEditScript
+{
+    constructor(class_title, main_content, save_buttons, tabs_selector{% if base_config.user_role == "ROLE_ADMIN" %}, title_input, description_input, thumbnail_image, thumbnail_button{% endif %})
+    {
+        this._class_title = class_title;
+        this._main_content = main_content;
+
+        this._save_buttons = save_buttons;
+
+        this._tabs_selector = tabs_selector;
+
+        {% if base_config.user_role == "ROLE_ADMIN" %}
+        this._title_input = title_input;
+        this._thumbnail_button = thumbnail_button;
+        this._description_input = description_input;
+        this._thumbnail_image = thumbnail_image;
+        {% endif %}
+
+    }
+
+    async onImageSelected(base64_content)
+    {
+        this._thumbnail_image.src = "data:image/png;base64," + base64_content;
+    }
+
+    async start()
+    {
+        let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
+
+        if (fetch_data.status != 202) 
+        {
+            this._class_title.textContent = "Impossible d'accéder à ce cours";
+            let error_span = this._main_content.appendChild(document.createElement("span"));
+            error_span.classList.add("error");
+            error_span.classList.add("result-text");
+
+            for (let button of this._save_buttons)
+            {
+                this._main_content.removeChild(button);
+            }
+
+            switch (fetch_data.status)
+            {
+                case 401:
+                error_span.innerText = "Vous devez d'abord vous connecter";
+                break;
+
+                case 403:
+                error_span.innerText = "Vous n'avez pas la permission d'accéder à ce cours";
+                break;
+
+                default:
+                error_span.innerText = "Une erreur s'est produite (" + fetch_data.status + ")";
+                break;
+            }
+            return;
+        }
+
+        let data = await fetch_data.json();
+
+        this._main_section = DEFAULT_SECTION_TYPES_MAP.export(data.content);
+        this._class_title.textContent = data.name + " - " + data.description;
+        {% if base_config.user_role == "ROLE_ADMIN" %}
+
+        this._title_input.value = data.name;
+        this._description_input.value = data.description;
+
+        this._thumbnail_selector = new ImageSelector(this._thumbnail_button, "data:img/png;base64," + data.thumbnail,
+            (base64_content) => {
+                this.onImageSelected(base64_content);
+            },
+            3000,
+            1000
+        );
+        {% endif %}
+
+        this._last_json = JSON.stringify(this._main_section.json_data);
+
+        this._html_base = this._main_content.appendChild(this._main_section.htmlElement);
+        this._edit_html_base = this._main_content.appendChild(this._main_section.editableHtmlElement);
+
+        for (let button of this._save_buttons)
+        {
+            button.setAttribute("disabled", "");
+            
+            button.addEventListener("click", async () => {
+                for (let button of this._save_buttons)
+                {
+                    button.setAttribute("disabled", '');
+                }
+
+                if (await this.save())
+                {
+                    this._last_json = JSON.stringify(this._main_section.json_data);
+                } else {
+                    alert("an error occured while saving");
+
+                    for (let button of this._save_buttons)
+                    {
+                        button.removeAttribute();
+                    }
+                }
+
+            });
+
+        }
+
+        this._main_section.addEventListener("modified", (event) => {
+            this.update(event);
+        });
+            
+        this._tabs_selector.update();
+    }
+
+    get thumbnail_selector()
+    {
+        return this._thumbnail_selector;
+    }
+
+    async update(event)
+    {
+        if (event.detail.requires_reload)
+        {
+            let edit_new_html = this._main_section.editableHtmlElement;
+            this._main_content.replaceChild(edit_new_html, this._edit_html_base);
+            this._edit_html_base = edit_new_html;
+        }
+
+        let new_html = this._main_section.htmlElement;
+        this._main_content.replaceChild(new_html, this._html_base);
+        this._html_base = new_html;
+
+        this._tabs_selector.update();
+
+        if (this._last_json == JSON.stringify(this._main_section.json_data))
+        {
+            for (let button of this._save_buttons)
+            {
+                button.setAttribute("disabled", '');
+            }
+        } else {
+            for (let button of this._save_buttons)
+            {
+                button.removeAttribute("disabled");
+            }
+        }
+    }
+
+    async save()
+    {
+        let fetch_data = await fetch(
+            "/classes/{{ ue_id }}/set-content",
+            {
+                method: "POST",
+                body: JSON.stringify(
+                    {
+                        "content": JSON.stringify(this._main_section.json_data)
+                    }
+                )
+            }
+        );
+
+        return fetch_data.status === 202;
+    }
+
+}
+
+{% if base_config.user_role == "ROLE_ADMIN" %}
+class UeUsersScript
+{
+    constructor(users_ids, users_list_div, users_search_bar, add_users_button)
+    {
+        this._users_ids = users_ids;
+
+        this._users_list_div = users_list_div;
+        this._users_search_bar = new SearchBar(users_search_bar);
+        this._users_search_list = new SearchList(this._users_search_bar, users_list_div);
+
+        this._add_users_button = add_users_button;
+        add_users_button.addEventListener("click", async () => {
+            await this.selectUsers();
+        });
+    }
+    async refreshUsers()
+    {
+        let nre = this._users_search_list.no_result_element;
+        this._users_list_div.innerHTML = "";
+        this._users_list_div.appendChild(nre);
+
+        let url = "/users/list?max-count=50&ids=";
+
+        for (let index=0; index < this._users_ids.length; ++index)
+        {
+            if (index > 0) url += ",";
+            url += this._users_ids[index];
+        }
+
+        let users_data = await fetch(url);
+        let users = await users_data.json();
+
+        for (let user of users)
+        {
+            let user_link = this._users_list_div.appendChild(document.createElement("a"));
+            user_link.classList.add("user-preview-link");
+            user_link.href = "/profile/" + user.id;
+            user_link.target = "_blank";
+
+            let user_div = user_link.appendChild(document.createElement("div"));
+            user_div.classList.add("user-preview");
+
+            user_div.appendChild(document.createElement("img")).src = "data:image/png;base64," + user.image;
+
+            let user_description_div = user_div.appendChild(document.createElement("div"));
+            user_description_div.classList.add("user-description");
+
+            let title = user.surname + " " + user.name + "<span class='user-roles'> - ";
+            for (let role of user.roles)
+            {
+                switch (role)
+                {
+                    case "ROLE_ADMIN":
+                    title += "Administrateur ";
+                    break;
+
+                    case "ROLE_TEACHER":
+                    title += "Enseignant ";
+                    break;
+
+                    case "ROLE_STUDENT":
+                    title += "Élève ";
+                    break;
+                }
+            }
+
+            user_description_div.appendChild(document.createElement("h1")).innerHTML = title + " </span>";
+            user_description_div.appendChild(document.createElement("p")).innerText = user.description;
+
+            document.getElementById("users").appendChild(user_link);
+        }
+        this._users_list_div.appendChild(this._add_users_button);
+
+    }
+
+    async selectUsers()
+    {
+        let widget = new SelectUserWidget(
+            (user) => (user.roles.includes("ROLE_TEACHER") || user.roles.includes("ROLE_STUDENT")),
+            true, [...this._users_ids]
+        );
+
+        let users = await widget.main();
+
+        if (users !== null)
+        {
+            let last_users = [...this._users_ids];
+
+            this._users_ids = users;
+
+            this.refreshUsers();
+
+            try {
+                let set_users_request = await fetch(
+                    "/classes/{{ ue_id }}/set-users",
+                    {
+                        method: "POST",
+                        body: JSON.stringify(
+                            {
+                                "ids": users
+                            }
+                        )
+                    }
+                );
+            } catch (exc ) {
+                this._users_ids = last_users;
+            }
+
+        }
+    }
+}
+
+class UeMainHandlePanelScript
+{
+    constructor(name_input, description_input, image_selector, save_button, delete_button)
+    {
+        this._name_input = name_input;
+        this._description_input = description_input;
+        this._image_selector = image_selector;
+        this._save_button = save_button;
+        this._delete_button = delete_button;
+
+        save_button.addEventListener("click", () => {
+            this.onSaveClicked();
+        })
+
+        delete_button.addEventListener("click", () => {
+            this.onDeleteClicked();
+        });
+    }
+
+    async onSaveClicked() {
+        let request = await fetch("/classes/{{ ue_id }}/set-info", {
+            method: "POST",
+            body: JSON.stringify({
+                name: this._name_input.value,
+                description: this._description_input.value,
+                thumbnail: this._image_selector.base64_png_data,
+            })
+        });
+        
+        switch (request.status) {
+            case 202:
+            await new AlertWidget("Cours enregistré", "Le cours a été enregistré avec succès").main();
+            location.reload();
+            break;
+        
+            case 401:
+            await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+            break;
+
+            default:
+            await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+            break;
+        }
+    }
+
+    async onDeleteClicked() {
+        let confirm = new ConfirmWidget("Êtes-vous sûr de vouloir supprimer ce cours?", "Cette opération est irréversible!")
+
+        if (await confirm.main())
+        {
+            let request = await fetch("/classes/{{ ue_id }}/delete", { method: "POST"});
+            
+            switch (request.status) {
+                case 202:
+                location.href = "/";
+                break;
+            
+                case 401:
+                await new AlertWidget("Impossible de supprimer le cours", "Vous devez d'abord vous connecter").main();
+                break;
+
+                case 403:
+                await new AlertWidget("Impossible de supprimer le cours", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+                break;
+
+                default:
+                await new AlertWidget("Impossible de supprimer le cours", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+                break;
+            }
+        } else {
+            console.log("operation canceled");
+        }
+    }
+}
+{% endif %}
+
+window.addEventListener("load", async () => {
+    let ue_edit_script = new UeEditScript(
+        document.getElementById("class-title"),
+        document.getElementById("content-display"),
+        [
+            document.getElementById("save-button-top"),
+            document.getElementById("save-button-bottom")
+        ],
+        new TabsSelector(document.getElementById("class-tabs")){% if base_config.user_role == "ROLE_ADMIN" %},
+        document.getElementById("title-input"),
+        document.getElementById("description-input"),
+        document.getElementById("thumbnail-display"),
+        document.getElementById("thumbnail-button")
+        {% endif %}
+    );
+    await ue_edit_script.start();
+
+    {% if base_config.user_role == "ROLE_ADMIN" %}
+    
+    new UeUsersScript([{% for user in users %} {{ user.id}}, {% endfor %}],
+        document.getElementById("users"),
+        document.getElementById("users-search-bar"),
+        document.getElementById('add-user-button')
+    );
+
+    new UeMainHandlePanelScript(
+        document.getElementById("title-input"),
+        document.getElementById("description-input"),
+        ue_edit_script.thumbnail_selector,
+        document.getElementById("save-class-info-button"),
+        document.getElementById("delete-class-button")
+    );
+    {% endif %}
+});
+
+</script>
+
+{% endblock %}

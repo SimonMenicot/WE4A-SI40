@@ -1,0 +1,147 @@
+{% extends "base-settings.html.twig" %}
+
+{% block settings_body %}
+
+<h1> Personnaliser le profil </h1>
+<div id="profile-settings-horizontal-editor">
+    <div id="profile-settings-description">
+        <h2> Identité </h2>
+        <div class="settings-row">
+            <label> Prénom : </label> <input id="profile-surname-input" value="{{ base_config.current_user.surname }}"/>
+        </div>
+        <div class="settings-row">
+            <label> Nom : </label> <input id="profile-name-input" value="{{ base_config.current_user.name }}"/>
+        </div>
+        <h2> Description </h2>
+        <textarea id="profile-description-input">{{ base_config.current_user.description }}</textarea>
+    </div>
+    <div id="profile-settings-image">
+        <h2> Photo de profil </h2>
+        <div class="image-edit">
+            <img class="edit-image" id="profile-user-image">
+            </img>
+            <button id="profile-user-image-button">
+                <img src="{{ asset("images/icons/upload.png") }}"/>
+            </button>
+        </div>
+    </div>
+</div>
+<button class="main-button" id="profile-settings-save-button"> Sauvegarder </button>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset("styles/pages/settings/profile.css") }}" />
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="module">
+
+import { ImageSelector } from "/scripts/elements/ImageSelector.js";
+
+class EditProfileScript
+{
+    constructor(name_field, surname_field, description_field, profile_image, profile_image_button, save_button, base_profile_image)
+    {
+        this._name_field = name_field;
+        this._surname_field = surname_field;
+        this._description_field = description_field;
+
+        this._profile_image = profile_image;
+        this._profile_image_button = profile_image_button;
+
+        this._profile_image_data = base_profile_image; // null when unchanged, base64 data when changed
+
+        this._image_selector = new ImageSelector(this._profile_image_button, "data:img/png;base64," + base_profile_image,
+            (base64_content) => {
+                this.onImageSelected(base64_content);
+            },
+            1000,
+            1000
+        );
+
+        this._save_button = save_button;
+
+        this._name_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+        this._surname_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+        this._description_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+
+        this._save_button.addEventListener("click", () => {
+            this.onSaveButtonClicked();
+        });
+    }
+
+    async onImageSelected(base64_content)
+    {
+        this._profile_image.src = "data:image/png;base64," + base64_content;
+    }
+
+    onFieldsChanged() 
+    {
+        if (this._name_field.value === ""
+         || this._surname_field.value === ""
+         || this._description_field.value === "")
+        {
+            this._save_button.setAttribute("disabled", '');
+        } else {
+            this._save_button.removeAttribute("disabled");
+        }
+    }
+
+    async onSaveButtonClicked()
+    {
+        let data = await fetch(
+            "/settings-api/account/update-profile",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    name: this._name_field.value,
+                    surname: this._surname_field.value,
+                    description: this._description_field.value,
+                    image: this._image_selector.base64_png_data
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }
+        );
+
+        let result = await data.json();
+
+        console.log(result);
+
+        if ( data.status === 202)
+        {
+            location.reload();
+        } else {
+
+        }
+    }
+}
+
+window.addEventListener("load", () => {
+    let script = new EditProfileScript(
+        document.getElementById("profile-name-input"),
+        document.getElementById("profile-surname-input"),
+        document.getElementById("profile-description-input"),
+        document.getElementById("profile-user-image"),
+        document.getElementById("profile-user-image-button"),
+        document.getElementById("profile-settings-save-button"),
+        '{{ user_profile_image }}'
+    );
+});
+
+</script>
+
+{% endblock %}
+
+

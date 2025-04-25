@@ -34,7 +34,7 @@ export class RichTextSection extends Section
         {
             let action_button = edit_line_div.appendChild(document.createElement("button"));
             action_button.classList.add("icon-button");
-            action_button.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/" + icon_name + ".png";
+            action_button.appendChild(document.createElement("img")).src = "/images/icons/" + icon_name + ".png";
         }
 
         let edit_div = div.appendChild(document.createElement("div"));

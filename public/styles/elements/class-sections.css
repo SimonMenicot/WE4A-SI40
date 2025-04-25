@@ -81,6 +81,8 @@ div.section-rich-text.section-editable {
 }
 
 div.section-rich-text.section-editable div.rich-text-section-edit-line {
+    display: flex;
+    flex-direction: row;
     padding: var(--section-rich-text-edition-border-line-padding);
     background: #b6d5b6;
 }
@@ -161,6 +163,8 @@ div.section-image.section-editable {
 
 div.section-image.section-editable img {
     position: relative;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 div.section-image.section-editable button {
@@ -200,6 +204,12 @@ div.section-video.section-editable video {
     position: relative;
 }
 
+div.section-video.section-editable img {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+}
+
 div.section-video.section-editable button {
     position: absolute;
     top: 0px;
@@ -219,6 +229,11 @@ div.section-audio.section-editable audio {
 div.section-audio.section-editable audio {
     position: relative;
     width: 100%;
+}
+div.section-audio.section-editable img {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 div.section-audio.section-editable button {

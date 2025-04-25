@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div id="settings-main-separation" class="content-separator">
+    {% include "sections/settings-menu.html.twig" %}
+    <div id="settings-content">
+        {% block settings_body %}
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
+
+

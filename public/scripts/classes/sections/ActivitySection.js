@@ -1,3 +1,4 @@
+import { CssParser } from "../../css-integration/CssParser.js";
 import { Section } from "./Section.js";
 
 export class ActivitySection extends Section
@@ -5,6 +6,21 @@ export class ActivitySection extends Section
     constructor(data)
     {
         super("activity", data);
+
+        let activity;
+
+        eval(data.javascript + '\n\nactivity = new Activity(data.id, data.arguments)');
+        
+        this._activity = activity;
+
+        eval(data.edit_javascript + '\n\nactivity = new Activity(data.id, data.arguments)');
+        
+        this._edit_activity = activity;
+    }
+
+    get id()
+    {
+        return this.data.id;
     }
 
     get html()
@@ -32,28 +48,18 @@ export class ActivitySection extends Section
         return this.data.edit_javascript;
     }
 
-    get extra_data()
-    {
-        return this.data.extras;
-    }
-
-    set extra_data(value)
-    {
-        let data = this.data;
-        data.value = value;
-        this.data = data;
-    }
-
     render()
     {
         let div = document.createElement("div");
+        div.id = "activity-integration-" + this.id;
         div.innerHTML = this.html;
 
-        let style = div.appendChild(document.createElement("style"));
-        style.innerHTML = this.css;
+        let parser = new CssParser();
 
-        const DIV = div;
-        eval(this.javascript);
+        let style = div.appendChild(document.createElement("style"));
+        style.innerHTML = parser.parse("#" + div.id, this.css);
+
+        this._activity.onRender(div);
 
         return div;
     }
@@ -61,13 +67,15 @@ export class ActivitySection extends Section
     renderEditable()
     {
         let div = document.createElement("div");
+        div.id = "activity-integration-" + this.id;
         div.innerHTML = this.edit_html;
 
-        let style = div.appendChild(document.createElement("style"));
-        style.innerHTML = this.css;
+        let parser = new CssParser();
 
-        const DIV = div;
-        eval(this.javascript);
+        let style = div.appendChild(document.createElement("style"));
+        style.innerHTML = parser.parse("#" + div.id, this.css);
+
+        this._edit_activity.onRender(div);
 
         return div;
     }
@@ -75,12 +83,7 @@ export class ActivitySection extends Section
     exportToJsonData()
     {
         return {
-            html: this.html,
-            javascript: this.javascript,
-            css: this.css,
-            edit_html: this.edit_html,
-            edit_javascript: this.edit_javascript,
-            extra_data: this.extra_data
+            id: this.id
         };
     }
 }

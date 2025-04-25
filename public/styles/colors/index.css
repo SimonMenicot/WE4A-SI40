@@ -3,17 +3,26 @@
     --surfaces-color: white;
     --inputs-surfaces-color: rgb(232, 224, 200);
     --secondary-color: rgb(213, 135, 67);
+    --secondary-color-dark: rgb(122, 71, 26);
+    --secondary-color-light: rgb(249, 195, 147);
+
+    --color-error: rgb(178, 36, 36);
+    --on-error-text-color: white;
+
+    --color-success: rgb(35, 132, 28);
+    --on-success-text-color: white;
 
     --on-primary-text-color: white;
-    
+    --on-secondary-text-color: white;
     --on-surface-text-color: black;
 
     --login-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-form-background: var(--inputs-surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
     --login-inputs-background: var(--surfaces-color);/*linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 70%, var(--secondary-color) 100%);*/
-    --login-div-title-color: var(--on-surfaces-text-color);
+    --login-div-title-color: var(--on-surface-text-color);
 
     --buttons-background: var(--secondary-color);
+    --buttons-hover-background: var(--secondary-color-light);
     --buttons-border-color: none;
 
     --activity-thread-activity-border-color: #ccc;
@@ -32,6 +41,40 @@
     --section-video-editable-button-background: var(--section-media-editable-button-background);
     --section-image-editable-button-background: var(--section-media-editable-button-background);
     --section-audio-editable-button-background: var(--section-media-editable-button-background);
-    
 
+    --profile-options-background: var(--secondary-color);
+
+    --settings-menu-background: var(--secondary-color);
+    --settings-menu-color: var(--on-primary-text-color);
+    --settings-menu-selected-color: var(--on-surface-text-color);
+    --settings-menu-item-hover-background: #fff4;
+    --settings-menu-item-selected-background: var(--surfaces-color);
+    --settings-menu-border-color: black;
+    --image-edit-button-background: #fff8;
+    --image-edit-border-color: grey;
+    
+    --fields-border-color: var(--secondary-color);
+    --fields-background: var(--surfaces-color);
+
+    --fullscreen-widget-background: #0008;
+
+    --thumbnails-button-background: var(--surfaces-color);
+    --thumbnails-button-hover-background: var(--secondary-color-light);
+    --thumbnails-button-border-color: var(--secondary-color-light);
+
+    --tabs-buttons-border-color: grey;
+    --tabs-buttons-background: var(--surfaces-color);
+    --tabs-buttons-hover-background: var(--secondary-color-light);
+    --tabs-buttons-selected-background: var(--secondary-color);
+    --tabs-content-border-color: grey;
+    --tabs-buttons-color: var(--on-surface-text-color);
+    --tabs-buttons-selected-color: var(--on-secondary-text-color);
+
+    --checkbox-border-color: white;
+    --checkbox-background: var(--surfaces-color);
+    --checkbox-color: var(--secondary-color);
+
+    --users-list-user-preview-selected-background: var(--secondary-color);
+
+    --classes-list-box-shadow-background: black;
 }

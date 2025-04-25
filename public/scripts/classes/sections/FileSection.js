@@ -55,7 +55,7 @@ export class FileSection extends Section
         link.href = this.src;
         link.target = "_blank";
 
-        link.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/download.png"
+        link.appendChild(document.createElement("img")).src = "/images/icons/download.png"
         let name = document.createElement("span")
         link.append(name)
         name.classList.add("file-extension");
@@ -74,7 +74,7 @@ export class FileSection extends Section
         let upload_button = div.appendChild(document.createElement("button"));
         upload_button.classList.add("file-button");
 
-        upload_button.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/upload.png"
+        upload_button.appendChild(document.createElement("img")).src = "/images/icons/upload.png"
         let name = document.createElement("span")
         upload_button.append(name)
         name.classList.add("file-extension");

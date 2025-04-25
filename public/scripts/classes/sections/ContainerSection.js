@@ -2,7 +2,7 @@ import { Section } from "./Section.js";
 
 export class ContainerSection extends Section
 {
-    constructor(data)
+    constructor(data, section_adder)
     {
         super("container", data);
 
@@ -16,6 +16,8 @@ export class ContainerSection extends Section
                 }, event.detail.requires_reload)
             });
         }
+
+        this._section_adder = section_adder;
     }
 
     get is_horizontal()
@@ -62,6 +64,14 @@ export class ContainerSection extends Section
     addChild(child)
     {
         this.data.children.push(child);
+
+        child.addEventListener("modified", (event) => {
+            this.notifyEvents("modified", {
+                reason: 'child-modification',
+                child: child,
+                event: event
+            }, event.detail.requires_reload)
+        });
 
         this.notifyEvents("modified", {
             reason: 'children-addition',
@@ -158,10 +168,10 @@ export class ContainerSection extends Section
         if (this.is_horizontal)
         {
             direction_button.classList.add("edit-content-vertical");
-            direction_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/vertical.png";
+            direction_button_image.src = "/images/icons/vertical.png";
         } else {
             direction_button.classList.add("edit-content-horizontal");
-            direction_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/horizontal.png";
+            direction_button_image.src = "/images/icons/horizontal.png";
         }
 
         let wrap_button = start_edit_buttons_actions.appendChild(document.createElement("button"));
@@ -175,10 +185,10 @@ export class ContainerSection extends Section
         if (this.is_wrapping)
         {
             wrap_button.classList.add("edit-content-nowrap");
-            wrap_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/nowrap.png";
+            wrap_button_image.src = "/images/icons/nowrap.png";
         } else {
             wrap_button.classList.add("edit-content-wrap");
-            wrap_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/wrap.png";
+            wrap_button_image.src = "/images/icons/wrap.png";
         }
 
         let editable_div = div.appendChild(document.createElement("div"));
@@ -203,7 +213,7 @@ export class ContainerSection extends Section
             })
     
             let remove_button_image = remove_button.appendChild(document.createElement("img"));
-            remove_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/close.png";
+            remove_button_image.src = "/images/icons/close.png";
         
             let move_previous_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_previous_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
@@ -214,9 +224,9 @@ export class ContainerSection extends Section
             let move_previous_button_image = move_previous_button.appendChild(document.createElement("img"));
 
             if (this.is_horizontal)
-                move_previous_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/left.png";
+                move_previous_button_image.src = "/images/icons/left.png";
             else
-                move_previous_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/up.png";
+                move_previous_button_image.src = "/images/icons/up.png";
         
             let move_next_button = element_edit_buttons_actions.appendChild(document.createElement("button"));
             move_next_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
@@ -227,9 +237,9 @@ export class ContainerSection extends Section
             let move_next_button_image = move_next_button.appendChild(document.createElement("img"));
 
             if (this.is_horizontal)
-                move_next_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/right.png";
+                move_next_button_image.src = "/images/icons/right.png";
             else
-                move_next_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/down.png";
+                move_next_button_image.src = "/images/icons/down.png";
 
             if (child_index === 0)
             {
@@ -251,9 +261,12 @@ export class ContainerSection extends Section
 
         let add_button = end_edit_buttons_actions.appendChild(document.createElement("button"));
         add_button.classList.add("edit-content-action", "edit-content-remove-line", "icon-button");
+        add_button.addEventListener("click", () => {
+            this.addElement();
+        });
 
         let add_button_image = add_button.appendChild(document.createElement("img"));
-        add_button_image.src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/add.png";
+        add_button_image.src = "/images/icons/add.png";
     
         return div;
     }
@@ -265,6 +278,23 @@ export class ContainerSection extends Section
             is_wrapping: this.is_wrapping,
             children: this.children.map((child) => child.json_data)
         };
+    }
+
+    async addElement()
+    {
+        let exporter = await this._section_adder.promptNewSection()
+
+        if (exporter !== null)
+        {
+            let element;
+            try {
+                element = await exporter.createNew(this._section_adder.types_map);
+            } catch (exc) {
+                throw exc;
+            }
+
+            this.addChild(element);
+        }
     }
 
 

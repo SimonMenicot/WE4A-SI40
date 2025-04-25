@@ -30,8 +30,7 @@ export class ImageSection extends Section
 
         div.appendChild(document.createElement("img")).src = this.src;
         let change_button = div.appendChild(document.createElement("button"));
-        change_button.classList.add("icon-button");
-        change_button.appendChild(document.createElement("img")).src = NOOBLE_CONFIG["PATH_NAME"] + "/static/images/icons/upload.png";
+        change_button.appendChild(document.createElement("img")).src = "/images/icons/upload.png";
 
         return div;
     }

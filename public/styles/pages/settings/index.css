@@ -1,0 +1,31 @@
+@import url("./profile.css");
+
+div#settings-content {
+    flex-grow: 1;
+    width: 100%;
+    box-sizing: border-box;
+    border: var(--settings-content-border-width) solid var(--settings-menu-background);
+    border-radius: 10px;
+    padding: var(--settings-content-padding-vertical) var(--settings-content-padding-horizontal);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+}
+
+div#settings-content div.settings-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: var(--settings-row-margin-bottom);
+    align-items: center;
+}
+
+div#settings-content div.settings-row label {
+    margin-right: var(--settings-row-spacing);
+}
+
+div#settings-content div.settings-row input {
+    flex-grow: 1;
+}
+

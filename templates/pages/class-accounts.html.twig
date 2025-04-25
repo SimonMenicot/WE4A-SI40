@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+Ça parle de toi là
+{% endblock %}
+
+{% block body %}
+<div id="classpage-main-separation" class="content-separator">
+    <div id="main-class-content" class="class-content">
+        <div class="class-title-content">
+            <a class="class-back-link" href="/class/{{ ue_id }}">
+                <img src="{{ asset("/images/icons/back.png") }}">
+            </a>
+            <h1 id="class-title">
+                {{ class.name }} - {{ class.description }}
+            </h1>
+        </div>
+        
+        <h2>
+            Comptes associés à ce cours
+        </h2>
+
+        <div class="search-bar" id="users-search-bar">
+            <input type="text" placeholder="Rechercher..."/>
+            <button class="icon-button main-button">
+                <img src="{{ asset("images/icons/search.png") }}"/>
+            </button>
+        </div>
+
+        <div id="users" class="users-list">
+            {% for user in accounts %}
+
+            <a href="/profile/{{ user.id }}" class="user-preview-link">
+                <div class="user-preview">
+                    <img src="data:image/png;base64,{{ user.image }}" />
+
+                    <div class="user-description">
+                        <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} 
+                {% if role == "ROLE_STUDENT" %}
+                Étudiant
+                {% elseif role == "ROLE_TEACHER" %}
+                Enseignant
+                {% elseif role == "ROLE_ADMIN" %}
+                Administrateur
+                {% endif %}
+                {% endfor %}</span></h1>
+                        <p>{{ user.description }}</p>
+                    </div>
+                </div>
+
+            </a>
+            
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include "sections/activity-thread.html.twig" %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script type="module">
+import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
+import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
+
+import { CreateClassWidget } from "{{ asset("scripts/widgets/CreateClassWidget.js") }}";
+
+window.addEventListener("load", () => {
+    let users_search_bar = new SearchBar(document.getElementById("users-search-bar"));
+    new SearchList(users_search_bar, document.getElementById("users"));
+});
+
+</script>
+
+
+{% endblock %}
+
