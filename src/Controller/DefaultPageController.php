@@ -219,6 +219,30 @@ class DefaultPageController extends AbstractController
         ]);
     }
     
+    #[Route('/profile/{id}/edit', 'profile-edit')]
+    public function render_profile_edit(#[CurrentUser] ?Account $user, Account $displayed_user, Request $request): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        if ($this->get_current_user_role($user, $request) !== "ROLE_ADMIN")
+        {
+            return new Response(status:Response::HTTP_FORBIDDEN);
+        }
+
+        return $this->render("pages/admin-user-edit.html.twig", [
+            "base_config" => [
+                "current_user" => $user,
+                "current_user_image" => $this->readImage($user->getImage()),
+                "user_role" => $this->get_current_user_role($user, $request)
+            ],
+            "account" => $displayed_user,
+            "user_image" => $this->readImage($displayed_user->getImage())
+        ]);
+    }
+    
     #[Route('/class/{id}/users', 'ue-users')]
     public function render_ue_users(#[CurrentUser] ?Account $user, Classe $class, Request $request, EntityManagerInterface $entityManager): Response
     {

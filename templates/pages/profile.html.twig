@@ -76,13 +76,21 @@
                 <li>info intéressante 3</li>
             </ul>
         </div>
-        {% if base_config.current_user == account %}
+        {% if base_config.current_user == account or base_config.user_role == "ROLE_ADMIN" %}
         <div class="profile-options">
+            {% if base_config.current_user == account %}
             <h2>Accès rapides</h2>
             <ul>
                 <li><a href="/settings/account/profile">Paramètres du profile...</a></li>
                 <li><a href="/settings/accessibility">Accessibilité...</a></li>
             </ul>
+            {% endif %}
+            {% if base_config.user_role == "ROLE_ADMIN" %}
+            <h2>Accès administrateur</h2>
+            <ul>
+                <li><a href="/profile/{{ account.id }}/edit">Gérer l'utilisateur...</a></li>
+            </ul>
+            {% endif %}
         </div>
         {% endif %}
     </div>

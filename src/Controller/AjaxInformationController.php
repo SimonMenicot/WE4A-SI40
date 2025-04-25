@@ -13,9 +13,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Twig\Environment;
+use Twig\Sandbox\SecurityPolicyInterface;
 
 class AjaxInformationController extends AbstractController
 {
@@ -530,6 +534,165 @@ class AjaxInformationController extends AbstractController
         if (is_null($image)) return "";
         fseek($image, 0);
         return base64_encode(stream_get_contents($image));
+    }
+
+    #[Route("/user/{id}/set-profile", methods:"POST")]
+    public function update_profile(#[CurrentUser] ?Account $user, Account $profile_user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode(
+                [
+                    "status" => "error",
+                    "error" => "you must be logged in to update your account"
+                ]
+            ),
+            status: Response::HTTP_FORBIDDEN);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $payload = $request->getPayload();
+
+        $name = $payload->get('name');
+        $surname = $payload->get('surname');
+        $description = $payload->get('description');
+        $image = $payload->get('image');
+
+        if (gettype($name) != 'string'
+         || gettype($surname) != 'string'
+         || gettype($description) != 'string'
+         || gettype($image) != 'string')
+        {
+            return new Response(json_encode(
+                [
+                    "status" => "error",
+                    "error" => "bad arguments names or type provided"
+                ]
+            ),
+            status: Response::HTTP_BAD_REQUEST);
+        }
+
+        $profile_user->setName($name);
+        $profile_user->setSurname($surname);
+        $profile_user->setDescription($description);
+        $profile_user->setImage(base64_decode($image));
+        $entityManager->flush();
+
+        return new Response(json_encode(
+            [
+                "status" => "success"
+            ]
+        ),
+        status: Response::HTTP_ACCEPTED);
+
+    }
+
+    #[Route("/user/{id}/delete", methods:"POST")]
+    public function delete_profile(#[CurrentUser] ?Account $user, Account $profile_user, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode(
+                [
+                    "status" => "error",
+                    "error" => "you must be logged in to update your account"
+                ]
+            ),
+            status: Response::HTTP_FORBIDDEN);
+        }
+
+        if ((!in_array("ROLE_ADMIN", $user->getRoles())) || ( $user->getId() === $profile_user->getId() ))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        $entityManager->remove($profile_user);
+        $entityManager->flush();
+
+        return new Response(json_encode(
+            [
+                "status" => "success"
+            ]
+        ),
+        status: Response::HTTP_ACCEPTED);
+
+    }
+
+    #[Route('/user/new', name: "create user", methods:["POST"])]
+    public function create_new_user(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'please log in!'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $name = $request->getPayload()->get("name");
+        $surname = $request->getPayload()->get("surname");
+        $mail = $request->getPayload()->get("mail");
+
+        if (gettype($name) !== "string" || gettype($surname) !== "string" || gettype($mail) !== "string")
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'invalid request'
+            ]), Response::HTTP_BAD_REQUEST);
+        }
+
+        $account_password = $this->createNewPasswordFor($mail);
+
+        $new_user = new Account();
+        $new_user->setName($name);
+        $new_user->setSurname($surname);
+        $new_user->setEmail($mail);
+        $new_user->setPassword($userPasswordHasher->hashPassword($user, $account_password));
+        $new_user->setRoles(["ROLE_STUDENT"]);
+        $entityManager->persist($new_user);
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+            "user-id" => $new_user->getId(),
+            "password" => $account_password
+        ]), Response::HTTP_ACCEPTED);
+    }
+
+    public function createNewPasswordFor(string $mail) // TODO : send a mail !
+    {
+        $a = "";
+
+        $chars = str_split(
+            'abcdefghijklmnopqrstuvwxyz'
+            .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            .'0123456789'
+        );
+        
+        foreach (array_rand($chars, 8) as $i)
+        {
+            $a.= $chars[$i];
+        }
+
+        return $a;
     }
 
 }

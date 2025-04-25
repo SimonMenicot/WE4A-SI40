@@ -6,8 +6,75 @@
 
 {% block body %}
 
-<div id="classpage-main-separation" class="content-separator">
-    <div id="main-class-content" class="class-content">
+<div id="edit-page-main-separation" class="content-separator">
+    <div id="edit-page-content">
+        <h1> Éditer l'utilisateur - {{ account.surname }} {{ account.name }} </h1>
+        <div class="tabs-container" id="edit-user-tabs">
+            <div class="tabs-buttons">
+                <button id="view-tab-button">Paramètres généraux</button>
+                <button id="edit-tab-button">Rôles</button>
+                <button id="edit-tab-button">Cours inscrits</button>
+            </div>
+
+            <div class="tabs-content" id="content-display">
+                <div class="edit-user-settings-panel">
+                    <h2> Adresse mail </h2>
+                    <div class="settings-row">
+                        <label> Adresse mail : </label> <input id="user-mail-input" value="{{ account.email }}"/>
+                    </div>
+                    <button id="save-user-mail-button" class="main-button icon-button">
+                        <img src="{{ asset("/images/icons/save.png") }}"/>
+                        <span>Enregistrer</span>
+                    </button>
+                    <hr></hr>
+                    <div class="user-profile-settings">
+                        <div id="user-profile-settings-description">
+                            <h2> Identité </h2>
+                            <div class="settings-row">
+                                <label> Prénom : </label> <input id="user-profile-surname-input" value="{{ account.surname }}"/>
+                            </div>
+                            <div class="settings-row">
+                                <label> Nom : </label> <input id="user-profile-name-input" value="{{ account.name }}"/>
+                            </div>
+                            <h2> Description </h2>
+                            <textarea id="user-profile-description-input">{{ account.description }}</textarea>
+                        </div>
+                        <div id="user-profile-settings-image">
+                            <h2> Photo de profil </h2>
+                            <div class="image-edit">
+                                <img class="edit-image" id="profile-user-image">
+                                </img>
+                                <button id="profile-user-image-button">
+                                    <img src="{{ asset("images/icons/upload.png") }}"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="save-user-profile-button" class="main-button icon-button">
+                        <img src="{{ asset("/images/icons/save.png") }}"/>
+                        <span>Enregistrer</span>
+                    </button>
+                    <hr></hr>
+                    <h2> Zone à risques </h2>
+                    <button id="delete-user-button" class="main-button icon-button"{% if base_config.current_user.id == account.id %} disabled{% endif %}>
+                        <img src="{{ asset("/images/icons/delete.png") }}"/>
+                        <span>Supprimer l'utilisateur</span>
+                    </button>
+                </div>
+
+                <div class="edit-user-settings-panel">
+                    <h2>
+                        Rôles de l'utilisateur
+                    </h2>
+                </div>
+
+                <div class="edit-user-settings-panel">
+                    <h2>
+                        Cours inscrits
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
 
     {% include "sections/activity-thread.html.twig" %}
@@ -17,7 +84,149 @@
 
 {% block javascripts %}
 
+<script type="module">
 
+import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}";
+import { ImageSelector } from "{{ asset("/scripts/elements/ImageSelector.js") }}";
+
+import { ConfirmWidget } from "{{ asset("/scripts/widgets/ConfirmWidget.js") }}";
+
+class EditUserScript
+{
+    constructor(tabs_container)
+    {
+        this._tabs_selector = new TabsSelector(document.getElementById("edit-user-tabs"))
+    }
+}
+
+class EditUserProfileScript
+{
+    constructor(name_field, surname_field, description_field, profile_image, profile_image_button, save_button, base_profile_image)
+    {
+        this._name_field = name_field;
+        this._surname_field = surname_field;
+        this._description_field = description_field;
+
+        this._profile_image = profile_image;
+        this._profile_image_button = profile_image_button;
+
+        this._profile_image_data = base_profile_image; // null when unchanged, base64 data when changed
+
+        this._image_selector = new ImageSelector(this._profile_image_button, "data:img/png;base64," + base_profile_image,
+            (base64_content) => {
+                this.onImageSelected(base64_content);
+            },
+            1000,
+            1000
+        );
+
+        this._save_button = save_button;
+
+        this._name_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+        this._surname_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+        this._description_field.addEventListener("input", () => {
+            this.onFieldsChanged();
+        });
+
+        this._save_button.addEventListener("click", () => {
+            this.onSaveButtonClicked();
+        });
+    }
+
+    async onImageSelected(base64_content)
+    {
+        this._profile_image.src = "data:image/png;base64," + base64_content;
+    }
+
+    onFieldsChanged() 
+    {
+        if (this._name_field.value === ""
+         || this._surname_field.value === ""
+         || this._description_field.value === "")
+        {
+            this._save_button.setAttribute("disabled", '');
+        } else {
+            this._save_button.removeAttribute("disabled");
+        }
+    }
+
+    async onSaveButtonClicked()
+    {
+        let data = await fetch(
+            "/user/{{ account.id }}/set-profile",
+            {
+                method: "POST",
+                body: JSON.stringify({
+                    name: this._name_field.value,
+                    surname: this._surname_field.value,
+                    description: this._description_field.value,
+                    image: this._image_selector.base64_png_data
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }
+        );
+
+        let result = await data.json();
+
+        console.log(result);
+
+        if ( data.status === 202)
+        {
+            location.reload();
+        } else {
+
+        }
+    }
+}
+
+window.addEventListener("load", () => {
+    new EditUserScript(
+        document.getElementById("edit-user-tabs")
+    )
+
+    new EditUserProfileScript(
+        document.getElementById("user-profile-name-input"),
+        document.getElementById("user-profile-surname-input"),
+        document.getElementById("user-profile-description-input"),
+        document.getElementById("profile-user-image"),
+        document.getElementById("profile-user-image-button"),
+        document.getElementById("save-user-profile-button"),
+        '{{ user_image }}'
+    );
+
+    document.getElementById("delete-user-button").addEventListener("click", async () => {
+        if (await new ConfirmWidget("Êtes-vous sûr(e) de vouloir supprimer cet utilisateur?", "Cette action est irréversible").main())
+        {
+           let request = await fetch("/user/{{ account.id }}/delete", { method: "POST"});
+            
+            switch (request.status) {
+                case 202:
+                location.href = "/";
+                break;
+            
+                case 401:
+                await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous devez d'abord vous connecter").main();
+                break;
+
+                case 403:
+                await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+                break;
+
+                default:
+                await new AlertWidget("Impossible de supprimer l'utilisateur", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+                break;
+            }
+        }
+    })
+});
+
+</script>
 
 {% endblock %}
 
