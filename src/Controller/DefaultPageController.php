@@ -88,7 +88,7 @@ class DefaultPageController extends AbstractController
 
         $classes = [];
 
-        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        foreach ($user->getClasses() as $class)
         {
             $classes[] = [
                 "id" => $class->getId(),
@@ -170,6 +170,18 @@ class DefaultPageController extends AbstractController
             ];
         }
 
+        $user_classes = [];
+
+        foreach ($user->getClasses() as $class)
+        {
+            $user_classes[] = [
+                "id" => $class->getId(),
+                "name" => $class->getName(),
+                "description" => $class->getDescription(),
+                "thumbnail" => $this->readImage($class->getThumbnail()),
+            ];
+        }
+
         return $this->render('pages/admin-homepage.html.twig', [
             "base_config" => [
                 "current_user" => $user,
@@ -178,6 +190,7 @@ class DefaultPageController extends AbstractController
             ],
             "classes" => $classes,
             "accounts" => $accounts,
+            "user_classes" => $user_classes
         ]);
     }
     

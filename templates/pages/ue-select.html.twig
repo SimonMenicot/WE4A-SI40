@@ -20,10 +20,10 @@ Welcome, student
         </div>
 
         <div id="classes" class="classes-list">
-            {% for class in base_config.current_user.classes %}
+            {% for class in classes %}
 
             <a href="class/{{ class.id }}" class="class-preview-link">
-                <div class="class-preview">
+                <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
                     {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />

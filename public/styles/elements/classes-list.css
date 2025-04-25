@@ -6,7 +6,7 @@ div.classes-list {
     margin: 0px;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
     box-sizing: border-box;
     justify-content: center;
@@ -27,8 +27,10 @@ div.classes-list div.class-preview, button#add-class-button {
     box-sizing: border-box;
     padding: var(--classes-list-class-preview-padding-vertical) var(--classes-list-class-preview-padding-horizontal);
 
-    background: var(--inputs-surfaces-color);
     border-radius: var(--classes-list-class-preview-border-radius);
+    box-shadow: var(--classes-list-box-shadow-dx) var(--classes-list-box-shadow-dy) var(--classes-list-box-shadow-blurry) var(--classes-list-box-shadow-background);
+    background-size: cover;
+    background-position: 50% 50%;
 
     cursor: pointer;
 }
