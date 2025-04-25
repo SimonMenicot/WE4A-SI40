@@ -25,7 +25,7 @@ Welcome, student
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
-            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+            <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview">
                     {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
                     <span class="class-edit-icon">
@@ -57,7 +57,7 @@ Welcome, student
         <div id="global-classes" class="classes-list">
             {% for class in classes %}
 
-            <a href="class/{{ class.id }}/edit" class="class-preview-link">
+            <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview">
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
@@ -154,7 +154,7 @@ window.addEventListener("load", () => {
 
         if (new_class_id !== null)
         {
-            document.location.href = "/class/" + new_class_id + "/edit";
+            document.location.href = "/class/" + new_class_id;
         }
     });
 });

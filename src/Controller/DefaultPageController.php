@@ -206,7 +206,58 @@ class DefaultPageController extends AbstractController
         ]);
     }
     
-    #[Route('/class/{id}/read', 'ue-read')]
+    #[Route('/class/{id}/users', 'ue-users')]
+    public function render_ue_users(#[CurrentUser] ?Account $user, Classe $class, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        $accounts = [];
+
+        foreach ($class->getAccounts() as $account)
+        {
+            $accounts[] = [
+                "name" => $account->getName(),
+                "surname" => $account->getSurname(),
+                "image" => $this->readImage($account->getImage()),
+                "description" => $account->getDescription(),
+                "roles" => $account->getRoles(),
+                "id" => $account->getId()
+            ];
+        }
+
+        $class_export = [
+            "id" => $class->getId(),
+            "name" => $class->getName(),
+            "description" => $class->getDescription(),
+            "thumbnail" => $this->readImage($class->getThumbnail()),
+        ];
+
+        return $this->render('pages/class-accounts.html.twig', [
+            "base_config" => [
+                "current_user" => $user,
+                "current_user_image" => $this->readImage($user->getImage()),
+                "user_role" => $this->get_current_user_role($user, $request)
+            ],
+            "accounts" => $accounts,
+            "class" => $class_export,
+            "ue_id" => $class->getId()
+        ]);
+    }
+
+    #[Route('/class/{id}', 'ue-preview')]
+    public function render_ue_preview(#[CurrentUser] ?Account $user, int $id, ?Classe $class, Request $request): Response
+    {
+        if ($this->get_current_user_role($user, $request) === "ROLE_STUDENT")
+        {
+            return $this->render_ue_read($user, $id, $request);
+        } else {
+            return $this->render_ue_edit($user, $id, $class, $request);
+        }
+    }
+    
     public function render_ue_read(#[CurrentUser] ?Account $user, int $id, Request $request): Response
     {
         if ($user === null)
@@ -224,7 +275,6 @@ class DefaultPageController extends AbstractController
         ]);
     }
     
-    #[Route('/class/{id}/edit', 'ue-edit')]
     public function render_ue_edit(#[CurrentUser] ?Account $user, int $id, ?Classe $class, Request $request): Response
     {
         if ($user === null)
@@ -252,7 +302,6 @@ class DefaultPageController extends AbstractController
                 "id" => $account->getId()
             ];
         }
-
 
         return $this->render('pages/ue-edit.html.twig', [
             "base_config" => [

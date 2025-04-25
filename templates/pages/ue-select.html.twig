@@ -22,11 +22,7 @@ Welcome, student
         <div id="classes" class="classes-list">
             {% for class in base_config.current_user.classes %}
 
-            {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
-            <a href="class/{{ class.id }}/edit" class="class-preview-link">
-            {% else %}
-            <a href="class/{{ class.id }}/read" class="class-preview-link">
-            {% endif %}
+            <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview">
                     {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
                     <span class="class-edit-icon">
