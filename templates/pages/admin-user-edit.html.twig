@@ -90,12 +90,70 @@ import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}";
 import { ImageSelector } from "{{ asset("/scripts/elements/ImageSelector.js") }}";
 
 import { ConfirmWidget } from "{{ asset("/scripts/widgets/ConfirmWidget.js") }}";
+import { AlertWidget } from "{{ asset("/scripts/widgets/AlertWidget.js") }}";
 
-class EditUserScript
+class EditUserEmailScript
 {
-    constructor(tabs_container)
+    constructor(email_input, email_button)
     {
-        this._tabs_selector = new TabsSelector(document.getElementById("edit-user-tabs"))
+        this._email_input = email_input;
+        this._email_button = email_button;
+
+        this._actual_email = "{{ account.email }}";
+
+        this._email_input.addEventListener("input", () => {
+            this.onFieldChange();
+        });
+
+        this._email_button.addEventListener("click", () => {
+            this.onSaveClicked(this._email_input.value);
+        });
+
+        this.onFieldChange();
+    }
+
+    onFieldChange() 
+    {
+        if (!this._email_input.value.match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            ) || this._email_input.value === this._actual_email
+        )
+        {
+            this._email_button.setAttribute("disabled", "");
+        } else {
+            this._email_button.removeAttribute("disabled", "");
+        }
+    }
+
+    async onSaveClicked(mail) 
+    {
+        let data = await fetch("/user/{{ account.id }}/set-mail", {
+            method: "POST",
+            body: JSON.stringify({
+                mail: mail
+            })
+        });
+
+        switch ( data.status )
+        {
+            case 202:
+            await new AlertWidget("Utilisateur enregistré avec succès").main();
+            this._actual_email = mail;
+            this.onFieldChange();
+            break;
+
+            case 401:
+            await new AlertWidget("Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Vous n'avez pas les permission nécessaires pour effectuer cette action").main();
+            break;
+
+            default:
+            await new AlertWidget("Une erreur inconnue s'est produite (" + data.status + ")").main();
+            break;
+        }
     }
 }
 
@@ -172,23 +230,34 @@ class EditUserProfileScript
             }
         );
 
-        let result = await data.json();
-
-        console.log(result);
-
-        if ( data.status === 202)
+        switch ( data.status )
         {
-            location.reload();
-        } else {
+            case 202:
+            await new AlertWidget("Utilisateur enregistré avec succès").main();
+            break;
 
+            case 401:
+            await new AlertWidget("Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Vous n'avez pas les permission nécessaires pour effectuer cette action").main();
+            break;
+
+            default:
+            await new AlertWidget("Une erreur inconnue s'est produite (" + data.status + ")").main();
+            break;
         }
     }
 }
 
 window.addEventListener("load", () => {
-    new EditUserScript(
-        document.getElementById("edit-user-tabs")
-    )
+    new TabsSelector(document.getElementById("edit-user-tabs"));
+
+    new EditUserEmailScript(
+        document.getElementById("user-mail-input"),
+        document.getElementById("save-user-mail-button"),
+    );
 
     new EditUserProfileScript(
         document.getElementById("user-profile-name-input"),

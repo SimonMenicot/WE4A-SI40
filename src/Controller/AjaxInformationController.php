@@ -97,6 +97,8 @@ class AjaxInformationController extends AbstractController
             );
         }
 
+        // TODO : send an email to inform in case of admin
+
         $content = $request->getPayload()->get("content");
 
         if (gettype($content) != "string" || $content === "")
@@ -600,6 +602,44 @@ class AjaxInformationController extends AbstractController
 
     }
 
+    #[Route("/user/{id}/set-mail", methods:"POST")]
+    public function set_user_mail(#[CurrentUser] ?Account $user, Account $modified_user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode(
+                [
+                    "status" => "error",
+                    "error" => "you must be logged in to update your account"
+                ]
+            ),
+            status: Response::HTTP_FORBIDDEN);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $payload = $request->getPayload();
+
+        $mail = $payload->get("mail");
+        $modified_user->setEmail($mail);
+        $entityManager->flush();
+
+        // TODO : send an email to inform
+
+        return new Response(json_encode(
+            [
+                "status" => "success"
+            ]
+        ),
+        status: Response::HTTP_ACCEPTED);
+    }
+
     #[Route("/user/{id}/delete", methods:"POST")]
     public function delete_profile(#[CurrentUser] ?Account $user, Account $profile_user, EntityManagerInterface $entityManager): Response
     {
@@ -667,6 +707,8 @@ class AjaxInformationController extends AbstractController
 
         $account_password = $this->createNewPasswordFor($mail);
 
+        // TODO : send an email containing the password
+
         $default_image = fopen($kernel->getProjectDir() . "/templates/resources/default_user_image.png", "rb");
         $default_image_data = $this->readImage($default_image);
 
@@ -683,7 +725,7 @@ class AjaxInformationController extends AbstractController
         return new Response(json_encode([
             "status" => "success",
             "user-id" => $new_user->getId(),
-            "password" => $account_password
+            "password" => $account_password // todo : after having sent an email to the user, remove this !!!
         ]), Response::HTTP_ACCEPTED);
     }
 
