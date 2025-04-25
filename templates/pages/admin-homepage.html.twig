@@ -2,7 +2,7 @@
 
 {% block title %}
 
-Welcome, student
+Accueil administrateur
 
 {% endblock %}
 
@@ -134,6 +134,7 @@ import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
 import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
 
 import { CreateClassWidget } from "{{ asset("scripts/widgets/CreateClassWidget.js") }}";
+import { CreateUserWidget } from "{{ asset("scripts/widgets/CreateUserWidget.js") }}";
 
 window.addEventListener("load", () => {
 {% if base_config.current_user.classes|length %}
@@ -155,6 +156,17 @@ window.addEventListener("load", () => {
         if (new_class_id !== null)
         {
             document.location.href = "/class/" + new_class_id;
+        }
+    });
+
+    let add_user_button = document.getElementById('add-user-button');
+    add_user_button.addEventListener("click", async () => {
+        let widget = new CreateUserWidget();
+        let new_user_id = await widget.main();
+
+        if (new_user_id !== null)
+        {
+            document.location.href = "/profile/" + new_user_id + "/edit";
         }
     });
 });
