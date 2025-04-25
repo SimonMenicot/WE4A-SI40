@@ -48,8 +48,11 @@ class SettingsPageController extends AbstractController
         }
 
         $user_image = $user->getImage();
-        fseek($user_image, 0);
-        $user_image_base64 = base64_encode(stream_get_contents($user_image));
+        $user_image_base64 = null;
+        if ($user_image !== null) {
+            fseek($user_image, 0);
+            $user_image_base64 = base64_encode(stream_get_contents($user_image));
+        }
 
         return $this->render("settings/account/profile.html.twig", [
             "base_config" => [
