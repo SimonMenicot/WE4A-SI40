@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -443,7 +445,7 @@ class AjaxInformationController extends AbstractController
     }
 
     #[Route('/classes/new', name: "create class", methods:["POST"])]
-    public function create_new_class(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request): Response
+    public function create_new_class(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request, KernelInterface $kernel): Response
     {
         if ($user === null)
         {
@@ -472,9 +474,13 @@ class AjaxInformationController extends AbstractController
             ]), Response::HTTP_BAD_REQUEST);
         }
 
+        $default_image = fopen($kernel->getProjectDir() . "/templates/resources/default_class_image.png", "rb");
+        $default_image_data = $this->readImage($default_image);
+
         $class = new Classe();
         $class->setName($name);
         $class->setDescription($description);
+        $class->setThumbnail(base64_decode($default_image_data));
         $class->setContent([
             "type" => "container",
             "data" => [
@@ -629,7 +635,7 @@ class AjaxInformationController extends AbstractController
     }
 
     #[Route('/user/new', name: "create user", methods:["POST"])]
-    public function create_new_user(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function create_new_user(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $userPasswordHasher, KernelInterface $kernel): Response
     {
         if ($user === null)
         {
@@ -661,12 +667,16 @@ class AjaxInformationController extends AbstractController
 
         $account_password = $this->createNewPasswordFor($mail);
 
+        $default_image = fopen($kernel->getProjectDir() . "/templates/resources/default_user_image.png", "rb");
+        $default_image_data = $this->readImage($default_image);
+
         $new_user = new Account();
         $new_user->setName($name);
         $new_user->setSurname($surname);
         $new_user->setEmail($mail);
         $new_user->setPassword($userPasswordHasher->hashPassword($user, $account_password));
         $new_user->setRoles(["ROLE_STUDENT"]);
+        $new_user->setImage(base64_decode($default_image_data));
         $entityManager->persist($new_user);
         $entityManager->flush();
 

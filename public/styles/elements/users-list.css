@@ -95,7 +95,7 @@ div.users-list div.user-description p {
 
 div.users-list button#add-user-button {
     border: none;
-    margin: var(--users-list-margin);
+    margin-top: var(--users-list-margin);
     background: none;
     border: var(--users-list-add-user-button-border-width) dashed var(--inputs-surfaces-color);
     box-sizing: border-box;
