@@ -263,6 +263,11 @@ class DefaultPageController extends AbstractController
     #[Route('/class/{id}', 'ue-preview')]
     public function render_ue_preview(#[CurrentUser] ?Account $user, int $id, ?Classe $class, Request $request): Response
     {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
         if ($this->get_current_user_role($user, $request) === "ROLE_STUDENT")
         {
             return $this->render_ue_read($user, $id, $request);
