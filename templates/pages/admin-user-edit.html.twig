@@ -11,9 +11,9 @@
         <h1> Éditer l'utilisateur - {{ account.surname }} {{ account.name }} </h1>
         <div class="tabs-container" id="edit-user-tabs">
             <div class="tabs-buttons">
-                <button id="view-tab-button">Paramètres généraux</button>
-                <button id="edit-tab-button">Rôles</button>
-                <button id="edit-tab-button">Cours inscrits</button>
+                <button>Paramètres généraux</button>
+                <button>Rôles</button>
+                <button id="classes-access-button"{% if not ("ROLE_STUDENT" in account.roles or "ROLE_TEACHER" in account.roles) %} disabled{% endif %}>Cours inscrits</button>
             </div>
 
             <div class="tabs-content" id="content-display">
@@ -60,18 +60,96 @@
                         <img src="{{ asset("/images/icons/delete.png") }}"/>
                         <span>Supprimer l'utilisateur</span>
                     </button>
+                    {% if base_config.current_user.id == account.id %} 
+                    <small> Vous ne pouvez pas vous supprimer vous-même </small>
+                    {% endif %}
                 </div>
 
                 <div class="edit-user-settings-panel">
                     <h2>
                         Rôles de l'utilisateur
                     </h2>
+
+                    <div class="checkboxes-list"{% if base_config.current_user.id == account.id %} disabled{% endif %}>
+
+                        <div class="settings-row">
+                            <label> Étudiant </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-student-checkbox"{% if "ROLE_STUDENT" in account.roles %}  checked{% endif %}{% if "ROLE_ADMIN" in account.roles or "ROLE_TEACHER" in account.roles %}  disabled{% endif %}>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+                        <div class="settings-row">
+                            <label> Enseignant </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-teacher-checkbox"{% if "ROLE_TEACHER" in account.roles %}  checked{% endif %}{% if "ROLE_STUDENT" in account.roles %}  disabled{% endif %}/>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+                        <div class="settings-row">
+                            <label> Administrateur </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-admin-checkbox"{% if "ROLE_ADMIN" in account.roles %}  checked{% endif %}{% if "ROLE_STUDENT" in account.roles %}  disabled{% endif %}/>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+
+                        <button id="save-user-roles-button" class="main-button icon-button">
+                            <img src="{{ asset("/images/icons/save.png") }}"/>
+                            <span>Enregistrer</span>
+                        </button>
+                    </div>
+
+                    {% if base_config.current_user.id == account.id %} 
+                    <small>
+                        Vous ne pouvez pas modifier vos propres rôles 
+                    </small>
+                    {% else %}
+                    <small>
+                        Un étudiant ne peut être ni enseignant, ni administrateur. 
+                    </small>
+                    {% endif %}
                 </div>
 
                 <div class="edit-user-settings-panel">
                     <h2>
                         Cours inscrits
                     </h2>
+
+                    <div class="search-bar" id="classes-search-bar">
+                        <input type="text" placeholder="Rechercher..."/>
+                        <button class="icon-button main-button">
+                            <img src="{{ asset("images/icons/search.png") }}"/>
+                        </button>
+                    </div>
+
+                    <div id="classes" class="classes-list">
+                        {% for class in user_classes %}
+
+                        <a href="/class/{{ class.id }}" class="class-preview-link" target="_blank">
+                            <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
+                                {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                                <span class="class-edit-icon">
+                                    <img src="{{ asset("images/icons/edit.png") }}" />
+                                </span>
+                                {% endif %}
+                                <h1>{{ class.name }}</h1>
+                                <p>{{ class.description }}</p>
+                            </div>
+                        </a>
+                        
+                        {% endfor %}
+
+                        <button id="add-class-button">
+                            <img src="{{ asset("images/icons/edit.png") }}" />
+                            <span class="class-edit-icon">
+                                Ajouter / Supprimer des cours...
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,11 +164,14 @@
 
 <script type="module">
 
+import { SearchBar } from "{{ asset("/scripts/elements/SearchBar.js") }}";
+import { SearchList } from "{{ asset("/scripts/elements/SearchList.js") }}";
 import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}";
 import { ImageSelector } from "{{ asset("/scripts/elements/ImageSelector.js") }}";
 
 import { ConfirmWidget } from "{{ asset("/scripts/widgets/ConfirmWidget.js") }}";
 import { AlertWidget } from "{{ asset("/scripts/widgets/AlertWidget.js") }}";
+import { SelectClassWidget } from "{{ asset("scripts/widgets/SelectClassWidget.js") }}";
 
 class EditUserEmailScript
 {
@@ -251,6 +332,224 @@ class EditUserProfileScript
     }
 }
 
+class SetUserRolesScript
+{
+    constructor(student_checkbox, teacher_checkbox, admin_checkbox, save_button, classes_access_button)
+    {
+        this._student_checkbox = student_checkbox;
+        this._teacher_checkbox = teacher_checkbox;
+        this._admin_checkbox = admin_checkbox;
+        this._classes_access_button = classes_access_button;
+
+        this._save_button = save_button;
+
+        this._student_checkbox.addEventListener("input", () => {
+            this.onStudentChanged();
+        });
+
+        this._teacher_checkbox.addEventListener("input", () => {
+            this.onTeacherChanged();
+        });
+
+        this._admin_checkbox.addEventListener("input", () => {
+            this.onAdminChanged();
+        });
+
+        this._save_button.addEventListener("click", () => {
+            this.onSaveClicked();
+        });
+
+        this.onRolesChanged();
+    }
+
+    onStudentChanged()
+    {
+        if (this._student_checkbox.checked)
+        {
+            this._teacher_checkbox.checked = false;
+            this._admin_checkbox.checked = false;
+
+            this._teacher_checkbox.disabled = true;
+            this._admin_checkbox.disabled = true;
+        } else {
+            this._teacher_checkbox.disabled = false;
+            this._admin_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onTeacherChanged()
+    {
+        if (this._teacher_checkbox.checked)
+        {
+            this._student_checkbox.checked = false;
+            this._student_checkbox.disabled = true;
+        } else if (!this._admin_checkbox.checked) {
+            this._student_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onAdminChanged()
+    {
+        if (this._admin_checkbox.checked)
+        {
+            this._student_checkbox.checked = false;
+            this._student_checkbox.disabled = true;
+        } else if (!this._teacher_checkbox.checked) {
+            this._student_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onRolesChanged()
+    {
+        if ((this._student_checkbox.checked && (this._teacher_checkbox.checked || this._admin_checkbox.checked))
+            || !(this._student_checkbox.checked || this._teacher_checkbox.checked || this._admin_checkbox.checked))
+        {
+            this._save_button.disabled = true;
+        } else {
+            this._save_button.disabled = false;
+        }
+    }
+
+    async onSaveClicked()
+    {
+        let request = await fetch("/user/{{ account.id }}/set-roles", {
+            method: "POST",
+            body: JSON.stringify({
+                student: this._student_checkbox.checked,
+                teacher: this._teacher_checkbox.checked,
+                admin: this._admin_checkbox.checked,
+            })
+        });
+        
+        switch (request.status) {
+            case 202:
+            await new AlertWidget("Modifications enregistrées", "Les rôles ont été appliqués avec succès").main();
+
+
+            if (this._student_checkbox.checked || this._teacher_checkbox.checked)
+            {
+                this._classes_access_button.disabled = false;
+            } else {
+                this._classes_access_button.disabled = true;
+            }
+            break;
+        
+            case 401:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+            break;
+
+            case 423:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous ne pouvez pas vous modifier vous-même ").main();
+            break;
+
+            default:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+            break;
+        }
+    }
+}
+
+class UserClassesScript
+{
+    constructor(classes_ids, classes_list_div, classes_search_bar, add_classes_button)
+    {
+        this._classes_ids = classes_ids;
+
+        this._classes_list_div = classes_list_div;
+        this._classes_search_bar = new SearchBar(classes_search_bar);
+        this._classes_search_list = new SearchList(this._classes_search_bar, classes_list_div);
+
+        this._add_classes_button = add_classes_button;
+        add_classes_button.addEventListener("click", async () => {
+            await this.selectClasses();
+        });
+    }
+    async refreshClasses()
+    {
+        let nre = this._classes_search_list.no_result_element;
+        this._classes_list_div.innerHTML = "";
+        this._classes_list_div.appendChild(nre);
+
+        let url = "/classes/list?max-count=50&ids=";
+
+        for (let index=0; index < this._classes_ids.length; ++index)
+        {
+            if (index > 0) url += ",";
+            url += this._classes_ids[index];
+        }
+
+        let classes_data = await fetch(url);
+        let classes = await classes_data.json();
+
+        for (let classe of classes)
+        {
+            let class_link = this._classes_list_div.appendChild(document.createElement("a"));
+            class_link.classList.add("class-preview-link");
+            class_link.href = "/class/" + classe.id;
+            class_link.target = "_blank";
+
+            let class_div = class_link.appendChild(document.createElement("div"));
+            class_div.classList.add("class-preview");
+
+            console.log("url('data:image/png;base64," + classe.thumbnail + "');");
+
+            class_div.style["background-image"] = "url('data:image/png;base64," + classe.thumbnail + "')";
+
+            class_div.appendChild(document.createElement("h1")).innerHTML = classe.name;
+            class_div.appendChild(document.createElement("p")).innerText = classe.description;
+
+            document.getElementById("classes").appendChild(class_link);
+        }
+        this._classes_list_div.appendChild(this._add_classes_button);
+
+    }
+
+    async selectClasses()
+    {
+        let widget = new SelectClassWidget(
+            (classe) => true, true, [...this._classes_ids]
+        );
+
+        let classes = await widget.main();
+
+        if (classes !== null)
+        {
+            let last_classes = [...this._classes_ids];
+
+            this._classes_ids = classes;
+
+            this.refreshClasses();
+
+            try {
+                let set_classes_request = await fetch(
+                    "/users/{{ account.id }}/set-classes",
+                    {
+                        method: "POST",
+                        body: JSON.stringify(
+                            {
+                                "ids": classes
+                            }
+                        )
+                    }
+                );
+            } catch (exc ) {
+                this._classes_ids = last_classes;
+            }
+
+        }
+    }
+}
+
 window.addEventListener("load", () => {
     new TabsSelector(document.getElementById("edit-user-tabs"));
 
@@ -269,6 +568,20 @@ window.addEventListener("load", () => {
         '{{ user_image }}'
     );
 
+    new SetUserRolesScript(
+        document.getElementById("account-role-student-checkbox"),
+        document.getElementById("account-role-teacher-checkbox"),
+        document.getElementById("account-role-admin-checkbox"),
+        document.getElementById("save-user-roles-button"),
+        document.getElementById("classes-access-button")
+    )
+
+    new UserClassesScript([{% for class in user_classes %} {{ class.id}}, {% endfor %}],
+        document.getElementById("classes"),
+        document.getElementById("classes-search-bar"),
+        document.getElementById('add-class-button')
+    );
+
     document.getElementById("delete-user-button").addEventListener("click", async () => {
         if (await new ConfirmWidget("Êtes-vous sûr(e) de vouloir supprimer cet utilisateur?", "Cette action est irréversible").main())
         {
@@ -285,6 +598,10 @@ window.addEventListener("load", () => {
 
                 case 403:
                 await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+                break;
+
+                case 423:
+                await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous ne pouvez pas vous supprimer vous-même ").main();
                 break;
 
                 default:

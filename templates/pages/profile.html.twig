@@ -56,6 +56,7 @@
 
 <div id="profilepage-main-separation" class="content-separator">
     <div id="profile-listing">
+        {% if "ROLE_STUDENT" in account.roles or "ROLE_TEACHER" in account.roles %}
         <div class="profile-list">
             <h2>Cours suivis</h2>
             {% if account.classes|length %}
@@ -68,6 +69,7 @@
             <p>Cet utilisateur n'est inscrit à aucun cours</p>
             {% endif %}
         </div>
+        {% endif %}
         <div class="profile-list">
             <h2>JSP</h2>
             <ul>

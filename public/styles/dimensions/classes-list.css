@@ -16,4 +16,15 @@
     --classes-list-box-shadow-dx: 0px;
     --classes-list-box-shadow-dy: 2px;
     --classes-list-box-shadow-blurry: 3px;
+
+    --classes-list-class-preview-selected-margin: 30px;
+    --classes-list-class-preview-selected-icon-size: 30px;
+
+    --classes-list-preview-min-width: 30%;
+
+    --classes-list-class-title-padding: 4px;
+    --classes-list-class-title-shadow-strength: 3px;
+
+    --classes-list-class-description-padding: 20px;
+    --classes-list-class-description-shadow-strength: 3px;
 }

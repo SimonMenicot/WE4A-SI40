@@ -16,6 +16,25 @@
         <h2> Fuseau horaire </h2>
         <p> &lt; FUSEAU HORAIRE &gt; </p>
     </div>
+    <div class="info-section">
+        <h2>Rôle</h2>
+
+        <p>{% for role in base_config.current_user.roles %} 
+        {% if role == base_config.user_role %} 
+        <strong>
+        {% endif %} 
+        {% if role == "ROLE_STUDENT" %}
+        Étudiant
+        {% elseif role == "ROLE_TEACHER" %}
+        Enseignant
+        {% elseif role == "ROLE_ADMIN" %}
+        Administrateur
+        {% endif %}
+        {% if role == base_config.user_role %} 
+        </strong>
+        {% endif %} 
+        {% endfor %}</p>
+    </div>
 </div>
 <div class="related-section">
     <a href="./profile">Éditer le profile</a>

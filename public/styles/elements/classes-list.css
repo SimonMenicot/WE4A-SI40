@@ -6,17 +6,30 @@ div.classes-list {
     margin: 0px;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     box-sizing: border-box;
-    justify-content: center;
 
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+div.classes-list a.class-preview-link {
+    text-decoration: none;
+    min-width: var(--classes-list-preview-min-width);
+}
+
+div.classes-list a.class-preview-link.hidden, div.classes-list div.class-preview.hidden {
+    display: none;
 }
 
 div.classes-list div.class-preview, button#add-class-button {
     position: relative;
 
-    margin: 0px;
+    min-width: var(--classes-list-preview-min-width);
+
+    margin: var(--classes-list-margin);
     flex-grow: 0;
 
     display: flex;
@@ -35,13 +48,12 @@ div.classes-list div.class-preview, button#add-class-button {
     cursor: pointer;
 }
 
-div.classes-list a.class-preview-link {
-    text-decoration: none;
-    margin: var(--classes-list-margin);
+div.classes-list.selecting div.class-preview:not(.selected) {
+    padding: calc(var(--classes-list-class-preview-padding-vertical) + 5px) calc(var(--classes-list-class-preview-padding-horizontal) + 5px);
 }
 
-div.classes-list a.class-preview-link.hidden {
-    display: none;
+div.classes-list.selecting div.class-preview.selected {
+    border: 5px solid var(--color-success);
 }
 
 div.classes-list div.class-preview h1 {
@@ -49,10 +61,18 @@ div.classes-list div.class-preview h1 {
     margin-bottom: var(--classes-list-class-preview-spacing);
 
     font-size: var(--classes-list-class-preview-title-size);
+
+    background: var(--classes-list-class-content-background);
+    padding: var(--classes-list-class-title-padding);
+    box-shadow: 0px 0px var(--classes-list-class-title-shadow-strength) var(--classes-list-class-title-shadow-strength) var(--classes-list-class-content-background);
+    border-radius: var(--classes-list-class-title-shadow-strength);
 }
 
 div.classes-list div.class-preview p {
-    margin: 0px;
+    background: var(--classes-list-class-content-background);
+    padding: var(--classes-list-class-description-padding);
+    box-shadow: 0px 0px var(--classes-list-class-description-shadow-strength) var(--classes-list-class-description-shadow-strength) var(--classes-list-class-content-background);
+    border-radius: var(--classes-list-class-description-shadow-strength);
 }
 
 div.classes-list div.class-preview span.class-edit-icon {
