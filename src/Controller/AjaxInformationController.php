@@ -848,6 +848,20 @@ class AjaxInformationController extends AbstractController
             status: Response::HTTP_BAD_REQUEST);
         }
 
+        if ($user->getId() !== $profile_user->getId())
+        {
+
+            $this->emailer->send_email(
+                $profile_user,
+                "Profil modifié",
+                "/mails/profile-modified-notification.html.twig", [
+                    "user" => $profile_user,
+                    "operator" => $user
+                ]
+            );
+    
+        }
+        
         $profile_user->setName($name);
         $profile_user->setSurname($surname);
         $profile_user->setDescription($description);
