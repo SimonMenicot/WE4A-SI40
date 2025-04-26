@@ -14,14 +14,17 @@ class Emailer
 {
     private MessageBusInterface $bus;
 
+    private string $base_url;
+
     public function __construct(MessageBusInterface $bus)
     {
         $this->bus = $bus;
+        $this->base_url = $_ENV["EMAILER_LINKS_BASE_URL"];
     }
 
     public function send_email(Account $user, string $subject, string $template, array $args)
     {
-        $args["base_url"] = BASE_URL;
+        $args["base_url"] = $this->base_url;
 
         $mail = (new TemplatedEmail())
             ->from(new Address("no-reply@nooble.flopcreation.fr", "Nooble"))
