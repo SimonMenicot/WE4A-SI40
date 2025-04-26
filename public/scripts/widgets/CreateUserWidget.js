@@ -108,9 +108,6 @@ export class CreateUserWidget extends Widget
         if (data.status === 202) {
             let json_data = await data.json();
 
-            let alert = new AlertWidget("Utilisateur créé", "Mot de passe : " + json_data.password);
-            await alert.main();
-            
             return json_data['user-id'];
         } else {
             throw new Error(data.status);
