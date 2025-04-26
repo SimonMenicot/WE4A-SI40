@@ -1,11 +1,12 @@
 div.checkbox {
     position: relative;
-    width: calc(var(--checkbox-size) * 2 - var(--checkbox-padding) * 2);
-    height: calc(var(--checkbox-size) - var(--checkbox-padding) * 2);
+    width: calc(var(--checkbox-size) * 2 + var(--checkbox-border-width) * 2);
+    height: calc(var(--checkbox-size) + var(--checkbox-border-width) * 2);
     padding: var(--checkbox-padding);
     border-radius: var(--checkbox-size);
     background: var(--checkbox-background);
     border: var(--checkbox-border-width) solid var(--checkbox-border-color);
+    box-sizing: border-box;
     cursor: pointer;
     overflow: hidden;
 }
@@ -40,5 +41,10 @@ div.checkbox:has(input:checked) span.checkbox-style {
     right: var(--checkbox-padding);
     background: var(--color-success);
     transition: 0.2s left ease-in, 0.2s right ease-out, 0.2s background ease-in-out;
+}
+
+div.checkbox:has(input:disabled) {
+    opacity: 0.5;
+    pointer-events: none;
 }
 

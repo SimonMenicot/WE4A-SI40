@@ -70,7 +70,7 @@
     --tabs-buttons-color: var(--on-surface-text-color);
     --tabs-buttons-selected-color: var(--on-secondary-text-color);
 
-    --checkbox-border-color: white;
+    --checkbox-border-color: black;
     --checkbox-background: var(--surfaces-color);
     --checkbox-color: var(--secondary-color);
 

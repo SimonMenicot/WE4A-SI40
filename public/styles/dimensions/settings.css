@@ -16,4 +16,6 @@
     --image-edit-size: 300px;
     --edit-media-button-padding: 80px;
     --image-edit-border-width: 2px;
+
+    --settings-checkbox-list-max-width: 300px;
 }

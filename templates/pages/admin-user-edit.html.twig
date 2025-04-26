@@ -66,6 +66,43 @@
                     <h2>
                         Rôles de l'utilisateur
                     </h2>
+
+                    <div class="checkboxes-list">
+
+                        <div class="settings-row">
+                            <label> Étudiant </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-student-checkbox"{% if "ROLE_STUDENT" in account.roles %}  checked{% endif %}{% if "ROLE_ADMIN" in account.roles or "ROLE_TEACHER" in account.roles %}  disabled{% endif %}>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+                        <div class="settings-row">
+                            <label> Enseignant </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-teacher-checkbox"{% if "ROLE_TEACHER" in account.roles %}  checked{% endif %}{% if "ROLE_STUDENT" in account.roles %}  disabled{% endif %}/>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+                        <div class="settings-row">
+                            <label> Administrateur </label>
+                            <div class="checkbox">
+                                <input type="checkbox" id="account-role-admin-checkbox"{% if "ROLE_ADMIN" in account.roles %}  checked{% endif %}{% if "ROLE_STUDENT" in account.roles %}  disabled{% endif %}/>
+                                <span class="checkbox-style"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button id="save-user-roles-button" class="main-button icon-button">
+                        <img src="{{ asset("/images/icons/save.png") }}"/>
+                        <span>Enregistrer</span>
+                    </button>
+
+                    <small>
+                        Un étudiant ne peut être ni enseignant, ni administrateur. 
+                    </small>
                 </div>
 
                 <div class="edit-user-settings-panel">
@@ -251,6 +288,86 @@ class EditUserProfileScript
     }
 }
 
+class SetUserRolesScript
+{
+    constructor(student_checkbox, teacher_checkbox, admin_checkbox, save_button)
+    {
+        this._student_checkbox = student_checkbox;
+        this._teacher_checkbox = teacher_checkbox;
+        this._admin_checkbox = admin_checkbox;
+
+        this._save_button = save_button;
+
+        this._student_checkbox.addEventListener("input", () => {
+            this.onStudentChanged();
+        });
+
+        this._teacher_checkbox.addEventListener("input", () => {
+            this.onTeacherChanged();
+        });
+
+        this._admin_checkbox.addEventListener("input", () => {
+            this.onAdminChanged();
+        });
+
+        this.onRolesChanged();
+    }
+
+    onStudentChanged()
+    {
+        if (this._student_checkbox.checked)
+        {
+            this._teacher_checkbox.checked = false;
+            this._admin_checkbox.checked = false;
+
+            this._teacher_checkbox.disabled = true;
+            this._admin_checkbox.disabled = true;
+        } else {
+            this._teacher_checkbox.disabled = false;
+            this._admin_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onTeacherChanged()
+    {
+        if (this._teacher_checkbox.checked)
+        {
+            this._student_checkbox.checked = false;
+            this._student_checkbox.disabled = true;
+        } else if (!this._admin_checkbox.checked) {
+            this._student_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onAdminChanged()
+    {
+        if (this._admin_checkbox.checked)
+        {
+            this._student_checkbox.checked = false;
+            this._student_checkbox.disabled = true;
+        } else if (!this._teacher_checkbox.checked) {
+            this._student_checkbox.disabled = false;
+        }
+
+        this.onRolesChanged();
+    }
+
+    onRolesChanged()
+    {
+        if ((this._student_checkbox.checked && (this._teacher_checkbox.checked || this._admin_checkbox.checked))
+            || !(this._student_checkbox.checked || this._teacher_checkbox.checked || this._admin_checkbox.checked))
+        {
+            this._save_button.disabled = true;
+        } else {
+            this._save_button.disabled = false;
+        }
+    }
+}
+
 window.addEventListener("load", () => {
     new TabsSelector(document.getElementById("edit-user-tabs"));
 
@@ -268,6 +385,13 @@ window.addEventListener("load", () => {
         document.getElementById("save-user-profile-button"),
         '{{ user_image }}'
     );
+
+    new SetUserRolesScript(
+        document.getElementById("account-role-student-checkbox"),
+        document.getElementById("account-role-teacher-checkbox"),
+        document.getElementById("account-role-admin-checkbox"),
+        document.getElementById("save-user-roles-button")
+    )
 
     document.getElementById("delete-user-button").addEventListener("click", async () => {
         if (await new ConfirmWidget("Êtes-vous sûr(e) de vouloir supprimer cet utilisateur?", "Cette action est irréversible").main())
