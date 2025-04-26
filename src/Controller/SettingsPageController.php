@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 class SettingsPageController extends AbstractController
 {
     #[Route("/settings/", "settings-home")]
-    public function render_settings_home(#[CurrentUser] ?Account $user): Response
+    public function render_settings_home(#[CurrentUser] ?Account $user, Request $request): Response
     {
         if ($user === null)
         {
@@ -33,14 +33,15 @@ class SettingsPageController extends AbstractController
             "base_config" => [
                 "admin_enabled" => false,
                 "current_user" => $user,
-                "current_user_image" => $user_image_base64
+                "current_user_image" => $user_image_base64,
+                "user_role" => $this->get_current_user_role($user, $request)
             ]
             
         ]);
     }
 
     #[Route("/settings/account/profile", "settings-profile")]
-    public function render_settings_profile(#[CurrentUser] ?Account $user): Response
+    public function render_settings_profile(#[CurrentUser] ?Account $user, Request $request): Response
     {
         if ($user === null)
         {
@@ -55,7 +56,8 @@ class SettingsPageController extends AbstractController
             "base_config" => [
                 "admin_enabled" => false,
                 "current_user" => $user,
-                "current_user_image" => $user_image_base64
+                "current_user_image" => $user_image_base64,
+                "user_role" => $this->get_current_user_role($user, $request)
             ],
             "user_profile_image" => $user_image_base64,
         ]);
@@ -167,7 +169,7 @@ class SettingsPageController extends AbstractController
     }
 
     #[Route("/settings/account/infos", "settings-profile-infos")]
-    public function render_settings_profile_infos(#[CurrentUser] ?Account $user)
+    public function render_settings_profile_infos(#[CurrentUser] ?Account $user, Request $request)
     {
         if ($user === null)
         {
@@ -182,14 +184,15 @@ class SettingsPageController extends AbstractController
             "base_config" => [
                 "admin_enabled" => false,
                 "current_user" => $user,
-                "current_user_image" => $user_image_base64
+                "current_user_image" => $user_image_base64,
+                "user_role" => $this->get_current_user_role($user, $request)
             ],
             "user_profile_image" => $user_image_base64,
         ]);
     }
 
     #[Route("/settings/account/password", "settings-account-password")]
-    public function render_settings_password_infos(#[CurrentUser] ?Account $user)
+    public function render_settings_password_infos(#[CurrentUser] ?Account $user, Request $request)
     {
         if ($user === null)
         {
@@ -204,10 +207,31 @@ class SettingsPageController extends AbstractController
             "base_config" => [
                 "admin_enabled" => false,
                 "current_user" => $user,
-                "current_user_image" => $user_image_base64
+                "current_user_image" => $user_image_base64,
+                "user_role" => $this->get_current_user_role($user, $request)
             ],
             "user_profile_image" => $user_image_base64,
         ]);
+    }
+
+    public function get_current_user_role(Account $user, Request $request): string
+    {
+        $ROLES = [
+            "ROLE_ADMIN" => in_array("ROLE_ADMIN", $user->getRoles()),
+            "ROLE_STUDENT" => in_array("ROLE_STUDENT", $user->getRoles()),
+            "ROLE_TEACHER" => in_array("ROLE_TEACHER", $user->getRoles())
+        ];
+
+        if ($ROLES["ROLE_ADMIN"] && $ROLES["ROLE_TEACHER"])
+        {
+            $admin_mode_enabled = $request->cookies->get("admin_enabled", "false") === "true";
+            return $admin_mode_enabled?"ROLE_ADMIN":"ROLE_TEACHER";
+        } else {
+            if ($ROLES["ROLE_ADMIN"]) return "ROLE_ADMIN";
+            else if ($ROLES["ROLE_TEACHER"]) return "ROLE_TEACHER";
+            else return "ROLE_STUDENT";
+        }
+
     }
 }
 

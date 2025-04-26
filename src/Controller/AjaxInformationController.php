@@ -640,6 +640,67 @@ class AjaxInformationController extends AbstractController
         status: Response::HTTP_ACCEPTED);
     }
 
+    #[Route("/user/{id}/set-roles", methods:"POST")]
+    public function set_user_roles(#[CurrentUser] ?Account $user, Account $modified_user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode(
+                [
+                    "status" => "error",
+                    "error" => "you must be logged in to update your account"
+                ]
+            ),
+            status: Response::HTTP_FORBIDDEN);
+        }
+
+        if ($user === $modified_user)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You cannot grant your own account'
+            ]), Response::HTTP_LOCKED);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $payload = $request->getPayload();
+
+        $student_active = $payload->get("student");
+
+        if ($student_active === true)
+        {
+            $modified_user->setRoles(["ROLE_STUDENT"]);
+        } else {
+            $teacher_active = $payload->get("teacher");
+            $admin_active = $payload->get("admin");
+            
+            $roles = [];
+
+            if ($teacher_active) $roles[] = "ROLE_TEACHER";
+            if ($admin_active) $roles[] = "ROLE_ADMIN";
+
+            $modified_user->setRoles($roles);
+        }
+
+        $entityManager->flush();
+
+        // TODO : send an email to inform
+
+        return new Response(json_encode(
+            [
+                "status" => "success"
+            ]
+        ),
+        status: Response::HTTP_ACCEPTED);
+    }
+
     #[Route("/user/{id}/delete", methods:"POST")]
     public function delete_profile(#[CurrentUser] ?Account $user, Account $profile_user, EntityManagerInterface $entityManager): Response
     {
@@ -660,6 +721,14 @@ class AjaxInformationController extends AbstractController
                 "status" => "error",
                 "error" => 'You must be admin to perform this action'
             ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if ($user === $profile_user)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You cannot delete your own account'
+            ]), Response::HTTP_LOCKED);
         }
 
         $entityManager->remove($profile_user);

@@ -60,6 +60,9 @@
                         <img src="{{ asset("/images/icons/delete.png") }}"/>
                         <span>Supprimer l'utilisateur</span>
                     </button>
+                    {% if base_config.current_user.id == account.id %} 
+                    <small> Vous ne pouvez pas vous supprimer vous-même </small>
+                    {% endif %}
                 </div>
 
                 <div class="edit-user-settings-panel">
@@ -67,7 +70,7 @@
                         Rôles de l'utilisateur
                     </h2>
 
-                    <div class="checkboxes-list">
+                    <div class="checkboxes-list"{% if base_config.current_user.id == account.id %} disabled{% endif %}>
 
                         <div class="settings-row">
                             <label> Étudiant </label>
@@ -93,16 +96,22 @@
                             </div>
                         </div>
 
+
+                        <button id="save-user-roles-button" class="main-button icon-button">
+                            <img src="{{ asset("/images/icons/save.png") }}"/>
+                            <span>Enregistrer</span>
+                        </button>
                     </div>
 
-                    <button id="save-user-roles-button" class="main-button icon-button">
-                        <img src="{{ asset("/images/icons/save.png") }}"/>
-                        <span>Enregistrer</span>
-                    </button>
-
+                    {% if base_config.current_user.id == account.id %} 
+                    <small>
+                        Vous ne pouvez pas modifier vos propres rôles 
+                    </small>
+                    {% else %}
                     <small>
                         Un étudiant ne peut être ni enseignant, ni administrateur. 
                     </small>
+                    {% endif %}
                 </div>
 
                 <div class="edit-user-settings-panel">
@@ -310,6 +319,10 @@ class SetUserRolesScript
             this.onAdminChanged();
         });
 
+        this._save_button.addEventListener("click", () => {
+            this.onSaveClicked();
+        });
+
         this.onRolesChanged();
     }
 
@@ -366,6 +379,40 @@ class SetUserRolesScript
             this._save_button.disabled = false;
         }
     }
+
+    async onSaveClicked()
+    {
+        let request = await fetch("/user/{{ account.id }}/set-roles", {
+            method: "POST",
+            body: JSON.stringify({
+                student: this._student_checkbox.checked,
+                teacher: this._teacher_checkbox.checked,
+                admin: this._admin_checkbox.checked,
+            })
+        });
+        
+        switch (request.status) {
+            case 202:
+            await new AlertWidget("Modifications enregistrées", "Les rôles ont été appliqués avec succès").main();
+            break;
+        
+            case 401:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous devez d'abord vous connecter").main();
+            break;
+
+            case 403:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+            break;
+
+            case 423:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "Vous ne pouvez pas vous modifier vous-même ").main();
+            break;
+
+            default:
+            await new AlertWidget("Impossible de modifier l'utilisateur", "erreur inconnue (" + request.status + ":" + await request.text() + ")").main();
+            break;
+        }
+    }
 }
 
 window.addEventListener("load", () => {
@@ -409,6 +456,10 @@ window.addEventListener("load", () => {
 
                 case 403:
                 await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous n'avez pas les permissions requises pour effectuer cette action. ").main();
+                break;
+
+                case 423:
+                await new AlertWidget("Impossible de supprimer l'utilisateur", "Vous ne pouvez pas vous supprimer vous-même ").main();
                 break;
 
                 default:
