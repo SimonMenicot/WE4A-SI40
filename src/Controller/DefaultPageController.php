@@ -1,22 +1,14 @@
 <?php
 namespace App\Controller;
 
-use App\CustomFeatures\ActivitiesManager;
 use App\Entity\Account;
 use App\Entity\Classe;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Asset\Package;
-use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Twig\Environment;
-
-use const App\CustomFeatures\MAIN_ACTIVITIES_MANAGER;
 
 class DefaultPageController extends AbstractController
 {
@@ -117,7 +109,7 @@ class DefaultPageController extends AbstractController
 
         $classes = [];
 
-        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        foreach ($user->getClasses() as $class)
         {
             $classes[] = [
                 "id" => $class->getId(),
