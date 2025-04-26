@@ -11,9 +11,9 @@
         <h1> Éditer l'utilisateur - {{ account.surname }} {{ account.name }} </h1>
         <div class="tabs-container" id="edit-user-tabs">
             <div class="tabs-buttons">
-                <button id="view-tab-button">Paramètres généraux</button>
-                <button id="edit-tab-button">Rôles</button>
-                <button id="edit-tab-button">Cours inscrits</button>
+                <button>Paramètres généraux</button>
+                <button>Rôles</button>
+                <button id="classes-access-button"{% if not ("ROLE_STUDENT" in account.roles or "ROLE_TEACHER" in account.roles) %} disabled{% endif %}>Cours inscrits</button>
             </div>
 
             <div class="tabs-content" id="content-display">
@@ -334,11 +334,12 @@ class EditUserProfileScript
 
 class SetUserRolesScript
 {
-    constructor(student_checkbox, teacher_checkbox, admin_checkbox, save_button)
+    constructor(student_checkbox, teacher_checkbox, admin_checkbox, save_button, classes_access_button)
     {
         this._student_checkbox = student_checkbox;
         this._teacher_checkbox = teacher_checkbox;
         this._admin_checkbox = admin_checkbox;
+        this._classes_access_button = classes_access_button;
 
         this._save_button = save_button;
 
@@ -429,6 +430,14 @@ class SetUserRolesScript
         switch (request.status) {
             case 202:
             await new AlertWidget("Modifications enregistrées", "Les rôles ont été appliqués avec succès").main();
+
+
+            if (this._student_checkbox.checked || this._teacher_checkbox.checked)
+            {
+                this._classes_access_button.disabled = false;
+            } else {
+                this._classes_access_button.disabled = true;
+            }
             break;
         
             case 401:
@@ -563,7 +572,8 @@ window.addEventListener("load", () => {
         document.getElementById("account-role-student-checkbox"),
         document.getElementById("account-role-teacher-checkbox"),
         document.getElementById("account-role-admin-checkbox"),
-        document.getElementById("save-user-roles-button")
+        document.getElementById("save-user-roles-button"),
+        document.getElementById("classes-access-button")
     )
 
     new UserClassesScript([{% for class in user_classes %} {{ class.id}}, {% endfor %}],

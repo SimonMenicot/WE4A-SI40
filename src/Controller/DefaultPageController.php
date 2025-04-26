@@ -234,7 +234,7 @@ class DefaultPageController extends AbstractController
 
         $classes = [];
 
-        foreach ($user->getClasses() as $class)
+        foreach ($displayed_user->getClasses() as $class)
         {
             $classes[] = [
                 "id" => $class->getId(),
