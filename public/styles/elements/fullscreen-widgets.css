@@ -11,11 +11,15 @@
 
 .fullscreen-prompt div.fullscreen-widget {
     position: fixed;
-    top: 30vh;
-    left: 50vw;
-    transform: translateX(-50%) translateY(-30%);
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
 
-    width: var(--fullscreen-widget-width);
+    margin-top: var(--fullscreen-widget-margin);
+    margin-right: calc((100vw - var(--fullscreen-widget-width))/2);
+    margin-left: calc((100vw - var(--fullscreen-widget-width))/2);
+
     max-height: var(--fullscreen-widget-height);
 
     background: var(--surfaces-color);

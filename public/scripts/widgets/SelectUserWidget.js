@@ -15,7 +15,7 @@ export class SelectUserWidget extends Widget
         cancel_button.textContent = "Annuler";
 
         if (multiple)
-            super("Sélectionner un compte", [
+            super("Sélectionner des comptes", [
                 cancel_button, ok_button
             ]);
         else 
@@ -164,28 +164,6 @@ export class SelectUserWidget extends Widget
         } finally {
             this.close();
         }
-    }
-
-    async createClass(name, description)
-    {
-        this._ok_button.setAttribute('disabled', '');
-        this._cancel_button.setAttribute('disabled', '');
-
-        let data = await fetch("/classes/new", {
-            method: "POST",
-            body: JSON.stringify({
-                name: name,
-                description: description
-            })
-        });
-
-        if (data.status === 202) {
-            let json_data = await data.json();
-            return json_data['class-id'];
-        } else {
-            throw new Error(data.status);
-        }
-
     }
 
 }

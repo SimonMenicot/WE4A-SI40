@@ -330,6 +330,218 @@ class AjaxInformationController extends AbstractController
         return new Response(json_encode($users), Response::HTTP_ACCEPTED);
     }
 
+    #[Route('/users/{id}/set-classes', name: "users-set-classes", methods: ["POST"])]
+    public function set_user_classes(#[CurrentUser] ?Account $user, Account $modified_user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($user === null) 
+        {
+            return new Response(json_encode([
+                "error" => 'bad user or password'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'You must be admin to perform this action'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        $classes = $entityManager->getRepository(Classe::class);
+
+        $ids = json_decode($request->getContent(), true)['ids'];
+
+        $classes_ids = [];
+        $user_classes = $modified_user->getClasses();
+
+        foreach ($user_classes as $class)
+        {
+            $classes_ids[] = $class->getId();
+        }
+
+        foreach ($ids as $newly_present_id)
+        {
+            if (!in_array($newly_present_id, $classes_ids))
+            {
+                $user->addClass($classes->findOneBy([
+                    "id" => $newly_present_id
+                ]));
+            }
+        }
+
+        foreach ($classes_ids as $lastly_present_id)
+        {
+            if (!in_array($lastly_present_id, $ids))
+            {
+                $user->removeClass($classes->findOneBy([
+                    "id" => $lastly_present_id
+                ]));
+            }
+        }
+
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+        ]), Response::HTTP_ACCEPTED);
+    }
+
+    #[Route('/classes/list', name: "list-users", methods:["GET"])]
+    public function list_classes(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request): Response
+    {
+        if ($user === null)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'you cannot do this request without being connected'
+            ]), Response::HTTP_FORBIDDEN);
+        }
+
+        if (!in_array("ROLE_ADMIN", $user->getRoles()))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'you must be admin to perform this action'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+
+        $max_count = intval($request->get("max-count"));
+
+        if (gettype($max_count) !== "integer" || is_nan($max_count))
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'max count is required'
+            ]), Response::HTTP_BAD_REQUEST);
+        }
+
+        $contains = $request->get("contains");
+
+        if (gettype($contains) !== "string" && gettype($contains) !== "NULL")
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'invalid contains given'
+            ]), Response::HTTP_BAD_REQUEST);
+        }
+
+        $ids = $request->get("ids");
+
+        if (gettype($ids) !== "string" && gettype($ids) !== "NULL")
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'invalid ids given, '.gettype($ids)
+            ]), Response::HTTP_BAD_REQUEST);
+        }
+
+        if (gettype($ids) === "string" && gettype($contains) !== "NULL")
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'cannot use contains and ids at the same time'
+            ]), Response::HTTP_BAD_REQUEST);
+        }
+
+        if (gettype($ids) === "string")
+        {
+
+            $ids_list = [];
+            foreach (explode(",", $ids) as $id)
+            {
+                $id_int = intval($id);
+                $ids_list[] = $id_int;
+    
+                if ($id_int === NAN)
+                {
+                    return new Response(json_encode([
+                        "status" => "error",
+                        "error" => 'invalid ids given'
+                    ]), Response::HTTP_BAD_REQUEST);
+                }
+            }
+        }
+
+        /* Demandé pour le cours de SI40 */
+        $RAW_QUERY = 'SELECT * FROM classe';
+        if ($contains === null || str_replace(" ", '', $contains) === "")
+        {
+            if (gettype($ids) === "string")
+            {
+                $RAW_QUERY.= ' WHERE ';
+
+                $i = false;
+                foreach ($ids_list as $id)
+                {
+                    if ($i)
+                    {
+                        $RAW_QUERY.= ' OR ';
+                    } else {
+                        $i = true;
+                    }
+
+                    $RAW_QUERY.= '`id`=' . $id; // $id is an integer (and not a NAN), so there is not problem by adding it
+                }
+            }
+        } else {
+            $keywords = explode(" ", $contains);
+
+            $RAW_QUERY.= ' WHERE ';
+
+            $i = false;
+            foreach ($keywords as $keyword)
+            {
+                if ($i) {
+                    $RAW_QUERY .= " OR ";
+                } else {
+                    $i = true;
+                }
+
+                $quotted_kw = $entityManager->getConnection()->quote("%" . $keyword . "%");
+
+                $j = false;
+                foreach (["name", "description"] as $fieldname)
+                {
+                    if ($j)
+                    {
+                        $RAW_QUERY .= " OR ";
+                    } else {
+                        $j = true;
+                    }
+
+                    $RAW_QUERY.= "`{$fieldname}` LIKE {$quotted_kw}";
+                }
+
+            }
+
+        }
+
+        $RAW_QUERY.= ' ORDER BY `name`, `description` LIMIT '.$max_count.";"; // $max_count is an integer
+
+        $connection = $entityManager->getConnection();
+
+        /* Demandé pour le cours de SI40 */
+        $statement = $connection->prepare($RAW_QUERY);
+        $result = $statement->execute(); /* Demandé pour le cours de SI40 */
+
+        $result_content = $result->fetchAll(); /* Demandé pour le cours de SI40 */
+
+        $classes = [];
+
+        foreach ($result_content as $class)
+        {
+            $classes[] = [
+                "name" => $class['name'],
+                "description" => $class['description'],
+                "thumbnail" => base64_encode($class['thumbnail']),
+                "id" => $class['id']
+            ];
+        }
+
+        return new Response(json_encode($classes), Response::HTTP_ACCEPTED);
+    }
+
     #[Route('/classes/{id}/set-users', name: "classes-set-users", methods: ["POST"])]
     public function set_classes_users(#[CurrentUser] ?Account $user, Classe $class, Request $request, EntityManagerInterface $entityManager): Response
     {

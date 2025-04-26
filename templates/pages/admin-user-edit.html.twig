@@ -118,6 +118,38 @@
                     <h2>
                         Cours inscrits
                     </h2>
+
+                    <div class="search-bar" id="classes-search-bar">
+                        <input type="text" placeholder="Rechercher..."/>
+                        <button class="icon-button main-button">
+                            <img src="{{ asset("images/icons/search.png") }}"/>
+                        </button>
+                    </div>
+
+                    <div id="classes" class="classes-list">
+                        {% for class in user_classes %}
+
+                        <a href="/class/{{ class.id }}" class="class-preview-link" target="_blank">
+                            <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
+                                {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
+                                <span class="class-edit-icon">
+                                    <img src="{{ asset("images/icons/edit.png") }}" />
+                                </span>
+                                {% endif %}
+                                <h1>{{ class.name }}</h1>
+                                <p>{{ class.description }}</p>
+                            </div>
+                        </a>
+                        
+                        {% endfor %}
+
+                        <button id="add-class-button">
+                            <img src="{{ asset("images/icons/edit.png") }}" />
+                            <span class="class-edit-icon">
+                                Ajouter / Supprimer des cours...
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,11 +164,14 @@
 
 <script type="module">
 
+import { SearchBar } from "{{ asset("/scripts/elements/SearchBar.js") }}";
+import { SearchList } from "{{ asset("/scripts/elements/SearchList.js") }}";
 import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}";
 import { ImageSelector } from "{{ asset("/scripts/elements/ImageSelector.js") }}";
 
 import { ConfirmWidget } from "{{ asset("/scripts/widgets/ConfirmWidget.js") }}";
 import { AlertWidget } from "{{ asset("/scripts/widgets/AlertWidget.js") }}";
+import { SelectClassWidget } from "{{ asset("scripts/widgets/SelectClassWidget.js") }}";
 
 class EditUserEmailScript
 {
@@ -415,6 +450,97 @@ class SetUserRolesScript
     }
 }
 
+class UserClassesScript
+{
+    constructor(classes_ids, classes_list_div, classes_search_bar, add_classes_button)
+    {
+        this._classes_ids = classes_ids;
+
+        this._classes_list_div = classes_list_div;
+        this._classes_search_bar = new SearchBar(classes_search_bar);
+        this._classes_search_list = new SearchList(this._classes_search_bar, classes_list_div);
+
+        this._add_classes_button = add_classes_button;
+        add_classes_button.addEventListener("click", async () => {
+            await this.selectClasses();
+        });
+    }
+    async refreshClasses()
+    {
+        let nre = this._classes_search_list.no_result_element;
+        this._classes_list_div.innerHTML = "";
+        this._classes_list_div.appendChild(nre);
+
+        let url = "/classes/list?max-count=50&ids=";
+
+        for (let index=0; index < this._classes_ids.length; ++index)
+        {
+            if (index > 0) url += ",";
+            url += this._classes_ids[index];
+        }
+
+        let classes_data = await fetch(url);
+        let classes = await classes_data.json();
+
+        for (let classe of classes)
+        {
+            let class_link = this._classes_list_div.appendChild(document.createElement("a"));
+            class_link.classList.add("class-preview-link");
+            class_link.href = "/class/" + classe.id;
+            class_link.target = "_blank";
+
+            let class_div = class_link.appendChild(document.createElement("div"));
+            class_div.classList.add("class-preview");
+
+            console.log("url('data:image/png;base64," + classe.thumbnail + "');");
+
+            class_div.style["background-image"] = "url('data:image/png;base64," + classe.thumbnail + "')";
+
+            class_div.appendChild(document.createElement("h1")).innerHTML = classe.name;
+            class_div.appendChild(document.createElement("p")).innerText = classe.description;
+
+            document.getElementById("classes").appendChild(class_link);
+        }
+        this._classes_list_div.appendChild(this._add_classes_button);
+
+    }
+
+    async selectClasses()
+    {
+        let widget = new SelectClassWidget(
+            (classe) => true, true, [...this._classes_ids]
+        );
+
+        let classes = await widget.main();
+
+        if (classes !== null)
+        {
+            let last_classes = [...this._classes_ids];
+
+            this._classes_ids = classes;
+
+            this.refreshClasses();
+
+            try {
+                let set_classes_request = await fetch(
+                    "/users/{{ account.id }}/set-classes",
+                    {
+                        method: "POST",
+                        body: JSON.stringify(
+                            {
+                                "ids": classes
+                            }
+                        )
+                    }
+                );
+            } catch (exc ) {
+                this._classes_ids = last_classes;
+            }
+
+        }
+    }
+}
+
 window.addEventListener("load", () => {
     new TabsSelector(document.getElementById("edit-user-tabs"));
 
@@ -439,6 +565,12 @@ window.addEventListener("load", () => {
         document.getElementById("account-role-admin-checkbox"),
         document.getElementById("save-user-roles-button")
     )
+
+    new UserClassesScript([{% for class in user_classes %} {{ class.id}}, {% endfor %}],
+        document.getElementById("classes"),
+        document.getElementById("classes-search-bar"),
+        document.getElementById('add-class-button')
+    );
 
     document.getElementById("delete-user-button").addEventListener("click", async () => {
         if (await new ConfirmWidget("Êtes-vous sûr(e) de vouloir supprimer cet utilisateur?", "Cette action est irréversible").main())

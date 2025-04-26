@@ -232,6 +232,18 @@ class DefaultPageController extends AbstractController
             return new Response(status:Response::HTTP_FORBIDDEN);
         }
 
+        $classes = [];
+
+        foreach ($user->getClasses() as $class)
+        {
+            $classes[] = [
+                "id" => $class->getId(),
+                "name" => $class->getName(),
+                "description" => $class->getDescription(),
+                "thumbnail" => $this->readImage($class->getThumbnail()),
+            ];
+        }
+
         return $this->render("pages/admin-user-edit.html.twig", [
             "base_config" => [
                 "current_user" => $user,
@@ -239,7 +251,8 @@ class DefaultPageController extends AbstractController
                 "user_role" => $this->get_current_user_role($user, $request)
             ],
             "account" => $displayed_user,
-            "user_image" => $this->readImage($displayed_user->getImage())
+            "user_image" => $this->readImage($displayed_user->getImage()),
+            "user_classes" => $classes
         ]);
     }
     
