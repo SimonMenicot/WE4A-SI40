@@ -7,6 +7,7 @@ use App\Entity\Account;
 use App\Entity\Classe;
 use App\Entity\File;
 use App\Repository\ClasseRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,7 +110,7 @@ class AjaxInformationController extends AbstractController
             {
                 $this->emailer->send_email(
                     $account,
-                    "Modifications operated on ".$class->getName(),
+                    "Modifications opérées sur le cours ".$class->getName(),
                     "/mails/class-modification-notification.html.twig", [
                         "class" => $class,
                         "account" => $account,
@@ -174,6 +175,40 @@ class AjaxInformationController extends AbstractController
                 'surname' => $user->getSurname()
             ]));
         }
+    }
+
+    #[Route('/new-password', name: "reset-password", methods: ["POST"])]
+    public function reset_user_password(#[CurrentUser] ?Account $user, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        if ($user !== null) 
+        {
+            return new Response(status:Response::HTTP_NOT_ACCEPTABLE);
+        } 
+
+        $mail = $request->getPayload()->get("username");
+
+        if (gettype($mail) !== "string")
+        {
+            return new Response(status:Response::HTTP_BAD_REQUEST);
+        }
+
+        $passwd_user = $entityManager->getRepository(Account::class)->findOneBy([
+            "email" => $mail
+        ]);
+
+        if ($passwd_user === null)
+        {
+            return new Response(status:Response::HTTP_NOT_FOUND);
+        } 
+
+        $passwd_user->setPassword($this->createNewPasswordFor($passwd_user, $userPasswordHasher));
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+            "name" => $passwd_user->getName(),
+            "surname" => $passwd_user->getSurname()
+        ]), Response::HTTP_ACCEPTED);
     }
 
     #[Route('/logout', name: "logout")]
@@ -866,7 +901,7 @@ class AjaxInformationController extends AbstractController
 
         $this->emailer->send_email(
             $modified_user,
-            "Email modificated",
+            "Adresse mail modifiée",
             "/mails/email-changed-notification.html.twig", [
                 "last" => $last_email,
                 "user" => $modified_user,
@@ -935,7 +970,7 @@ class AjaxInformationController extends AbstractController
 
         $this->emailer->send_email(
             $modified_user,
-            "Email modificated",
+            "Rôles modifiés",
             "/mails/roles-changed-notification.html.twig", [
                 "user" => $modified_user,
                 "operator" => $user
@@ -1030,10 +1065,10 @@ class AjaxInformationController extends AbstractController
         $new_user->setName($name);
         $new_user->setSurname($surname);
         $new_user->setEmail($mail);
-        $new_user->setRoles(["ROLE_STUDENT"]);
+        $new_user->setRoles(["ROLE_USER", "ROLE_STUDENT"]);
         $new_user->setImage(base64_decode($default_image_data));
 
-        // password must be defined after, before of emails sending needing name and email
+        // password must be defined after, because of emails sending needing name and email
 
         $new_user->setPassword($this->createNewPasswordFor($new_user, $userPasswordHasher));
         $entityManager->persist($new_user);
@@ -1063,7 +1098,7 @@ class AjaxInformationController extends AbstractController
 
         $this->emailer->send_email(
             $user,
-            "Email modificated",
+            "Nouveau mot de passe",
             "/mails/password-modificated-notification.html.twig", [
                 "user" => $user,
                 "password" => $passwd
