@@ -364,7 +364,7 @@ class AjaxInformationController extends AbstractController
         {
             if (!in_array($newly_present_id, $classes_ids))
             {
-                $user->addClass($classes->findOneBy([
+                $modified_user->addClass($classes->findOneBy([
                     "id" => $newly_present_id
                 ]));
             }
@@ -374,7 +374,7 @@ class AjaxInformationController extends AbstractController
         {
             if (!in_array($lastly_present_id, $ids))
             {
-                $user->removeClass($classes->findOneBy([
+                $modified_user->removeClass($classes->findOneBy([
                     "id" => $lastly_present_id
                 ]));
             }
