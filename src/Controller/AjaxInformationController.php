@@ -782,7 +782,7 @@ class AjaxInformationController extends AbstractController
             $file = $entityManager->getRepository(File::class)->find($id);
             $file_content = stream_get_contents($file->getContent());
 
-            $activity = $this->activities_manager->getActivity($file->getType());
+            $activity = $this->activities_manager->getActivity($file->getFileName());
 
             return [
                 "id" => $class_content["data"]["id"],
