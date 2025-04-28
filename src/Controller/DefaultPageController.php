@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\CustomFeatures\ActivitiesManager;
 use App\Entity\Account;
 use App\Entity\Classe;
+use App\Entity\File;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -386,6 +387,24 @@ class DefaultPageController extends AbstractController
         if (is_null($image)) return "";
         fseek($image, 0);
         return base64_encode(stream_get_contents($image));
+    }
+
+    #[Route("/file/{id}", name: "get-file")]
+    public function getFile(#[CurrentUser] ?Account $user, File $file): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+
+        //return $this->render('pages/file.html.twig', []);
+        $file_content = $file->getContent();
+        header('content-type: '.mime_content_type($file_content));
+        header('content-disposition: inline; filename="'.$file->getFilename().'"');
+        echo stream_get_contents($file_content);
+        die();
+
+
     }
 
 }

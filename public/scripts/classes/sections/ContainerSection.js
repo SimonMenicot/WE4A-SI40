@@ -271,6 +271,11 @@ export class ContainerSection extends Section
         return div;
     }
 
+    async onSave(){
+        for (let child of this.children){
+            await child.onSave();
+        }
+    }
     exportToJsonData()
     {
         return {

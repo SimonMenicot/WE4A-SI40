@@ -1,6 +1,6 @@
 <?php
-set_include_path("../");
-require "header.php";
+//set_include_path("../");
+require "../old-files/header.php";
 drawHeader("Welcome, Litzler", false);
 ?>
 <div id="classpage-main-separation" class="content-separator">

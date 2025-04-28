@@ -34,8 +34,7 @@
                         <input id="description-input"/>
                         <label> Image de fond </label>
                         <div class="image-edit">
-                            <img class="edit-image" id="thumbnail-display">
-                            </img>
+                            <img class="edit-image" id="thumbnail-display"/>
                             <button id="thumbnail-button">
                                 <img src="{{ asset("images/icons/upload.png") }}"/>
                             </button>
@@ -274,6 +273,7 @@ class UeEditScript
 
     async save()
     {
+        await this._main_section.onSave();
         let fetch_data = await fetch(
             "/classes/{{ ue_id }}/set-content",
             {

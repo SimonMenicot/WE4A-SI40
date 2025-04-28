@@ -14,28 +14,20 @@ class File
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\Column(type: Types::BLOB)]
     private $content;
+
+    #[ORM\Column(length: 255)]
+    private ?string $file_name = null;
+
+    #[ORM\Column]
+    private ?int $owner = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getContent()
     {
@@ -45,6 +37,30 @@ class File
     public function setContent($content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->file_name;
+    }
+
+    public function setFileName(string $file_name): static
+    {
+        $this->file_name = $file_name;
+
+        return $this;
+    }
+
+    public function getOwner(): ?int
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(int $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
