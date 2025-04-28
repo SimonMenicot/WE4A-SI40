@@ -76,6 +76,11 @@ export class Section
         return null;
     }
 
+    async onSave()
+    {
+        return null;
+    }
+
     get json_data()
     {
         return {

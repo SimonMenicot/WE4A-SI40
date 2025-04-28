@@ -1,6 +1,6 @@
 <?php
 
-require "config.php";
+//require "config.php";
 
 function drawHeader(string $title, bool $is_admin = false, string... $addition_scripts): void
 {

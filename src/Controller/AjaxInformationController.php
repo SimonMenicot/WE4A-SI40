@@ -1115,5 +1115,27 @@ class AjaxInformationController extends AbstractController
         return $userPasswordHasher->hashPassword($user, $passwd);
     }
 
+    #[Route("/file/new/{fileName}", name: "add file", methods:"POST")]
+    public function addNewFile(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request, string $fileName): Response{
+        if ($user === null)
+        {
+            return new Response(json_encode([
+                "status" => "error",
+                "error" => 'please log in!'
+            ]), Response::HTTP_UNAUTHORIZED);
+        }
+        $newFile = new File();
+        $newFile->setContent($request->getContent());
+        $newFile->setFileName($fileName);
+        $newFile->setOwner($user->getId());
+        $entityManager->persist($newFile);
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+            "file_id" => $newFile->getId()
+        ]), Response::HTTP_ACCEPTED);
+    }
+
 }
 

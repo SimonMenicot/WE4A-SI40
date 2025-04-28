@@ -1,10 +1,12 @@
 import { Section } from "./Section.js";
+import { FileSelector } from "../../elements/FileSelector.js";
 
 export class FileSection extends Section
 {
     constructor(data)
     {
         super("file", data);
+        this._changed_src = false;
     }
 
     get description()
@@ -17,6 +19,11 @@ export class FileSection extends Section
         let data = this.data;
         data.description = value;
         this.data = data;
+        this.notifyEvents("modified", {
+            reason: "inner-modification",
+            modification: "descritption",
+            description:value
+        }, false);
     }
 
     get src()
@@ -29,6 +36,13 @@ export class FileSection extends Section
         let data = this.data;
         data.src = value;
         this.data = data;
+        this._changed_src = true;
+        this.notifyEvents("modified", {
+            reason: "inner-modification",
+            modification: "src",
+            src: value
+        }, false);
+
     }
 
     get filename()
@@ -41,6 +55,11 @@ export class FileSection extends Section
         let data = this.data;
         data.filename = value;
         this.data = data;
+        this.notifyEvents("modified", {
+            reason: "inner-modification",
+            modification: "filename",
+            src: value
+        }, false);
     }
 
     render()
@@ -79,7 +98,36 @@ export class FileSection extends Section
         upload_button.append(name)
         name.classList.add("file-extension");
         name.textContent = this.filename;
+
+        description.addEventListener("input", ()=>{
+            this.description = description.value;
+        })
+
+
+        let file_selector = new FileSelector(upload_button, (files)=>{
+            this.filename = files[0].name;
+            this.src = URL.createObjectURL(files[0]);
+            this._file = files[0]
+            name.textContent = this.filename;
+        }, "")
+
+
         return div;
+    }
+
+    async onSave() {
+        if (this._changed_src){
+            let data = await fetch("/file/new/"+this.filename,{
+                method: "POST",
+                body:this._file
+            });
+            if (data.status === 202) {
+                let json_data = await data.json();
+                this.src = "/file/" + json_data.file_id;
+            }else{
+                throw new Error(data.status);
+            }
+        }
     }
 
     exportToJsonData()

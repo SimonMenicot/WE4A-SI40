@@ -109,7 +109,7 @@ class DefaultPageController extends AbstractController
 
         $classes = [];
 
-        foreach ($user->getClasses() as $class)
+        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
         {
             $classes[] = [
                 "id" => $class->getId(),
@@ -370,18 +370,6 @@ class DefaultPageController extends AbstractController
         }
 
         return $this->render('pages/login.html.twig', [
-        ]);
-    }
-
-    #[Route('/reset-passwd', "reset-passwd")]
-    public function render_reset_passwd(#[CurrentUser] ?Account $user): Response
-    {
-        if ($user !== null)
-        {
-            return $this->redirectToRoute("home");
-        }
-
-        return $this->render('pages/password-forgotten.html.twig', [
         ]);
     }
 

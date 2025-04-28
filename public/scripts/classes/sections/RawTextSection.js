@@ -38,8 +38,8 @@ export class RawTextSection extends Section
         div.addEventListener("input", () => {
             let text = div.innerText;
 
-            if (text.endsWith("\n")) text = text.substring(0, text.length - 1)
-            
+            while (text.endsWith("\n")) text = text.substring(0, text.length - 1)
+
             this.text = text;
         });
 
