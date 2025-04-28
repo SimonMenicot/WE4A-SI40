@@ -352,7 +352,7 @@ class AjaxInformationController extends AbstractController
 
         }
 
-        $RAW_QUERY.= ' ORDER BY `name`, `surname`;';
+        $RAW_QUERY.= ' ORDER BY `name`, `surname` LIMIT '.$max_count.";";
 
         $connection = $entityManager->getConnection();
 
