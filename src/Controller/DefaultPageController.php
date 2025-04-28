@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Account;
 use App\Entity\Classe;
+use App\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -378,6 +379,24 @@ class DefaultPageController extends AbstractController
         if (is_null($image)) return "";
         fseek($image, 0);
         return base64_encode(stream_get_contents($image));
+    }
+
+    #[Route("/file/{id}", name: "get-file")]
+
+
+
+    public function getFile(#[CurrentUser] ?Account $user, File $file): Response
+    {
+        if ($user === null)
+        {
+            return $this->redirectToRoute("login-page");
+        }
+        $file_content = $file->getContent();
+        header('content-type: '.mime_content_type($file_content));
+        header('content-disposition: inline; filename="'.$file->getFilename().'"');
+        echo stream_get_contents($file_content);
+        die();
+
     }
 
 }
