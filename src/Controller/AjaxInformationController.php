@@ -2,10 +2,10 @@
 namespace App\Controller;
 
 use App\CustomFeatures\ActivitiesManager;
+use App\CustomFeatures\Emailer;
 use App\Entity\Account;
 use App\Entity\Classe;
 use App\Entity\File;
-use App\Repository\ClasseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,23 +13,22 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Twig\Environment;
-use Twig\Sandbox\SecurityPolicyInterface;
 
 class AjaxInformationController extends AbstractController
 {
-    private $activities_manager;
+    private ActivitiesManager $activities_manager;
+    private Emailer $emailer;
 
-    public function __construct(Environment $env, Packages $assets)
+    public function __construct(Environment $env, Packages $assets, MessageBusInterface $bus)
     {
         $this->activities_manager = new ActivitiesManager($env, $assets);
+        $this->emailer = new Emailer($bus);
     }
 
     #[Route('/classes/{id}/get-content', "get class content")]
@@ -97,7 +96,23 @@ class AjaxInformationController extends AbstractController
             );
         }
 
-        // TODO : send an email to inform in case of admin
+        if (!$class->getAccounts()->contains($user))
+        {
+
+            foreach ($class->getAccounts() as $account)
+            {
+                $this->emailer->send_email(
+                    $account,
+                    "Modifications opérées sur le cours ".$class->getName(),
+                    "/mails/class-modification-notification.html.twig", [
+                        "class" => $class,
+                        "account" => $account,
+                        "operator" => $user
+                    ]
+                );
+            }
+
+        }
 
         $content = $request->getPayload()->get("content");
 
@@ -153,6 +168,40 @@ class AjaxInformationController extends AbstractController
                 'surname' => $user->getSurname()
             ]));
         }
+    }
+
+    #[Route('/new-password', name: "reset-password", methods: ["POST"])]
+    public function reset_user_password(#[CurrentUser] ?Account $user, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    {
+        if ($user !== null) 
+        {
+            return new Response(status:Response::HTTP_NOT_ACCEPTABLE);
+        } 
+
+        $mail = $request->getPayload()->get("username");
+
+        if (gettype($mail) !== "string")
+        {
+            return new Response(status:Response::HTTP_BAD_REQUEST);
+        }
+
+        $passwd_user = $entityManager->getRepository(Account::class)->findOneBy([
+            "email" => $mail
+        ]);
+
+        if ($passwd_user === null)
+        {
+            return new Response(status:Response::HTTP_NOT_FOUND);
+        } 
+
+        $passwd_user->setPassword($this->createNewPasswordFor($passwd_user, $userPasswordHasher));
+        $entityManager->flush();
+
+        return new Response(json_encode([
+            "status" => "success",
+            "name" => $passwd_user->getName(),
+            "surname" => $passwd_user->getSurname()
+        ]), Response::HTTP_ACCEPTED);
     }
 
     #[Route('/logout', name: "logout")]
@@ -303,7 +352,7 @@ class AjaxInformationController extends AbstractController
 
         }
 
-        $RAW_QUERY.= ' ORDER BY `name`, `surname`;';
+        $RAW_QUERY.= ' ORDER BY `name`, `surname` LIMIT '.$max_count.";";
 
         $connection = $entityManager->getConnection();
 
@@ -387,7 +436,7 @@ class AjaxInformationController extends AbstractController
         ]), Response::HTTP_ACCEPTED);
     }
 
-    #[Route('/classes/list', name: "list-users", methods:["GET"])]
+    #[Route('/classes/list', name: "list-classes", methods:["GET"])]
     public function list_classes(#[CurrentUser] ?Account $user, EntityManagerInterface $entityManager, Request $request): Response
     {
         if ($user === null)
@@ -799,6 +848,20 @@ class AjaxInformationController extends AbstractController
             status: Response::HTTP_BAD_REQUEST);
         }
 
+        if ($user->getId() !== $profile_user->getId())
+        {
+
+            $this->emailer->send_email(
+                $profile_user,
+                "Profil modifié",
+                "/mails/profile-modified-notification.html.twig", [
+                    "user" => $profile_user,
+                    "operator" => $user
+                ]
+            );
+    
+        }
+        
         $profile_user->setName($name);
         $profile_user->setSurname($surname);
         $profile_user->setDescription($description);
@@ -839,10 +902,19 @@ class AjaxInformationController extends AbstractController
         $payload = $request->getPayload();
 
         $mail = $payload->get("mail");
+        $last_email = $modified_user->getEmail();
         $modified_user->setEmail($mail);
         $entityManager->flush();
 
-        // TODO : send an email to inform
+        $this->emailer->send_email(
+            $modified_user,
+            "Adresse mail modifiée",
+            "/mails/email-changed-notification.html.twig", [
+                "last" => $last_email,
+                "user" => $modified_user,
+                "operator" => $user
+            ]
+        );
 
         return new Response(json_encode(
             [
@@ -903,8 +975,15 @@ class AjaxInformationController extends AbstractController
 
         $entityManager->flush();
 
-        // TODO : send an email to inform
-
+        $this->emailer->send_email(
+            $modified_user,
+            "Rôles modifiés",
+            "/mails/roles-changed-notification.html.twig", [
+                "user" => $modified_user,
+                "operator" => $user
+            ]
+        );
+        
         return new Response(json_encode(
             [
                 "status" => "success"
@@ -986,10 +1065,6 @@ class AjaxInformationController extends AbstractController
             ]), Response::HTTP_BAD_REQUEST);
         }
 
-        $account_password = $this->createNewPasswordFor($mail);
-
-        // TODO : send an email containing the password
-
         $default_image = fopen($kernel->getProjectDir() . "/templates/resources/default_user_image.png", "rb");
         $default_image_data = $this->readImage($default_image);
 
@@ -997,22 +1072,25 @@ class AjaxInformationController extends AbstractController
         $new_user->setName($name);
         $new_user->setSurname($surname);
         $new_user->setEmail($mail);
-        $new_user->setPassword($userPasswordHasher->hashPassword($user, $account_password));
-        $new_user->setRoles(["ROLE_STUDENT"]);
+        $new_user->setRoles(["ROLE_USER", "ROLE_STUDENT"]);
         $new_user->setImage(base64_decode($default_image_data));
+
+        // password must be defined after, because of emails sending needing name and email
+
+        $new_user->setPassword($this->createNewPasswordFor($new_user, $userPasswordHasher));
         $entityManager->persist($new_user);
+
         $entityManager->flush();
 
         return new Response(json_encode([
             "status" => "success",
-            "user-id" => $new_user->getId(),
-            "password" => $account_password // todo : after having sent an email to the user, remove this !!!
+            "user-id" => $new_user->getId()
         ]), Response::HTTP_ACCEPTED);
     }
 
-    public function createNewPasswordFor(string $mail) // TODO : send a mail !
+    public function createNewPasswordFor(Account $user, $userPasswordHasher)
     {
-        $a = "";
+        $passwd = "";
 
         $chars = str_split(
             'abcdefghijklmnopqrstuvwxyz'
@@ -1022,10 +1100,19 @@ class AjaxInformationController extends AbstractController
         
         foreach (array_rand($chars, 8) as $i)
         {
-            $a.= $chars[$i];
+            $passwd.= $chars[$i];
         }
 
-        return $a;
+        $this->emailer->send_email(
+            $user,
+            "Nouveau mot de passe",
+            "/mails/password-modificated-notification.html.twig", [
+                "user" => $user,
+                "password" => $passwd
+            ]
+        );
+
+        return $userPasswordHasher->hashPassword($user, $passwd);
     }
 
     #[Route("/file/new/{fileName}", name: "add file", methods:"POST")]

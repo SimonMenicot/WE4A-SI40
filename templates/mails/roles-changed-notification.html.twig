@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h1> Bonjour {{ user.surname }} {{ user.name }}, </h1>
+        <p>
+            Vos rôles ont été redéfinis par l'administrateur {{ operator.surname }} {{ operator.name }}.
+        </p>
+        <p>
+            Vous bénéficier maintenant des rôles suivants :
+        </p>
+        <ul>
+            {% for role in user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+            <li>
+                <strong>Administrateur</strong> : vous bénéficiez des droits d'accès sur l'ensemble du site sans aucune restriction. 
+            </li>
+            {% endif %}
+            {% if role == "ROLE_TEACHER" %}
+            <li>
+                <strong>Enseignant</strong> : vous pouvez modifier les cours qui vous été assignés par les administrateurs. 
+            </li>
+            {% endif %}
+            {% if role == "ROLE_STUDENT" %}
+            <li>
+                <strong>Étudiant</strong> : vous aurez désormais accès aux cours qui vont sont attribués. 
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <hr></hr>
+        <small>Cet email est un email automatique. Merci de ne pas y répondre. </small>
+    </body>
+</html>

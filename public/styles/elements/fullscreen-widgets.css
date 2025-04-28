@@ -20,6 +20,7 @@
     margin-right: calc((100vw - var(--fullscreen-widget-width))/2);
     margin-left: calc((100vw - var(--fullscreen-widget-width))/2);
 
+    height: min-content;
     max-height: var(--fullscreen-widget-height);
 
     background: var(--surfaces-color);
