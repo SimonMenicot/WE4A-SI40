@@ -1,4 +1,17 @@
-<html>
+{# 
+
+    Cette page décrit le template html du mail envoyé en cas de modification de l'adresse mail. 
+
+    Variables: 
+     - user : le compte dont l'adresse a été modifié
+     - last : l'adresse mail précédente
+     - operator : l'opérateur (administrateur) de la modification. 
+
+    Les mails contiennent aussi la variable base_url, qui correspond à la variable d'environnement "EMAILER_LINKS_BASE_URL"
+
+    Voir aussi src/CustomFeatures/Emailer.php. 
+
+#}<html>
     <head>
         <meta charset="utf-8"/>
     </head>
