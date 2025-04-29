@@ -381,10 +381,19 @@ class DefaultPageController extends AbstractController
         return base64_encode(stream_get_contents($image));
     }
 
+    #[Route('/reset-passwd', "reset-passwd")]
+    public function render_reset_passwd(#[CurrentUser] ?Account $user): Response
+    {
+        if ($user !== null)
+        {
+            return $this->redirectToRoute("home");
+        }
+
+        return $this->render('pages/password-forgotten.html.twig', [
+        ]);
+    }
+     
     #[Route("/file/{id}", name: "get-file")]
-
-
-
     public function getFile(#[CurrentUser] ?Account $user, File $file): Response
     {
         if ($user === null)
