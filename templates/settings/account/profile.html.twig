@@ -29,6 +29,7 @@
 
 {% endblock %}
 
+{# Importation du style de la page #}
 {% block stylesheets %}
 
 <link rel="stylesheet" href="{{ asset("styles/pages/settings/profile.css") }}" />
@@ -39,8 +40,10 @@
 
 <script type="module">
 
+{# ImageSelector permet de demander à sélectionner une image #}
 import { ImageSelector } from "/scripts/elements/ImageSelector.js";
 
+{# Script de modification du profile #}
 class EditProfileScript
 {
     constructor(name_field, surname_field, description_field, profile_image, profile_image_button, save_button, base_profile_image)
@@ -127,6 +130,7 @@ class EditProfileScript
     }
 }
 
+{# Chargement du script #}
 window.addEventListener("load", () => {
     let script = new EditProfileScript(
         document.getElementById("profile-name-input"),
@@ -135,7 +139,7 @@ window.addEventListener("load", () => {
         document.getElementById("profile-user-image"),
         document.getElementById("profile-user-image-button"),
         document.getElementById("profile-settings-save-button"),
-        '{{ user_profile_image }}'
+        '{{ user_profile_image }}' {# contenu base64 de l'image de profile, assuré par le controlleur #}
     );
 });
 

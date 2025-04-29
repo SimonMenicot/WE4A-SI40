@@ -1,3 +1,4 @@
+{# Page de connexion. N'hérite pas de base.html.twig car sa structure diffère #}
 <!DOCTYPE html>
 
 <html>
@@ -38,6 +39,7 @@
 {% block javascripts %}
 <script type="module">
 
+{# Script de connexion #}
 class LoginDiv
 {
     constructor(
@@ -137,6 +139,7 @@ class LoginDiv
     }
 }
 
+{# Chargement du script #}
 window.addEventListener("load", () => {
     let l = new LoginDiv(
         document.getElementById("login-mail"),

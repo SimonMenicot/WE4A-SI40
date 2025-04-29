@@ -1,22 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="classpage-main-separation" class="content-separator">
+    {# Contenu principal de la classe #}
     <div id="main-class-content" class="class-content">
+        {# Titre #}
         <div class="class-title-content">
             <a class="class-back-link" href="/">
                 <img src="{{ asset("/images/icons/back.png") }}">
             </a>
             <h1 id="class-title">
+                {# On n'accède aux informations sur le compte qu'au moment de recevoir le contenu, pour informer du statut de la requête #}
                 Chargement...
             </h1>
         </div>
+        {# Bouton de sauvegarde #}
         <button class="main-button icon-button" id="save-button-top">
             <img src="{{ asset("/images/icons/save.png") }}"/>
             <span>Sauvegarder</span>
         </button>
+        {# Onglets de modification (voir public/scripts/elements/TabsSelector.js) #}
         <div class="tabs-container" id="class-tabs">
             <div class="tabs-buttons">
+                {# Deux premiers panneaux pour les administrateurs seulement #}
                 {% if base_config.user_role == "ROLE_ADMIN" %}
                 <button id="view-tab-button">Paramètres généraux</button>
                 <button id="view-tab-button">Comptes liés</button>
@@ -25,7 +32,9 @@
                 <button id="edit-tab-button">Édition</button>
             </div>
             <div class="tabs-content" id="content-display">
+                {# Deux premiers panneaux pour les administrateurs seulement #}
                 {% if base_config.user_role == "ROLE_ADMIN" %}
+                {# Panneaux des caractéristiques du cours #}
                 <div id="admin-class-handler">
                     <h2> Affiche </h2>
                         <label> Nom </label>
@@ -49,7 +58,9 @@
                         <span> Supprimer le cours </span>
                     </button> 
                 </div>
+                {# Panneaux des utilisateurs liés au cours #}
                 <div>
+                    {# Barre de recherche #}
                     <div class="search-bar" id="users-search-bar">
                         <input type="text" placeholder="Rechercher..."/>
                         <button class="icon-button main-button">
@@ -57,6 +68,7 @@
                         </button>
                     </div>
 
+                    {# Liste des utilisateurs #}
                     <div id="users" class="users-list">
                         {% for user in users %}
 
@@ -81,18 +93,21 @@
                         </a>
                         
                         {% endfor %}
+                        {# Bouton de modification des utilisateurs #}
                         <button id="add-user-button">
                             <img src="{{ asset("images/icons/add.png") }}" />
                             <span class="user-edit-icon">
-                                Ajouter un élève / enseignant...
+                                Ajouter un étudiant / enseignant...
                             </span>
                         </button>
 
                     </div>
                 </div>
                 {% endif %}
+                {# Les deux autres éléments (aperçus et édition) sont créés dynamiquement avec Javascript #}
             </div>
         </div>
+        {# Bouton de sauvegarde #}
         <button class="main-button icon-button" id="save-button-bottom">
             <img src="{{ asset("/images/icons/save.png") }}"/>
             <span>Sauvegarder</span>
@@ -105,12 +120,15 @@
 
 {% endblock %}
 
+{# Scripts de modification de cours #}
 {% block javascripts %}
 
 <script type="module">
 
+{# Le premier objet (DEFAULT_SECTION_TYPES_MAP) permet de gérer toute la partie génération de cours #}
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 import { TabsSelector } from "{{ asset("/scripts/elements/TabsSelector.js") }}"
+{# certains éléments requis uniquement pour les scripts admins #}
 {% if base_config.user_role == "ROLE_ADMIN" %}
 
 import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
@@ -123,9 +141,10 @@ import { AlertWidget } from "{{ asset("scripts/widgets/AlertWidget.js") }}";
 import { ImageSelector } from "/scripts/elements/ImageSelector.js";
 {% endif %}
 
+{# Script de modification de contenu de cours #}
 class UeEditScript
 {
-    constructor(class_title, main_content, save_buttons, tabs_selector{% if base_config.user_role == "ROLE_ADMIN" %}, title_input, description_input, thumbnail_image, thumbnail_button{% endif %})
+    constructor(class_title, main_content, save_buttons, tabs_selector{% if base_config.user_role == "ROLE_ADMIN" %}, /*arguments requis pour la partie administrateurs*/ title_input, description_input, thumbnail_image, thumbnail_button{% endif %})
     {
         this._class_title = class_title;
         this._main_content = main_content;
@@ -135,6 +154,8 @@ class UeEditScript
         this._tabs_selector = tabs_selector;
 
         {% if base_config.user_role == "ROLE_ADMIN" %}
+        // éléments requis pour la partie administrateurs, après avoir reçues les informations de requête
+
         this._title_input = title_input;
         this._thumbnail_button = thumbnail_button;
         this._description_input = description_input;
@@ -186,6 +207,7 @@ class UeEditScript
         this._main_section = DEFAULT_SECTION_TYPES_MAP.export(data.content);
         this._class_title.textContent = data.name + " - " + data.description;
         {% if base_config.user_role == "ROLE_ADMIN" %}
+        // en cas d'admin, on met aussi à jour les éléments des panneaux administrateurs
 
         this._title_input.value = data.name;
         this._description_input.value = data.description;
@@ -291,7 +313,9 @@ class UeEditScript
 
 }
 
+{# Scripts accessibles seulement pour les admins #}
 {% if base_config.user_role == "ROLE_ADMIN" %}
+{# Script de modification des utilisateurs du cours #}
 class UeUsersScript
 {
     constructor(users_ids, users_list_div, users_search_bar, add_users_button)
@@ -353,7 +377,7 @@ class UeUsersScript
                     break;
 
                     case "ROLE_STUDENT":
-                    title += "Élève ";
+                    title += "Étudiant ";
                     break;
                 }
             }
@@ -404,6 +428,7 @@ class UeUsersScript
     }
 }
 
+{# Script de modification des informations générales du cours #}
 class UeMainHandlePanelScript
 {
     constructor(name_input, description_input, image_selector, save_button, delete_button)
@@ -484,6 +509,7 @@ class UeMainHandlePanelScript
 }
 {% endif %}
 
+{# Chargement des scripts #}
 window.addEventListener("load", async () => {
     let ue_edit_script = new UeEditScript(
         document.getElementById("class-title"),
@@ -502,6 +528,7 @@ window.addEventListener("load", async () => {
     await ue_edit_script.start();
 
     {% if base_config.user_role == "ROLE_ADMIN" %}
+    // Scripts réservés aux administrateurs
     
     new UeUsersScript([{% for user in users %} {{ user.id}}, {% endfor %}],
         document.getElementById("users"),

@@ -8,8 +8,6 @@ use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 
-const BASE_URL = "http://localhost:8000";
-
 class Emailer
 {
     private MessageBusInterface $bus;

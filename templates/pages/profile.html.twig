@@ -1,12 +1,15 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-Ça parle de toi là
+{{ account.surname }} {{ account.name }}
 {% endblock %}
 
 {% block body %}
+{# Bannière de profile #}
 <div id="main-profile-page" class="top-banner">
+    {# Division pour l'identité #}
     <div class="profile-identity">
+        {# Division pour les informations de compte #}
         <div class="profile-infos">
             <div class="profile-description">
                 <h1>{{ account.surname }} {{ account.name }}</h1>
@@ -36,6 +39,7 @@
                 </li>
             </ul>
         </div>
+        {# Division pour les logos #}
         <div class="profile-logos">
             <a href="https://youtu.be/dQw4w9WgXcQ?si=P-2GDqOQpbUTdIEf" class="img-link" target="_blank">
                 <img src="{{ asset("/images/logos/LinkedIn_icon.svg.png") }}" alt="LinkedIn logo"/>
@@ -51,18 +55,21 @@
             </a>
         </div>
     </div>
+    {# Image de profile #}
     <img class="profile-thumbnail" src="data:image/png;base64,{{ user_image }}" alt="Profile Picture"/>
 </div>
 
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="profilepage-main-separation" class="content-separator">
     <div id="profile-listing">
         {% if "ROLE_STUDENT" in account.roles or "ROLE_TEACHER" in account.roles %}
+        {# Liste des cours suivis (affiché seulement pour les enseignants et les élèves) #}
         <div class="profile-list">
             <h2>Cours suivis</h2>
             {% if account.classes|length %}
             <ul>
                 {% for class in account.classes %}
-                <li>WE4A : Introduction to Web Design</li>
+                <li>{{ class.name }} : {{ class.description }}</li>
                 {% endfor %}
             </ul>
             {% else %}
@@ -70,23 +77,19 @@
             {% endif %}
         </div>
         {% endif %}
-        <div class="profile-list">
-            <h2>JSP</h2>
-            <ul>
-                <li>info intéressante 1</li>
-                <li>info intéressante 2</li>
-                <li>info intéressante 3</li>
-            </ul>
-        </div>
+        {# Liens et options #}
         {% if base_config.current_user == account or base_config.user_role == "ROLE_ADMIN" %}
         <div class="profile-options">
+            {# Accès aux paramètres sur sa propre page #}
             {% if base_config.current_user == account %}
-            <h2>Accès rapides</h2>
+            <h2>Paramètres</h2>
             <ul>
                 <li><a href="/settings/account/profile">Paramètres du profile...</a></li>
                 <li><a href="/settings/accessibility">Accessibilité...</a></li>
             </ul>
             {% endif %}
+
+            {# Accès aux paramètres du compte pour les administrateurs #}
             {% if base_config.user_role == "ROLE_ADMIN" %}
             <h2>Accès administrateur</h2>
             <ul>
