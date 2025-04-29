@@ -48,12 +48,9 @@ class AjaxInformationController extends AbstractController
             $user_classes = $user->getClasses();
 
             $found_in_user_classes = false;
-            $l = [];
 
             foreach ($user_classes as $subscribed_class)
             {
-                $l[] = $subscribed_class->getId();
-
                 if ($subscribed_class->getId() === $class->getId())
                 {
                     $found_in_user_classes = true;
@@ -64,8 +61,7 @@ class AjaxInformationController extends AbstractController
             {
 
                 return new Response(json_encode([
-                    "error" => "you are not subscribed to this class",
-                    "list" => $l
+                    "error" => "you are not subscribed to this class"
                 ]), Response::HTTP_FORBIDDEN,
                     [
                         "Content-Type" => "text/json"
