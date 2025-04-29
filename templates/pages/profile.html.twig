@@ -69,7 +69,7 @@
             {% if account.classes|length %}
             <ul>
                 {% for class in account.classes %}
-                <li>WE4A : Introduction to Web Design</li>
+                <li>{{ class.name }} : {{ class.description }}</li>
                 {% endfor %}
             </ul>
             {% else %}
@@ -77,15 +77,6 @@
             {% endif %}
         </div>
         {% endif %}
-        {# Liste des informations intéressantes #}
-        <div class="profile-list">
-            <h2>JSP</h2>
-            <ul>
-                <li>info intéressante 1</li>
-                <li>info intéressante 2</li>
-                <li>info intéressante 3</li>
-            </ul>
-        </div>
         {# Liens et options #}
         {% if base_config.current_user == account or base_config.user_role == "ROLE_ADMIN" %}
         <div class="profile-options">
