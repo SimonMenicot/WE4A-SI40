@@ -2,10 +2,11 @@
 
 {% block body %}
 
+{# Template de base des pages de paramètres. #}
 <div id="settings-main-separation" class="content-separator">
-    {% include "sections/settings-menu.html.twig" %}
+    {% include "sections/settings-menu.html.twig" %}{# Intégration du menu. #}
     <div id="settings-content">
-        {% block settings_body %}
+        {% block settings_body %}{# Contenu principal des paramètres. #}
         {% endblock %}
     </div>
 </div>
