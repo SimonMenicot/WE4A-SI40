@@ -101,15 +101,18 @@ class AjaxInformationController extends AbstractController
 
             foreach ($class->getAccounts() as $account)
             {
-                $this->emailer->send_email(
-                    $account,
-                    "Modifications opérées sur le cours ".$class->getName(),
-                    "/mails/class-modification-notification.html.twig", [
-                        "class" => $class,
-                        "account" => $account,
-                        "operator" => $user
-                    ]
-                );
+                if (in_array("ROLE_TEACHER", $account->getRoles()))
+                {
+                    $this->emailer->send_email(
+                        $account,
+                        "Modifications opérées sur le cours ".$class->getName(),
+                        "/mails/class-modification-notification.html.twig", [
+                            "class" => $class,
+                            "account" => $account,
+                            "operator" => $user
+                        ]
+                    );
+                }
             }
 
         }
