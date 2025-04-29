@@ -5,7 +5,7 @@ export class RawTextSectionExporter extends SectionExporter
 {
     constructor()
     {
-        super("raw-text", "Texte brute");
+        super("raw-text", "Texte brut");
     }
 
     exportDataToSection(data, section_types_map)
