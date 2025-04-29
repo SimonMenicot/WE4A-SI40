@@ -43,15 +43,31 @@ class AjaxInformationController extends AbstractController
                     "Content-Type" => "text/json"
                 ]
             );
-        } else if (!(in_array("ROLE_ADMIN", $user->getRoles()) || $user->getClasses()->contains($class)))
+        } else if (!(in_array("ROLE_ADMIN", $user->getRoles())))
         {
-            return new Response(json_encode([
-                "error" => "you are not subscribed to this class"
-            ]), Response::HTTP_FORBIDDEN,
-                [
-                    "Content-Type" => "text/json"
-                ]
-            );
+            $user_classes = $user->getClasses();
+
+            $found_in_user_classes = false;
+            foreach ($user_classes as $subscribed_class)
+            {
+                if ($subscribed_class->getId() === $class->getId())
+                {
+                    $found_in_user_classes = true;
+                }
+            }
+
+            if (!$found_in_user_classes)
+            {
+
+                return new Response(json_encode([
+                    "error" => "you are not subscribed to this class"
+                ]), Response::HTTP_FORBIDDEN,
+                    [
+                        "Content-Type" => "text/json"
+                    ]
+                );
+
+            }
         }
 
         $content = $class->getContent();
