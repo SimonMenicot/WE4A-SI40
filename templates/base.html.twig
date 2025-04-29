@@ -13,7 +13,9 @@
         {% endblock %}
     </head>
     <body>
+        {# En-tête de la page #}
         <header>
+            {# Logo principal #}
             <div id="header-logo">
                 <img src="{{ asset("images/logo.png") }}" class="logo-medium">
                 <h1>
@@ -22,6 +24,7 @@
             </div>
             <span class="header-space"></span>
 
+            {# Checkbox dans le cas où l'utilisateur serait à la fois professeur et administrateur #}
             {% if "ROLE_ADMIN" in base_config.current_user.roles and "ROLE_TEACHER" in base_config.current_user.roles %}
 
             <div id="header-admin-prof-switch">
@@ -36,6 +39,7 @@
 
             {% endif %}
 
+            {# Lien vers sa propre page de profile, qui contient le raccourcis vers les paramètres #}
             <a id="header-user-icon" href="/profile">
                 <img src="data:img/png;base64,{{ base_config.current_user_image }}"/>
                 <span>
@@ -43,6 +47,7 @@
                 </span>
             </a>
         </header>
+        {# Contenu principal #}
         <div id="root">
             <main>
                 {% block body %}{% endblock %}
