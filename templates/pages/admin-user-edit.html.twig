@@ -6,17 +6,23 @@
 
 {% block body %}
 
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="edit-page-main-separation" class="content-separator">
     <div id="edit-page-content">
         <h1> Éditer l'utilisateur - {{ account.surname }} {{ account.name }} </h1>
+
+        {# Séparation par onglets. Voir public/scripts/elements/TabsSelector.js #}
         <div class="tabs-container" id="edit-user-tabs">
             <div class="tabs-buttons">
                 <button>Paramètres généraux</button>
                 <button>Rôles</button>
+
+                {# On désactive le bouton d'association des cours si l'utilisateur n'est ni étudiant, ni enseignant #}
                 <button id="classes-access-button"{% if not ("ROLE_STUDENT" in account.roles or "ROLE_TEACHER" in account.roles) %} disabled{% endif %}>Cours inscrits</button>
             </div>
 
             <div class="tabs-content" id="content-display">
+                {# page d'édition générale de l'utilisateur (profile, adresse mail, suppression) #}
                 <div class="edit-user-settings-panel">
                     <h2> Adresse mail </h2>
                     <div class="settings-row">
@@ -60,16 +66,20 @@
                         <img src="{{ asset("/images/icons/delete.png") }}"/>
                         <span>Supprimer l'utilisateur</span>
                     </button>
+
+                    {# Se supprimer soi-même est dangereux pour un administrateur. #}
                     {% if base_config.current_user.id == account.id %} 
                     <small> Vous ne pouvez pas vous supprimer vous-même </small>
                     {% endif %}
                 </div>
 
+                {# Rôles de l'utilisateur. #}
                 <div class="edit-user-settings-panel">
                     <h2>
                         Rôles de l'utilisateur
                     </h2>
 
+                    {# On ne permet pas non plus à un adminstrateur de modifier pour ses propres rôles #}
                     <div class="checkboxes-list"{% if base_config.current_user.id == account.id %} disabled{% endif %}>
 
                         <div class="settings-row">
@@ -103,6 +113,7 @@
                         </button>
                     </div>
 
+                    {# On ne permet pas non plus à un adminstrateur de modifier pour ses propres rôles #}
                     {% if base_config.current_user.id == account.id %} 
                     <small>
                         Vous ne pouvez pas modifier vos propres rôles 
@@ -114,6 +125,7 @@
                     {% endif %}
                 </div>
 
+                {# Liste des cours inscrits (inaccessible si l'utilisateur n'est qu'un simple administrateur, via les onglets) #}
                 <div class="edit-user-settings-panel">
                     <h2>
                         Cours inscrits
@@ -126,16 +138,15 @@
                         </button>
                     </div>
 
+                    {# Liste des cours inscrits #}
                     <div id="classes" class="classes-list">
                         {% for class in user_classes %}
 
                         <a href="/class/{{ class.id }}" class="class-preview-link" target="_blank">
                             <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
-                                {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
                                 <span class="class-edit-icon">
                                     <img src="{{ asset("images/icons/edit.png") }}" />
                                 </span>
-                                {% endif %}
                                 <h1>{{ class.name }}</h1>
                                 <p>{{ class.description }}</p>
                             </div>
@@ -143,6 +154,7 @@
                         
                         {% endfor %}
 
+                        {# Modification de la liste des cours #}
                         <button id="add-class-button">
                             <img src="{{ asset("images/icons/edit.png") }}" />
                             <span class="class-edit-icon">
@@ -173,6 +185,7 @@ import { ConfirmWidget } from "{{ asset("/scripts/widgets/ConfirmWidget.js") }}"
 import { AlertWidget } from "{{ asset("/scripts/widgets/AlertWidget.js") }}";
 import { SelectClassWidget } from "{{ asset("scripts/widgets/SelectClassWidget.js") }}";
 
+{# Script de modification de l'adresse mail #}
 class EditUserEmailScript
 {
     constructor(email_input, email_button)
@@ -238,6 +251,7 @@ class EditUserEmailScript
     }
 }
 
+{# Script de modification du profile #}
 class EditUserProfileScript
 {
     constructor(name_field, surname_field, description_field, profile_image, profile_image_button, save_button, base_profile_image)
@@ -332,6 +346,7 @@ class EditUserProfileScript
     }
 }
 
+{# Script de modification des rôles de l'utilisateur #}
 class SetUserRolesScript
 {
     constructor(student_checkbox, teacher_checkbox, admin_checkbox, save_button, classes_access_button)
@@ -364,7 +379,7 @@ class SetUserRolesScript
 
     onStudentChanged()
     {
-        if (this._student_checkbox.checked)
+        if (this._student_checkbox.checked) // on s'assure de ne pas pouvoir ajouter un autre rôle à l'étudiant
         {
             this._teacher_checkbox.checked = false;
             this._admin_checkbox.checked = false;
@@ -379,7 +394,7 @@ class SetUserRolesScript
         this.onRolesChanged();
     }
 
-    onTeacherChanged()
+    onTeacherChanged() // on s'assure que l'enseignant ne peux pas être étudiant
     {
         if (this._teacher_checkbox.checked)
         {
@@ -392,7 +407,7 @@ class SetUserRolesScript
         this.onRolesChanged();
     }
 
-    onAdminChanged()
+    onAdminChanged() // on s'assure que l'administrateur ne peut pas être étudiant
     {
         if (this._admin_checkbox.checked)
         {
@@ -405,7 +420,7 @@ class SetUserRolesScript
         this.onRolesChanged();
     }
 
-    onRolesChanged()
+    onRolesChanged() // si aucun rôle n'est donné, on n'active pas l'enregistrement
     {
         if ((this._student_checkbox.checked && (this._teacher_checkbox.checked || this._admin_checkbox.checked))
             || !(this._student_checkbox.checked || this._teacher_checkbox.checked || this._admin_checkbox.checked))
@@ -459,6 +474,7 @@ class SetUserRolesScript
     }
 }
 
+{# Script de modification des cours l'utilisateur #}
 class UserClassesScript
 {
     constructor(classes_ids, classes_list_div, classes_search_bar, add_classes_button)
@@ -550,9 +566,12 @@ class UserClassesScript
     }
 }
 
+{# Chargement des scripts #}
 window.addEventListener("load", () => {
+    // on lie les onglets aux panneaux
     new TabsSelector(document.getElementById("edit-user-tabs"));
 
+    // on active les différents scripts
     new EditUserEmailScript(
         document.getElementById("user-mail-input"),
         document.getElementById("save-user-mail-button"),
@@ -582,6 +601,7 @@ window.addEventListener("load", () => {
         document.getElementById('add-class-button')
     );
 
+    // bouton de suppression de l'utilisateur
     document.getElementById("delete-user-button").addEventListener("click", async () => {
         if (await new ConfirmWidget("Êtes-vous sûr(e) de vouloir supprimer cet utilisateur?", "Cette action est irréversible").main())
         {
