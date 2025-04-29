@@ -4,7 +4,9 @@
 {% endblock %}
 
 {% block body %}
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="classpage-main-separation" class="content-separator">
+    {# Contenu principal du cours #}
     <div id="main-class-content" class="class-content">
         <div class="class-title-content">
             <a class="class-back-link" href="/">
@@ -19,61 +21,67 @@
 
     {% include 'sections/activity-thread.html.twig' %}
 
-    <script type="module">
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="module">
 
 import { DEFAULT_SECTION_TYPES_MAP } from "{{ asset("/scripts/classes/SectionTypesMap.js") }}"
 
-(async () => {
+{# Script principal : récupération du contenu et exportation via le DEFAULT_SECTION_TYPES_MAP (voir le dossier public/scripts/classes/) #}
 
-let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
+window.addEventListener("load", async () => {
 
-let maincontent = document.getElementById("main-class-content");
+    let fetch_data = await fetch("/classes/{{ ue_id }}/get-content");
 
-if (fetch_data.status != 202) 
-{
-    document.getElementById("class-title").textContent = "Impossible d'accéder à ce cours";
-    let error_span = maincontent.appendChild(document.createElement("span"));
-    error_span.classList.add("error");
-    error_span.classList.add("result-text");
+    let maincontent = document.getElementById("main-class-content");
 
-    switch (fetch_data.status)
+    if (fetch_data.status != 202) 
     {
-        case 401:
-        error_span.innerText = "Vous devez d'abord vous connecter";
-        break;
+        document.getElementById("class-title").textContent = "Impossible d'accéder à ce cours";
+        let error_span = maincontent.appendChild(document.createElement("span"));
+        error_span.classList.add("error");
+        error_span.classList.add("result-text");
 
-        case 403:
-        error_span.innerText = "Vous n'avez pas la permission d'accéder à ce cours";
-        break;
+        switch (fetch_data.status)
+        {
+            case 401:
+            error_span.innerText = "Vous devez d'abord vous connecter";
+            break;
 
-        default:
-        error_span.innerText = "Une erreur s'est produite (" + data.error + ")";
-        break;
+            case 403:
+            error_span.innerText = "Vous n'avez pas la permission d'accéder à ce cours";
+            break;
+
+            default:
+            error_span.innerText = "Une erreur s'est produite (" + data.error + ")";
+            break;
+        }
+        return;
     }
-    return;
-}
 
-let data = await fetch_data.json();
+    let data = await fetch_data.json();
 
-let mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
-document.getElementById("class-title").textContent = data.name + " - " + data.description;
+    let mainSection = DEFAULT_SECTION_TYPES_MAP.export(data.content);
+    document.getElementById("class-title").textContent = data.name + " - " + data.description;
 
-let html_base = maincontent.appendChild(mainSection.htmlElement);
-html_base.id="main-class-section";
+    let html_base = maincontent.appendChild(mainSection.htmlElement);
+    html_base.id="main-class-section";
 
-mainSection.addEventListener("modified", (event) => {
-    if (event.detail.requires_reload)
-    {
-        let new_html = mainSection.htmlElement;
-        maincontent.replaceChild(new_html, html_base);
-        html_base = new_html;
-    }
-    console.log(event);
+    mainSection.addEventListener("modified", (event) => {
+        if (event.detail.requires_reload)
+        {
+            let new_html = mainSection.htmlElement;
+            maincontent.replaceChild(new_html, html_base);
+            html_base = new_html;
+        }
+        console.log(event);
+    });
+        
 });
-    
-})()
 
-    </script>
-</div>
+</script>
 
 {% endblock %}

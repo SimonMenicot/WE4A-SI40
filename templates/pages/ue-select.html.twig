@@ -1,15 +1,24 @@
 {% extends "base.html.twig" %}
 
+{#
+
+    Cette page n'est accessible qu'aux enseignants et étudiants. 
+    Les administrateurs ont eux accès à la page "admin-homepage.html.twig". 
+
+#}
+
 {% block title %}
 Accueil
 {% endblock %}
 
 {% block body %}
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="homepage-main-separation" class="content-separator">
     <div id="homepage-content" class="main-page-content">
         <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
         {% if base_config.current_user.classes|length %}
+        {# Barre de recherche #}
         <div class="search-bar" id="classes-search-bar">
             <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
@@ -17,12 +26,14 @@ Accueil
             </button>
         </div>
 
+        {# Liste des cours #}
         <div id="classes" class="classes-list">
             {% for class in classes %}
 
             <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
-                    {% if base_config.user_role in ["ROLE_TEACHER", "ROLE_ADMIN"] %}
+                    {# Si on est face à un enseignant, on rajoute un icon d'édition #}
+                    {% if base_config.user_role == "ROLE_TEACHER" %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
                     </span>
@@ -36,6 +47,7 @@ Accueil
 
         </div>
         {% else %}
+        {# S'il n'y a pas de cours, on se content d'afficher un simple texte #}
         <span>Vous n'avez actuellement aucun cours</span>
         {% endif %}
 
@@ -47,7 +59,10 @@ Accueil
 
 {% endblock %}
 
+{# Scripts #}
+
 {% block javascripts %}
+{# S'il y a des cours associés au compte, on lie la barre de recherche à la liste de cours #}
 {% if base_config.current_user.classes|length %}
 
 <script type="module">
