@@ -110,7 +110,7 @@ class DefaultPageController extends AbstractController
 
         $classes = [];
 
-        foreach ($entityManager->getRepository(Classe::class)->findAll() as $class)
+        foreach ($user->getClasses() as $class)
         {
             $classes[] = [
                 "id" => $class->getId(),
