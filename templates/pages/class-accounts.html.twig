@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body %}
+{# Le "content separator" permet une séparation horizontale entre le contenu de la page et le fil d'actualité #}
 <div id="classpage-main-separation" class="content-separator">
     <div id="main-class-content" class="class-content">
         <div class="class-title-content">
@@ -16,6 +17,7 @@
             </h1>
         </div>
         
+        {# Liste des comptes #}
         <h2>
             Comptes associés à ce cours
         </h2>
@@ -61,13 +63,13 @@
 
 {% block javascripts %}
 
-
 <script type="module">
 import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
 import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
 
 import { CreateClassWidget } from "{{ asset("scripts/widgets/CreateClassWidget.js") }}";
 
+{# Liaison entre la liste de comptes et la barre de recherche #}
 window.addEventListener("load", () => {
     let users_search_bar = new SearchBar(document.getElementById("users-search-bar"));
     new SearchList(users_search_bar, document.getElementById("users"));
