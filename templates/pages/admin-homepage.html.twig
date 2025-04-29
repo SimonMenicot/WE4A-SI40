@@ -12,9 +12,12 @@ Accueil administrateur
         <h1>Bonjour, {{ base_config.current_user.surname }} {{ base_config.current_user.name }}!</h1>
 
         {% if "ROLE_TEACHER" in base_config.current_user.roles %}
+        {# Pour les administrateurs professeurs, affichage des cours #}
         <h2>Vos cours</h2>
 
         {% if base_config.current_user.classes|length %}
+
+        {# Barre de recherche #}
         <div class="search-bar" id="classes-search-bar">
             <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
@@ -22,16 +25,16 @@ Accueil administrateur
             </button>
         </div>
 
+        {# Liste des cours #}
         <div id="classes" class="classes-list">
             {% for class in user_classes %}
 
+            {# Élement de prévisualisation du cours #}
             <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
-                    {% if "ROLE_ADMIN" in base_config.current_user.roles or "ROLE_TEACHER" in base_config.current_user.roles %}
                     <span class="class-edit-icon">
                         <img src="{{ asset("images/icons/edit.png") }}" />
                     </span>
-                    {% endif %}
                     <h1>{{ class.name }}</h1>
                     <p>{{ class.description }}</p>
                 </div>
@@ -41,12 +44,15 @@ Accueil administrateur
 
         </div>
         {% else %}
+        {# Si aucun cours n'est présent, on affiche simplement un texte #}
         <span>Vous n'avez actuellement aucun cours</span>
         {% endif %}
-        {% endif %}
+        {% endif %} {# // endif des admins enseignants #}
 
+        {# On affiche tous les cours présents #}
         <h2>Tous les cours</h2>
 
+        {# Toujours une barre de recherche #}
         <div class="search-bar" id="global-classes-search-bar">
             <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
@@ -54,9 +60,11 @@ Accueil administrateur
             </button>
         </div>
 
+        {# La liste des cours #}
         <div id="global-classes" class="classes-list">
             {% for class in classes %}
 
+            {# Élément de prévisualisation du cours #}
             <a href="class/{{ class.id }}" class="class-preview-link">
                 <div class="class-preview" style="background-image: url('data:image/png;base64,{{ class.thumbnail }}')">
                     <span class="class-edit-icon">
@@ -69,6 +77,7 @@ Accueil administrateur
             
             {% endfor %}
 
+            {# Bouton pour ajouter un nouveau cours #}
             <button id="add-class-button">
                 <img src="{{ asset("images/icons/add.png") }}" />
                 <span class="class-edit-icon">
@@ -77,8 +86,10 @@ Accueil administrateur
             </button>
         </div>
 
+        {# On affiche tous les utilisateurs #}
         <h2>Tous les utilisateurs</h2>
 
+        {# Barre de recherche #}
         <div class="search-bar" id="users-search-bar">
             <input type="text" placeholder="Rechercher..."/>
             <button class="icon-button main-button">
@@ -86,15 +97,17 @@ Accueil administrateur
             </button>
         </div>
 
+        {# Liste de tous les utilisateurs #}
         <div id="users" class="users-list">
             {% for user in accounts %}
 
+            {# Élement de prévisualisation d'un utilisateur #}
             <a href="/profile/{{ user.id }}" class="user-preview-link">
                 <div class="user-preview">
                     <img src="data:image/png;base64,{{ user.image }}" />
 
                     <div class="user-description">
-                        <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} 
+                        <h1>{{ user.surname }} {{ user.name }}<span class="user-roles"> - {% for role in user.roles %} {# Affichage des rôles #}
                 {% if role == "ROLE_STUDENT" %}
                 Étudiant
                 {% elseif role == "ROLE_TEACHER" %}
@@ -110,6 +123,7 @@ Accueil administrateur
             </a>
             
             {% endfor %}
+            {# Bouton pour ajotuer un utilisateur #}
             <button id="add-user-button">
                 <img src="{{ asset("images/icons/add.png") }}" />
                 <span class="user-edit-icon">
@@ -129,6 +143,13 @@ Accueil administrateur
 
 {% block javascripts %}
 
+{#
+
+    Scripts dynamiques permettant de gérer la page
+
+    Le script est de type "module" pour importer certains éléments utiles à travers plusieurs pages. 
+    
+#}
 <script type="module">
 import { SearchList } from "{{ asset("scripts/elements/SearchList.js") }}";
 import { SearchBar } from "{{ asset("scripts/elements/SearchBar.js") }}";
@@ -138,16 +159,22 @@ import { CreateUserWidget } from "{{ asset("scripts/widgets/CreateUserWidget.js"
 
 window.addEventListener("load", () => {
 {% if base_config.current_user.classes|length %}
+    {# Si l'administrateur est lié à des cours, on lie la barre de recherche à la liste des cours #}
     let classes_search_bar = new SearchBar(document.getElementById("classes-search-bar"));
     new SearchList(classes_search_bar, document.getElementById("classes"));
 
 {% endif %}
+    {# On lie la liste des cours à barre de recherche #}
     let global_classes_search_bar = new SearchBar(document.getElementById("global-classes-search-bar"));
     new SearchList(global_classes_search_bar, document.getElementById("global-classes"));
 
+    {# On lie la liste des utilisateur à sa barre de recherche #}
     let users_search_bar = new SearchBar(document.getElementById("users-search-bar"));
     new SearchList(users_search_bar, document.getElementById("users"));
 
+    {# On ajoute les actions des bouttons #}
+
+    {# Bouton pour rajouter un cours #}
     let add_class_button = document.getElementById('add-class-button');
     add_class_button.addEventListener("click", async () => {
         let widget = new CreateClassWidget();
@@ -159,6 +186,7 @@ window.addEventListener("load", () => {
         }
     });
 
+    {# Bouton pour rajouter un utilisateur #}
     let add_user_button = document.getElementById('add-user-button');
     add_user_button.addEventListener("click", async () => {
         let widget = new CreateUserWidget();

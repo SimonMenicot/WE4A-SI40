@@ -124,7 +124,7 @@ export class SelectUserWidget extends Widget
                     break;
 
                     case "ROLE_STUDENT":
-                    title += "Élève ";
+                    title += "Étudiant ";
                     break;
                 }
             }
