@@ -1,5 +1,13 @@
 import { Section } from "./Section.js";
 
+
+/*
+
+    Les sections d'intégration permettent d'intégrer une page via son URL d'intégration. 
+    
+    Le mode édition n'est pas encore implémenté. 
+
+*/
 export class IntegrationSection extends Section
 {
     constructor(data)

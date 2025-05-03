@@ -1,8 +1,13 @@
+/*
+
+    Le SectionAdder permet de demander une nouvelle section, et retourne un exportateur de section. 
+
+*/
 export class SectionAdder
 {
     constructor(types_map)
     {
-        this._types_map = types_map;
+        this._types_map = types_map; // types_map est un SectionTypesMap (voir dans /scripts/classes/SectionTypesMap.js)
     }
 
     get types_map()
@@ -12,7 +17,7 @@ export class SectionAdder
 
     /*
 
-        Returns the exporter to be used to create a new section. 
+        Retourne l'exportateur à utiliser pour créer une nouvelle section. 
 
     */
     async promptNewSection()
@@ -42,6 +47,11 @@ export class SectionAdder
         }
     }
 
+    /*
+
+        Crée un bouton pour sélectionner une section
+
+    */
     createThumbnailForExporter(exporter)
     {
         let button = document.createElement("button")
@@ -54,6 +64,11 @@ export class SectionAdder
     }
 }
 
+/*
+
+    Le contenu à afficher dans le widget en plein écran. 
+
+*/
 function createAddingSectionPrompt()
 {
     let div = document.createElement("div");

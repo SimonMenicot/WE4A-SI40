@@ -1,11 +1,18 @@
 import { Section } from "./Section.js";
 
+/*
+
+    Les sections conteneurs permettent d'afficher d'autres sections, de manière
+    horizontales ou verticales, avec ou sans retour à la ligne. 
+
+*/
 export class ContainerSection extends Section
 {
     constructor(data, section_adder)
     {
         super("container", data);
 
+        // Cette étape permet d'être notifié des évènements des enfants, et de les renvoyés à l'élément parent.
         for (let child of this.children)
         {
             child.addEventListener("modified", (event) => {
@@ -17,6 +24,7 @@ export class ContainerSection extends Section
             });
         }
 
+        // Le SectionAdder permet d'ouvrir une fenêtre d'invite pour choisir une section à rajouter. 
         this._section_adder = section_adder;
     }
 
@@ -35,6 +43,11 @@ export class ContainerSection extends Section
         return this.data.children;
     }
 
+    /*
+
+        Changer l'orientation du conteneur
+
+    */
     set is_horizontal(enabled)
     {
         let data = this.data;
@@ -48,6 +61,11 @@ export class ContainerSection extends Section
         }, true);
     }
 
+    /*
+
+        Changer le retour à la ligne du conteneur
+
+    */
     set is_wrapping(enabled)
     {
         let data = this.data;
@@ -61,6 +79,11 @@ export class ContainerSection extends Section
         }, true);
     }
 
+    /*
+
+        Ajouter un conteneur aux enfants
+
+    */
     addChild(child)
     {
         this.data.children.push(child);
@@ -79,6 +102,11 @@ export class ContainerSection extends Section
         }, true);
     }
 
+    /*
+
+        Retirer un enfant au conteneur
+
+    */
     removeChild(index)
     {
         let child = this.data.children.splice(index, 1)[0];
@@ -90,6 +118,11 @@ export class ContainerSection extends Section
         }, true);
     }
 
+    /*
+
+        Déplacer un enfant vers le haut
+
+    */
     moveChildToPrevious(index)
     {
         let child = this.children[index-1];
@@ -104,6 +137,11 @@ export class ContainerSection extends Section
         }, true);
     }
 
+    /*
+
+        Déplacer un enfant vers le bas
+
+    */
     moveChildToNext(index)
     {
         let child = this.children[index];
@@ -276,6 +314,7 @@ export class ContainerSection extends Section
             await child.onSave();
         }
     }
+    
     exportToJsonData()
     {
         return {
@@ -285,6 +324,11 @@ export class ContainerSection extends Section
         };
     }
 
+    /*
+
+        Créer un nouvel élément
+
+    */
     async addElement()
     {
         let exporter = await this._section_adder.promptNewSection()

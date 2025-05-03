@@ -2,6 +2,11 @@ import { SectionExporter } from "./SectionExporter.js";
 import { FileSection } from "../sections/FileSection.js"
 import {RichTextSection} from "../sections/RichTextSection.js";
 
+/*
+
+    Les exportateurs de sections d'activités permettent de créer une section de fichiers à partir de ses données JSON
+
+*/
 export class FileSectionExporter extends SectionExporter
 {
     constructor()

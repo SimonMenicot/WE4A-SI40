@@ -117,9 +117,9 @@ export class CssParser
     /*
 
         Call:
-        >> let specific_style = parseSplitted('#div', 'p {color:red}\n\nh1 {color: blue}');
+        >> let specific_style = parseSplitted('#div', 'p {color:red}\n\nh1 {color: blue}'); // -> "#div p {color:red}\n\n#div h1 {color: blue}"
 
-        to only add the style to the #div div.
+        to only add the style to the #div div and its children.
 
     */
     parseSplitted(name, splitted)

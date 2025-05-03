@@ -1,3 +1,8 @@
+/*
+
+    Un exportateur de section permettre de transformer les données JSON en un objet Section (voir le dossier Section.js), 
+
+*/
 export class SectionExporter
 {
     constructor(type, name)
@@ -16,11 +21,21 @@ export class SectionExporter
         return this._name;
     }
 
+    /*
+
+        Cette méthode permet d'exporter des données JSON en une section
+
+    */
     exportDataToSection(data, section_types_map)
     {
-        return null; // this section should return the defined Section as defined in the "../sections" folder
+        return null; // cette section doit retourner la section définir dans le dossier "../sections"
     }
 
+    /*
+
+        Cette méthode permet de créer une nouvelle section à partir de rien
+
+    */
     async createNew(section_types_map)
     {
         throw new Error("nothing to create");        

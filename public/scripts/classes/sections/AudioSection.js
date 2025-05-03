@@ -1,5 +1,12 @@
 import { Section } from "./Section.js";
 
+/*
+
+    Les sections audio permettent d'afficher un contenu audio.
+    
+    Le mode édition n'est pas encore implémenté. 
+
+*/
 export class AudioSection extends Section
 {
     constructor(data)

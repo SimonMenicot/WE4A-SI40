@@ -1,5 +1,12 @@
 import { Section } from "./Section.js";
 
+/*
+
+    Les sections de texte brut permettent d'afficher un texte brut dans le cours.
+    
+    Le mode édition n'est pas encore implémenté. 
+
+*/
 export class RawTextSection extends Section
 {
     constructor(data)
