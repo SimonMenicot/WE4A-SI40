@@ -7,6 +7,14 @@ use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Asset\Packages;
 
+/*
+
+    Les données d'activité permettent d'ajuter un AbstractController à une activité. 
+
+    Les données d'activités doivent impérativement ajouter l'annotation de controle de contenu d'activité. 
+    Voir src/Annotation/ActivityContentController.php. 
+
+*/
 abstract class ActivityData extends AbstractController
 {
     private Packages $assets;
@@ -18,7 +26,7 @@ abstract class ActivityData extends AbstractController
 
     /*
 
-        This method returns the url of the given path, corresponding to the activity. 
+        Cette méthode retourne l'URL correspondant à la source de l'activité. 
 
     */
     public function getActivityResourceUrl(string $path): string 

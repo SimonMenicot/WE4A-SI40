@@ -8,6 +8,11 @@ use ContainerOaYQZMV\getActivityService;
 use Symfony\Component\Asset\Packages;
 use Twig\Environment;
 
+/*
+
+    Le gestionnaire d'activités permet de stocker les différentes activités. 
+
+*/
 class ActivitiesManager
 {
     private array $activities = []; 

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[ActivityContentController('click-me-activity')]
 class ClickMeActivityData extends ActivityData
 {
-    #[Route('/test')] // affiché dans /activity-resources/click-me-activity/test
+    #[Route('/test')] // affiché lors du clic
     public function display(): Response
     {
         return new Response("Ce texte est généré depuis l'activité");
