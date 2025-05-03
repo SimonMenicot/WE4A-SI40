@@ -2,6 +2,14 @@ import { SearchBar } from "../elements/SearchBar.js";
 import { SearchList } from "../elements/SearchList.js";
 import { Widget } from "./Widget.js";
 
+/*
+
+    Ce widget permet de sélectionner un groupe d'utilisateurs, ou simplement un utilisateur.  
+    - criteria : fonction permettant de trier entre les utilisateur (user->boolean)
+    - multiple : booléan étant vrai lorsqu'on peut sélectionner plusieurs utilisateurs à la fois
+    - default_users: liste des utilisateurs sélectionnées par défaut. 
+
+*/
 export class SelectUserWidget extends Widget
 {
     constructor(criteria, multiple=false, default_users=[])

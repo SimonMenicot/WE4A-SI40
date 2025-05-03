@@ -1,6 +1,11 @@
 import { Widget } from "./Widget.js";
-import { AlertWidget } from "./AlertWidget.js";
 
+/*
+
+    Ce widget permet de créer un nouvel utilisateur. 
+    Il se contente d'afficher un formulaire contenant les informations principales du nouvel utilisateur. 
+
+*/
 export class CreateUserWidget extends Widget
 {
     constructor()
@@ -91,6 +96,11 @@ export class CreateUserWidget extends Widget
         }
     }
 
+    /*
+
+        Crée un utilisateur, et renvoie l'identifiant du nouvel utilisateur. 
+
+    */
     async createUser(name, surname, mail)
     {
         this._ok_button.setAttribute('disabled', '');

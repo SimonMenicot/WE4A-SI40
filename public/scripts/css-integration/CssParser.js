@@ -1,11 +1,12 @@
 /*
 
-    This class is aimed to englob css rules to make them only stay in a specific div. 
+    Cette classe vise à encapsuler les règles CSS afin qu'elles restent dans une div spécifique.
 
-    It is separated in some parts : 
-     - one part that splits rules;
-     - one part that parses and splits css rules (including media rules, etc...)
-     - one part that simply reads the css rules, and apply on each rule the css englobing parent. 
+    Elle est divisée en plusieurs parties :
+
+    - une partie qui divise les règles ;
+    - une partie qui analyse et scinde les règles CSS (y compris les règles multimédias, etc.)
+    - une partie qui lit simplement les règles CSS et applique à chaque règle le parent CSS d'encapsulation.
 
 */
 
@@ -116,10 +117,12 @@ export class CssParser
 
     /*
 
-        Call:
-        >> let specific_style = parseSplitted('#div', 'p {color:red}\n\nh1 {color: blue}'); // -> "#div p {color:red}\n\n#div h1 {color: blue}"
+        Exécuter:
+        >> let specific_style = parseSplitted('#div', 'p {color:red}\n\nh1 {color: blue}'); // 
 
-        to only add the style to the #div div and its children.
+        pour appliquer le style uniquement à la division "#div" :
+        
+            #div p {color:red}\n\n#div h1 {color: blue}
 
     */
     parseSplitted(name, splitted)

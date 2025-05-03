@@ -1,5 +1,10 @@
 import { Widget } from "./Widget.js";
 
+/*
+
+    Analogue à la fonction "alert" définie dans les navigateurs. 
+
+*/
 export class AlertWidget extends Widget {
     constructor(title, description)
     {
