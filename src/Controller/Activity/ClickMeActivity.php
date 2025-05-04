@@ -6,6 +6,14 @@ use App\CustomFeatures\Activity;
 use App\CustomFeatures\ActivityEnvironment;
 use App\Entity\Account;
 
+/*
+
+    Cette activité est l'activité de clic affiché dans le cours "". 
+    Cette activité est un simple exemple de ce qu'on peut faire avec les activités. 
+
+    On n'a cependant pas encore utilisé la possibilité de trier les comptes et de gérer le fichier d'activité. 
+
+*/
 class ClickMeActivity extends Activity
 {
     public function __construct(ActivityEnvironment $environment)

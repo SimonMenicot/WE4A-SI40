@@ -1,5 +1,12 @@
 import { Section } from "./Section.js";
 
+/*
+
+    Les sections de texte riche permettent d'afficher un texte riche. 
+    
+    Le mode édition n'est pas encore implémenté. 
+
+*/
 export class RichTextSection extends Section
 {
     constructor(data)

@@ -4,7 +4,7 @@ export class ImageSelector extends FileSelector
 {
     /*
 
-        Choosing an image and ensuring that it is not shrinked (cutting it if needed);
+        Choisir une image et s'assurer qu'elle n'est pas modifiée
 
     */
     constructor(button, image, on_change, dimx, dimy)
@@ -59,13 +59,13 @@ export class ImageSelector extends FileSelector
 
             if (imgwidth/imgheight > cnvwidth/cnvheight)
             {
-                // image is too long for the canvas - keeping the height, cutting the width
+                // image est trop longue, il faut garder la hauteur et couper la largeur
                 kept_width = imgheight * cnvwidth / cnvheight;
                 kept_height = imgheight;
                 img_startx = (imgwidth - kept_width) / 2;
                 img_starty = 0;
             } else {
-                // image is too high for the canvas - keeping the width, cutting the height
+                // image est trop longue, il faut garder la largeur et couper la hauteur
                 kept_width = imgwidth;
                 kept_height = imgwidth * cnvheight / cnvwidth;
                 img_startx = 0;

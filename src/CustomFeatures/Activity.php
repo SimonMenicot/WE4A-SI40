@@ -6,6 +6,13 @@ use App\Entity\Account;
 use Symfony\Component\Asset\Packages;
 use Twig\Environment;
 
+/*
+
+    Une activité est comme un plug-in intégré à Nooble contenu dans une section de cours. 
+
+    La documentation a précédemment été effectuée en anglais. Pour des raisons de temps, nous les avons laissé tels quels. 
+
+*/
 abstract class Activity
 {
     private string $name;

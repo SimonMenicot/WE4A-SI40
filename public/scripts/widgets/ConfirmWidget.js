@@ -1,5 +1,11 @@
 import { Widget } from "./Widget.js";
 
+/*
+
+    Analogue à la fonction "confirm" définie dans les navigateurs. 
+
+*/
+
 export class ConfirmWidget extends Widget {
     constructor(prompt, description)
     {

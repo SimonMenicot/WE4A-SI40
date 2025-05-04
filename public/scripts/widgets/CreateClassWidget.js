@@ -1,5 +1,11 @@
 import { Widget } from "./Widget.js";
 
+/*
+
+    Ce widget permet de créer une nouvelle classe. 
+    Il se contente d'afficher un formulaire contenant les informations principales de la nouvelle classe. 
+
+*/
 export class CreateClassWidget extends Widget
 {
     constructor()

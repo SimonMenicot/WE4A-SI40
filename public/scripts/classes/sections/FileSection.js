@@ -1,6 +1,13 @@
 import { Section } from "./Section.js";
 import { FileSelector } from "../../elements/FileSelector.js";
 
+/*
+
+    Les sections de fichiers permettent de télécharger des fichiers depuis le cours. 
+    En mode édition, les fichiers sont transmis vers le serveur.
+    En mode lecture, les fichiers sont téléchargés depuis le web. 
+
+*/
 export class FileSection extends Section
 {
     constructor(data)

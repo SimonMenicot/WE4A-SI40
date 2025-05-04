@@ -5,6 +5,11 @@ namespace App\CustomFeatures;
 use Symfony\Component\Asset\Packages;
 use Twig\Environment;
 
+/*
+
+    L'environnement d'activité donne accès à l'environnement Twig et aux assets pour toutes les activités. 
+
+*/
 class ActivityEnvironment
 {
     private Environment $environment;

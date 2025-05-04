@@ -2,6 +2,14 @@ import { SearchBar } from "../elements/SearchBar.js";
 import { SearchList } from "../elements/SearchList.js";
 import { Widget } from "./Widget.js";
 
+/*
+
+    Ce widget permet de sélectionner un groupe de classe, ou simplement une classe. 
+    - criteria : fonction permettant de trier entre les classes (classe->boolean)
+    - multiple : booléan étant vrai lorsqu'on peut sélectionner plusieurs classes à la fois
+    - default_classes: liste des classes sélectionnées par défaut. 
+
+*/
 export class SelectClassWidget extends Widget
 {
     constructor(criteria, multiple=false, default_classes=[])
@@ -68,11 +76,6 @@ export class SelectClassWidget extends Widget
 
         for (let classe of classes)
         {
-/*            let class_link = this._classes_list_div.appendChild(document.createElement("a"));
-            class_link.classList.add("class-preview-link");
-            class_link.href = "/profile/" + class.id;
-            class_link.target = "_blank";*/
-
             let local_class = classe; // classe is in a "global" and would contain the last class on callbacks
             
             let class_div = this._classes_list_div.appendChild(document.createElement("div"));
@@ -124,7 +127,7 @@ export class SelectClassWidget extends Widget
             return await new Promise((resolve, reject) => {
                 this._ok_button.addEventListener("click", async () => {
                     try {
-                        resolve(this._selected_classes); // ok can be clicked only when multiple is true
+                        resolve(this._selected_classes); // "ok" peut être cliqué seulement dans la sélection multiple
                     } catch (e) {
                         this._ok_button.removeAttribute('disabled');
                         this._cancel_button.removeAttribute('disabled');

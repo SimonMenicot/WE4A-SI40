@@ -8,10 +8,16 @@ import { RawTextSectionExporter } from "./section_exporters/RawTextSectionExport
 import { RichTextSectionExporter } from "./section_exporters/RichTextSectionExporter.js";
 import { VideoSectionExporter } from "./section_exporters/VideoSectionExporter.js";
 
+/*
+
+    Le "SectionTypesMap" est un annuaire contenant les différents exporteurs de sections. 
+
+*/
 class SectionTypesMap
 {
     constructor()
     {
+        // Cet objet a pour clés les nom des types des sections, et pour valeur les exporteurs de section. 
         this._defined_types = {}
     }
 
@@ -36,6 +42,8 @@ class SectionTypesMap
     }
 }
 
+
+// Création d'un exporteur par défaut qui contienne toutes les sections prédéfinies. 
 export const DEFAULT_SECTION_TYPES_MAP = new SectionTypesMap();
 
 DEFAULT_SECTION_TYPES_MAP.addTypeExporter(new ContainerSectionExporter());

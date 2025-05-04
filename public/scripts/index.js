@@ -1,3 +1,10 @@
+/*
+
+    Ce script est un script affiché sur toutes les pages.
+
+*/
+
+// script permettant de gérer la checkbox administrateur.
 class AdminCheckbox
 {
     constructor(checkbox)
@@ -28,6 +35,7 @@ class AdminCheckbox
 
 }
 
+// chargement des scripts. 
 window.addEventListener("load", () => {
     let admin_checkbox_element = document.getElementById("admin-checkbox");
 

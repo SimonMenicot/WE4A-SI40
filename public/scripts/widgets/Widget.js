@@ -1,3 +1,10 @@
+/*
+
+    Un widget est un élément en plein écran permettant d'afficher une fenêtre de dialogue. 
+
+    Au démarrage, il rajoute un élément qui s'affichera sur toute la fenêtre ; pour se fermer, il retire simplement son élément du corps du document. 
+
+*/
 export class Widget
 {
     constructor(title, buttons)
@@ -27,6 +34,26 @@ export class Widget
     }
 }
 
+/*
+
+    Créer un widget : 
+    <div class="fullscreen-prompt">
+        <div class="fullscreen-wiget">
+            <div class="widget-title">
+                <h1>{ Le titre }</h1>
+            </div>
+            <div class="widget-content">
+                { ... contenu ... }
+            </div>
+        </div>
+    </div>
+
+    Le "fullscreen-prompt" permet de griser l'arrière-plan, le "fullscreen-widget" permet d'afficher la fenêtre de dialogue
+    au centre de la page et le "widget-content" est le contenu personnalisé en fonction du widget. 
+
+    Les différents widgets sont les autres classes décrites dans ce dossier, qui héritent de Widget. 
+
+*/
 function createWidget(title, buttons)
 {
     let div = document.createElement("div");

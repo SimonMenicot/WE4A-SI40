@@ -1,5 +1,12 @@
 import { Section } from "./Section.js";
 
+/*
+
+    Les sections de vidéo permettent d'afficher un contenu vidéo. 
+    
+    Le mode édition n'est pas encore implémenté. 
+
+*/
 export class VideoSection extends Section
 {
     constructor(data)

@@ -8,9 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /*
 
-This annotation allows
- - to move every activity paths to /activity-resources/{activity-name}, to ensure that they are enclosde
- - to register the activity for the activities manager. 
+    Cette annotation permet de déplacer tous les chemins d'activité vers /activity-resources/{activity-name}, afin de garantir qu'ils sont inclus
+    Elle doit être incluse devant toutes les classes héritant de ActivityData (src/CustomFeatures/ActivityData.php). 
 
 */
 
